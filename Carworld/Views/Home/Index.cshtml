@@ -1,8 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model DTO.AutosDTO
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="autoContainer">
+        @foreach (DTO.AutoDTO auto in Model.Autos)
+        {
+            <div class="card">
+                <img src="@("/Images/"+auto.Id+".jpg")" alt=@Model.Merken[auto.Merk].Naam style="width:100%">
+                <h1>@(Model.Merken[auto.Merk].Naam + auto.Model)</h1>
+                <p class="price">€@auto.Prijs</p>
+                <p>Some text about the Car..</p>
+                <p><button>Meer lezen</button></p>
+            </div>
+        }
+    </div>
 </div>
+
+

@@ -1,0 +1,83 @@
+﻿@model Carworld.Models.AutoModel
+
+@{
+    ViewData["Title"] = "AutoToevoegen";
+}
+
+<h1>AutoToevoegen</h1>
+
+<h4>AutoModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AutoToevoegen">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Merk" class="control-label"></label>
+                <input asp-for="Merk" class="form-control" />
+                <span asp-validation-for="Merk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Jaar" class="control-label"></label>
+                <input asp-for="Jaar" class="form-control" />
+                <span asp-validation-for="Jaar" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prijs" class="control-label"></label>
+                <input asp-for="Prijs" class="form-control" />
+                <span asp-validation-for="Prijs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vermogen" class="control-label"></label>
+                <input asp-for="Vermogen" class="form-control" />
+                <span asp-validation-for="Vermogen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Koppel" class="control-label"></label>
+                <input asp-for="Koppel" class="form-control" />
+                <span asp-validation-for="Koppel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Acceleratie" class="control-label"></label>
+                <input asp-for="Acceleratie" class="form-control" />
+                <span asp-validation-for="Acceleratie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topsnelheid" class="control-label"></label>
+                <input asp-for="Topsnelheid" class="form-control" />
+                <span asp-validation-for="Topsnelheid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Klasse" class="control-label"></label>
+                <input asp-for="Klasse" class="form-control" />
+                <span asp-validation-for="Klasse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Brandstof" class="control-label"></label>
+                <input asp-for="Brandstof" class="form-control" />
+                <span asp-validation-for="Brandstof" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Verbruik" class="control-label"></label>
+                <input asp-for="Verbruik" class="form-control" />
+                <span asp-validation-for="Verbruik" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -21,12 +21,12 @@ namespace Carworld.Controllers
 
         public IActionResult Index()
         {
-            Class2 poep = new Class2();
-            poep.testje();
-            return View();
+            DTO.AutosDTO autos = LogicClass.getAllCarInformation();
+
+            return View(autos);
         }
 
-        public IActionResult Privacy()
+        public IActionResult AutoToevoegen()
         {
             return View();
         }
