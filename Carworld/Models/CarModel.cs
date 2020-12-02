@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Carworld.Models
 {
-    public class AutoModel
+    public class CarModel
     {
         public int Merk { get; set; }
         public string Model { get; set; }

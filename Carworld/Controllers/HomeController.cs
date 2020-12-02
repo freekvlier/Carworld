@@ -21,7 +21,8 @@ namespace Carworld.Controllers
 
         public IActionResult Index()
         {
-            DTO.AutosDTO autos = LogicClass.getAllCarInformation();
+            CarCollection autoCollection = new CarCollection();
+            var autos = autoCollection.getCars();
 
             return View(autos);
         }

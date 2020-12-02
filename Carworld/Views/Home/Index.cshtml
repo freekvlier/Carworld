@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model DTO.AutosDTO
+@model IEnumerable<Logic.Car>
 
 
 <div class="text-center">
@@ -9,16 +9,18 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
     <div class="autoContainer">
-        @foreach (DTO.AutoDTO auto in Model.Autos)
+        @foreach (var auto in Model)
         {
-            <div class="card">
-                <img src="@("/Images/"+auto.Id+".jpg")" alt=@Model.Merken[auto.Merk].Naam style="width:100%">
-                <h1>@(Model.Merken[auto.Merk].Naam + auto.Model)</h1>
-                <p class="price">€@auto.Prijs</p>
-                <p>Some text about the Car..</p>
-                <p><button>Meer lezen</button></p>
+        <div class="card">
+            <div class="imageCard row align-content-center" >
+                <img src="@("/Images/"+auto.Id+".jpg")" alt=@auto.Merk style="width:100%">
             </div>
-        }
+            <h1>@(auto.Merk + auto.Model)</h1>
+            <p class="price">€@auto.Prijs</p>
+            <p>Tekst</p>
+            <p><button>Meer lezen</button></p>
+        </div>
+         }
     </div>
 </div>
 
