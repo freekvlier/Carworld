@@ -13,80 +13,22 @@ namespace DAL
 
         public bool Create(UserDTO user)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(UserDTO user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<UserDTO> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public UserDTO Get(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(UserDTO fuel)
-        {
-            throw new NotImplementedException();
-        }
-
-        /*
-        public List<GebruikerDTO> readGebruikersFromDatabase()
-        {
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Gebruikers";
+                    string sql = "INSERT INTO Users (Email, Username, Password) VALUES (@Email, @Username, @Password)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        command.Parameters.AddWithValue("@Name", user.Username);
+                        command.Parameters.AddWithValue("@Username", user.Username);
+                        command.Parameters.AddWithValue("@Password", user.Username);
+                        if (command.ExecuteNonQuery() < 1)
                         {
-                            List<GebruikerDTO> gebruikers = new List<GebruikerDTO>();
-                            while (reader.Read())
-                            {
-                                GebruikerDTO gebruiker = new GebruikerDTO();
-                                gebruiker.Id = reader.GetInt32(0);
-                                gebruiker.Email = reader.GetString(1);
-                                gebruiker.Gebruikersnaam = reader.GetString(2);
-                                gebruiker.Wachtwoord = reader.GetString(3);
-
-                                gebruikers.Add(gebruiker);
-                            }
-                            return gebruikers;
+                            return false;
                         }
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
-        }
-
-        public bool insertGebruikerIntoDatabase(GebruikerDTO gebruiker)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
-                {
-                    string sql = $"INSERT INTO Gebruikers(Email, Gebruikersnaam, Wachtwoord) VALUES('{gebruiker.Email}', '{gebruiker.Gebruikersnaam}', '{gebruiker.Wachtwoord}')";
-                    //string SQL = "INSERT INTO Autos (Merk, Model, Jaar, Prijs, Vermogen, Koppel, Acceleratie, Topsnelheid, Klasse, Brandstof, Verbruik, GebruikerId) VALUES ('0', 'Modelleke', '2020', '20000', '350', '400', '4.3', '298', '0', '0', '2.1', '0')";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        connection.Open();
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            return true;
-                        }
+                        connection.Close();
                     }
                 }
             }
@@ -95,7 +37,128 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+            return true;
         }
-        */
+
+        public bool Delete(UserDTO user)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "DELETE FROM Users WHERE Username = (@Username)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Username", user.Username);
+                        if (command.ExecuteNonQuery() < 1)
+                        {
+                            return false;
+                        }
+                        //reseed();
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+        }
+
+        public List<UserDTO> GetAll()
+        {
+            List<UserDTO> users = new List<UserDTO>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Users";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+                                UserDTO user = new UserDTO();
+                                user.Id = reader.GetInt32(0);
+                                user.Email = reader.GetString(1);
+                                user.Username = reader.GetString(2);           
+                                user.Password = reader.GetString(3);
+
+                                users.Add(user);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+            return users;
+        }
+
+        public UserDTO Get(int Id)
+        {
+            UserDTO user = new UserDTO();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Users WHERE Id = (@Id)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Id", Id);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            reader.Read();
+                            user.Id = reader.GetInt32(0);
+                            user.Email = reader.GetString(1);
+                            user.Username = reader.GetString(2);                           
+                            user.Password = reader.GetString(3);
+                        }
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+            return user;
+        }
+
+        public bool Update(UserDTO user)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "UPDATE Users SET Email = (@Email), Username = (@Username), Password = (@Password) WHERE Id = (@Id)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Email", user.Email);
+                        command.Parameters.AddWithValue("@Username", user.Username);
+                        command.Parameters.AddWithValue("@Password", user.Password);
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+        }
     }
 }

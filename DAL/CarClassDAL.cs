@@ -15,7 +15,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "INSERT INTO Klasse (Naam) VALUES (@Name)";
+                    string sql = "INSERT INTO CarClass (Name) VALUES (@Name)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
@@ -23,7 +23,33 @@ namespace DAL
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
-                        }                       
+                        }
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool Update(CarClassDTO carclass)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "UPDATE CarClass SET Name = (@Name) WHERE Id = (@Id)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Name", carclass.Name);
+                        command.Parameters.AddWithValue("@Id", carclass.Id);
+                        command.ExecuteNonQuery();
+                        connection.Close();
                     }
                 }
             }
@@ -41,7 +67,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "DELETE FROM Klasse WHERE Naam = (@Name)";
+                    string sql = "DELETE FROM CarClass WHERE Name = (@Name)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
@@ -51,6 +77,7 @@ namespace DAL
                             return false;
                         }
                         //reseed();
+                        connection.Close();
                     }
                 }
             }
@@ -69,7 +96,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Klasse";
+                    string sql = "SELECT * FROM CarClass";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
@@ -84,6 +111,7 @@ namespace DAL
 
                                 klassen.Add(klasse);
                             }
+                            connection.Close();
                             return klassen;
                         }
                     }
@@ -103,11 +131,18 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Klasse WHERE Id = (@Id)";
+                    string sql = "SELECT * FROM CarClass WHERE Id = (@Id)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", Id);
+                        command.Parameters.AddWithValue("@Id", Id);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            reader.Read();
+                            carClass.Id = reader.GetInt32(0);
+                            carClass.Name = reader.GetString(1);
+                        }
+                        connection.Close();
                     }
                 }
             }
@@ -118,11 +153,6 @@ namespace DAL
             return carClass;
         }
 
-        public bool Update(CarClassDTO carclass)
-        {
-            throw new NotImplementedException();
-        }
-
         private void reseed()
         {
             int count = GetAll().Count - 1; 
@@ -130,12 +160,13 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "DBCC CHECKIDENT(Klasse, RESEED, @count)";
+                    string sql = "DBCC CHECKIDENT(CarClass, RESEED, @count)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
                         command.Parameters.AddWithValue("@count", count);
                         command.ExecuteNonQuery();
+                        connection.Close();
                     }
                 }
             }

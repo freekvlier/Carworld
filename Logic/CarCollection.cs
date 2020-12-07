@@ -10,23 +10,20 @@ namespace Logic
     {
         public List<Car> getCars()
         {
-            
-            //var autoDatabase = server.readAutosFromDatabase();
-            //var merken = server.readMerkenFromDatabase();
-            //var klasses = server.readKlassenFromDatabase();
-            var brandstoffen = FuelFactoryDAL.GetCollectionDAL().GetAll();
+            List<Car> carList = new List<Car>();
+            var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
+            var cars = CarFactoryDAL.GetCollectionDAL().GetAll();
+            var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
+            var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
 
-            
-            List<Car> cars = new List<Car>();
-            /*
-            foreach (var auto in autoDatabase)
+            foreach (var car in cars)
             {
-                autos.Add(new Auto(auto.Id, merken[auto.Merk].Naam, auto.Model, auto.Jaar, auto.Prijs, auto.Vermogen, auto.Koppel,
-                                   auto.Acceleratie, auto.Topsnelheid, klasses[auto.Klasse].Naam, brandstoffen[auto.Brandstof].Naam,
-                                   auto.Verbruik, auto.GebruikerId));
+                carList.Add(new Car(car.Id, brands[car.Brand].Name, car.Model,
+                            car.Year, car.Price, car.Power, car.Torque, car.Acceleration,
+                            car.Topspeed, carClasses[car.Class].Name, fuels[car.Fuel].Name, car.FuelConsumption, car.UserId));
             }
-            */
-            return cars;
+
+            return carList;
         }
     }
 }

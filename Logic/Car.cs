@@ -7,36 +7,36 @@ namespace Logic
     public class Car
     {
         public int Id { get; set; }
-        public string Merk { get; set; }
+        public string Brand { get; set; }
         public string Model { get; set; }
-        public string Jaar { get; set; }
-        public int Prijs { get; set; }
-        public int Vermogen { get; set; }
-        public int Koppel { get; set; }
-        public double Acceleratie { get; set; }
-        public int Topsnelheid { get; set; }
-        public string Klasse { get; set; }
-        public string Brandstof { get; set; }
-        public double Verbruik { get; set; }
-        public int GebruikerId { get; set; }
+        public string Year { get; set; }
+        public int Price { get; set; }
+        public int Power { get; set; }
+        public int Torque { get; set; }
+        public double Acceleration { get; set; }
+        public int Topspeed { get; set; }
+        public string Class { get; set; }
+        public string Fuel { get; set; }
+        public double Consumption { get; set; }
+        public int UserId { get; set; }
 
-        public Car(int Id, string Merk, string Model, string Jaar, int Prijs, int Vermogen,
-                   int Koppel, double Acceleratie, int Topsnelheid, string Klasse, 
-                   string Brandstof, double Verbruik, int GebruikerId)
+        public Car(int Id, string Brand, string Model, string Year, int Price, int Power,
+                   int Torque, double Acceleration, int Topspeed, string CarClass, 
+                   string Fuel, double Consumption, int UserId)
         {
             this.Id = Id;
-            this.Merk = Merk;
+            this.Brand = Brand;
             this.Model = Model;
-            this.Jaar = Jaar;
-            this.Prijs = Prijs;
-            this.Vermogen = Vermogen;
-            this.Koppel = Koppel;
-            this.Acceleratie = Acceleratie;
-            this.Topsnelheid = Topsnelheid;
-            this.Klasse = Klasse;
-            this.Brandstof = Brandstof;
-            this.Verbruik = Verbruik;
-            this.GebruikerId = GebruikerId;
+            this.Year = Year;
+            this.Price = Price;
+            this.Power = Power;
+            this.Torque = Torque;
+            this.Acceleration = Acceleration;
+            this.Topspeed = Topspeed;
+            this.Class = CarClass;
+            this.Fuel = Fuel;
+            this.Consumption = Consumption;
+            this.UserId = UserId;
         }
 
     }

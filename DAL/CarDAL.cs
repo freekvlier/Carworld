@@ -13,64 +13,145 @@ namespace DAL
 
         public bool Create(CarDTO car)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "INSERT INTO Cars (Brand, Model, Year, Price, Power, Torque, Acceleration, Topspeed, CarClass, Fuel, Consumption, UserId)" +
+                                 " VALUES (@Brand, @Model, @Year, @Price, @Power, @Torque, @Acceleration, @Topspeed, @CarClass, @Fuel, @Consumption, @UserId)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Brand", car.Model);
+                        command.Parameters.AddWithValue("@Model", car.Model);
+                        command.Parameters.AddWithValue("@Year", car.Model);
+                        command.Parameters.AddWithValue("@Price", car.Model);
+                        command.Parameters.AddWithValue("@Power", car.Model);
+                        command.Parameters.AddWithValue("@Torque", car.Model);
+                        command.Parameters.AddWithValue("@Acceleration", car.Model);
+                        command.Parameters.AddWithValue("@Topspeed", car.Model);
+                        command.Parameters.AddWithValue("@CarClass", car.Model);
+                        command.Parameters.AddWithValue("@Fuel", car.Model);
+                        command.Parameters.AddWithValue("@Consumption", car.Model);
+                        command.Parameters.AddWithValue("@UserId", car.Model);
+                        if (command.ExecuteNonQuery() < 1)
+                        {
+                            return false;
+                        }
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
         }
 
         public bool Delete(CarDTO car)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CarDTO Get(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<CarDTO> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(CarDTO auto)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        /*
-        public List<CarDTO> readAutosFromDatabase()
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Autos";
+                    string sql = "DELETE FROM Cars WHERE Model = (@Model)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Model", car.Model);
+                        if (command.ExecuteNonQuery() < 1)
+                        {
+                            return false;
+                        }
+                        //reseed();
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+        }
+
+        public CarDTO Get(int Id)
+        {
+            CarDTO car = new CarDTO();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Cars WHERE Id = (@Id)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Id", Id);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            reader.Read();
+                            car.Id = reader.GetInt32(0);
+                            car.Brand = reader.GetInt32(1);
+                            car.Model = reader.GetString(2);
+                            car.Year = reader.GetString(3);
+                            car.Price = reader.GetInt32(4);
+                            car.Power = reader.GetInt32(5);
+                            car.Torque = reader.GetInt32(6);
+                            car.Acceleration = reader.GetInt32(7);
+                            car.Topspeed = reader.GetInt32(8);
+                            car.Class = reader.GetInt32(9);
+                            car.Fuel = reader.GetInt32(10);
+                            car.FuelConsumption = reader.GetInt32(11);
+                            car.UserId = reader.GetInt32(12);
+                        }
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+            return car;
+        }
+
+        public List<CarDTO> GetAll()
+        {
+            CarDTO car = new CarDTO();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Cars";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            List<CarDTO> autos = new List<CarDTO>();
+                            List<CarDTO> cars = new List<CarDTO>();
                             while (reader.Read())
                             {
-                                CarDTO car = new CarDTO();
                                 car.Id = reader.GetInt32(0);
-                                car.Merk = reader.GetInt32(1);
+                                car.Brand = reader.GetInt32(1);
                                 car.Model = reader.GetString(2);
-                                car.Jaar = reader.GetString(3);
-                                car.Prijs = reader.GetInt32(4);
-                                car.Vermogen = reader.GetInt32(5);
-                                car.Koppel = reader.GetInt32(6);
-                                car.Acceleratie = reader.GetDouble(7);
-                                car.Topsnelheid = reader.GetInt32(8);
-                                car.Klasse = reader.GetInt32(9);
-                                car.Brandstof = reader.GetInt32(10);
-                                car.Verbruik = reader.GetDouble(11);
-                                car.GebruikerId = reader.GetInt32(13);
+                                car.Year = reader.GetString(3);
+                                car.Price = reader.GetInt32(4);
+                                car.Power = reader.GetInt32(5);
+                                car.Torque = reader.GetInt32(6);
+                                car.Acceleration = reader.GetInt32(7);
+                                car.Topspeed = reader.GetInt32(8);
+                                car.Class = reader.GetInt32(9);
+                                car.Fuel = reader.GetInt32(10);
+                                car.FuelConsumption = reader.GetInt32(11);
+                                car.UserId = reader.GetInt32(12);
 
-                                autos.Add(car);
+                                cars.Add(car);
                             }
-                            return autos;
+                            connection.Close();
+                            return cars;
                         }
                     }
                 }
@@ -82,20 +163,20 @@ namespace DAL
             }
         }
 
-        public bool insertAutoIntoDatabase(AutoDTO auto)
+        public bool Update(CarDTO car)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = $"INSERT INTO Autos (Merk, Model, Jaar, Prijs, Vermogen, Koppel, Acceleratie, Topsnelheid, Klasse, Brandstof, Verbruik, GebruikerId) VALUES ('{auto.Merk}', '{auto.Model}', '{auto.Jaar}', '{auto.Prijs}', '{auto.Vermogen}', '{auto.Koppel}', '{auto.Acceleratie.ToString(new CultureInfo("en-US"))}', '{auto.Topsnelheid}', '{auto.Klasse}', '{auto.Brandstof}', '{auto.Verbruik.ToString(new CultureInfo("en-US"))}', '{auto.GebruikerId}')";
+                    string sql = "UPDATE Cars SET Name = (@Name) WHERE Id = (@Id)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            return true;
-                        }
+                        command.Parameters.AddWithValue("@Name", car.Model);
+                        command.Parameters.AddWithValue("@Id", car.Id);
+                        command.ExecuteNonQuery();
+                        connection.Close();
                     }
                 }
             }
@@ -104,7 +185,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+            return true;
         }
-        */
     }
 }
