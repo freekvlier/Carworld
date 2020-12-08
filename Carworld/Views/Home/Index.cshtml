@@ -9,14 +9,14 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
     <div class="autoContainer">
-        @foreach (var auto in Model)
+        @foreach (var car in Model)
         {
         <div class="card">
             <div class="imageCard row align-content-center" >
-                <img src="@("/Images/"+auto.Id+".jpg")" alt=@auto.Merk style="width:100%">
+                <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
             </div>
-            <h1>@(auto.Merk + auto.Model)</h1>
-            <p class="price">€@auto.Prijs</p>
+            <h1>@(car.Brand + car.Model)</h1>
+            <p class="price">€@car.Price</p>
             <p>Tekst</p>
             <p><button>Meer lezen</button></p>
         </div>

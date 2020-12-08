@@ -120,7 +120,7 @@ namespace DAL
 
         public List<CarDTO> GetAll()
         {
-            CarDTO car = new CarDTO();
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
@@ -134,20 +134,22 @@ namespace DAL
                             List<CarDTO> cars = new List<CarDTO>();
                             while (reader.Read())
                             {
-                                car.Id = reader.GetInt32(0);
-                                car.Brand = reader.GetInt32(1);
-                                car.Model = reader.GetString(2);
-                                car.Year = reader.GetString(3);
-                                car.Price = reader.GetInt32(4);
-                                car.Power = reader.GetInt32(5);
-                                car.Torque = reader.GetInt32(6);
-                                car.Acceleration = reader.GetInt32(7);
-                                car.Topspeed = reader.GetInt32(8);
-                                car.Class = reader.GetInt32(9);
-                                car.Fuel = reader.GetInt32(10);
-                                car.FuelConsumption = reader.GetInt32(11);
-                                car.UserId = reader.GetInt32(12);
-
+                                CarDTO car = new CarDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Brand = reader.GetInt32(1),
+                                    Model = reader.GetString(2),
+                                    Year = reader.GetString(3),
+                                    Price = reader.GetInt32(4),
+                                    Power = reader.GetInt32(5),
+                                    Torque = reader.GetInt32(6),
+                                    Acceleration = reader.GetDouble(7),
+                                    Topspeed = reader.GetInt32(8),
+                                    Class = reader.GetInt32(9),
+                                    Fuel = reader.GetInt32(10),
+                                    FuelConsumption = reader.GetDouble(11),
+                                    UserId = reader.GetInt32(12)
+                                };
                                 cars.Add(car);
                             }
                             connection.Close();

@@ -111,10 +111,11 @@ namespace DAL
                             
                             while (reader.Read())
                             {
-                                FuelDTO brandstof = new FuelDTO();
-                                brandstof.Id = reader.GetInt32(0);
-                                brandstof.Name = reader.GetString(1);
-
+                                FuelDTO brandstof = new FuelDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Name = reader.GetString(1)
+                                };
                                 brandstoffen.Add(brandstof);
                             }
                             

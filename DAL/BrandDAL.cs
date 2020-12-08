@@ -99,7 +99,7 @@ namespace DAL
 
         public List<BrandDTO> GetAll()
         {
-            BrandDTO brand = new BrandDTO();
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
@@ -113,10 +113,12 @@ namespace DAL
                             List<BrandDTO> brands = new List<BrandDTO>();
                             while (reader.Read())
                             {
-                                brand.Id = reader.GetInt32(0);
-                                brand.Name = reader.GetString(1);
-                                brand.Origin = reader.GetString(2);
-
+                                BrandDTO brand = new BrandDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Name = reader.GetString(1),
+                                    Origin = reader.GetString(2)
+                                };
                                 brands.Add(brand);
                             }
                             connection.Close();

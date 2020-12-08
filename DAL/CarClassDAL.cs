@@ -91,7 +91,7 @@ namespace DAL
 
         public List<CarClassDTO> GetAll()
         {
-            CarClassDTO klasse = new CarClassDTO();
+            
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
@@ -105,10 +105,11 @@ namespace DAL
                             List<CarClassDTO> klassen = new List<CarClassDTO>();
                             while (reader.Read())
                             {
-                                
-                                klasse.Id = reader.GetInt32(0);
-                                klasse.Name = reader.GetString(1);
-
+                                CarClassDTO klasse = new CarClassDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Name = reader.GetString(1)
+                                };
                                 klassen.Add(klasse);
                             }
                             connection.Close();

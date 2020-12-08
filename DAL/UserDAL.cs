@@ -84,12 +84,13 @@ namespace DAL
 
                             while (reader.Read())
                             {
-                                UserDTO user = new UserDTO();
-                                user.Id = reader.GetInt32(0);
-                                user.Email = reader.GetString(1);
-                                user.Username = reader.GetString(2);           
-                                user.Password = reader.GetString(3);
-
+                                UserDTO user = new UserDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Email = reader.GetString(1),
+                                    Username = reader.GetString(2),
+                                    Password = reader.GetString(3)
+                                };
                                 users.Add(user);
                             }
 
