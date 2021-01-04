@@ -1,26 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-@model IEnumerable<Logic.Car>
-
+﻿@model IEnumerable<CarModel>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
     <div class="autoContainer">
         @foreach (var car in Model)
         {
-        <div class="card">
-            <div class="imageCard row align-content-center" >
-                <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
+            <div class="card">
+                <div class="imageCard row align-content-center">
+                    <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
+                </div>
+                <h1>@(car.Brand + car.Model)</h1>
+                <p class="price">€@car.Price</p>
+                <p>Tekst</p>
+                <p><button>Meer lezen</button></p>
             </div>
-            <h1>@(car.Brand + car.Model)</h1>
-            <p class="price">€@car.Price</p>
-            <p>Tekst</p>
-            <p><button>Meer lezen</button></p>
-        </div>
-         }
+        }
     </div>
 </div>
 

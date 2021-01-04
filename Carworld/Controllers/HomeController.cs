@@ -21,16 +21,32 @@ namespace Carworld.Controllers
 
         public IActionResult Index()
         {
-            CarCollection autoCollection = new CarCollection();
-            var autos = autoCollection.getCars();
+            List<CarModel> carModels = new List<CarModel>();
 
-            return View(autos);
+            foreach (Car car in new CarCollection().getCars())
+            {
+                carModels.Add(new CarModel
+                {
+                    Id = car.Id,
+                    Brand = car.Brand,
+                    Model = car.Model,
+                    Year = car.Year,
+                    Price = car.Price,
+                    Horsepower = car.Power,
+                    Torque = car.Torque,
+                    Acceleration = car.Acceleration,
+                    Topspeed = car.Topspeed,
+                    CarClass = car.Class,
+                    Fuel = car.Fuel,
+                    FuelConsumption = car.FuelConsumption,
+                    MadeByUser = car.MadeByUser,
+                    DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
+                });
+            }
+
+            return View(carModels);
         }
 
-        public IActionResult AutoToevoegen()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -17,8 +17,8 @@ namespace Logic
         public int Topspeed { get; set; }
         public string Class { get; set; }
         public string Fuel { get; set; }
-        public double Consumption { get; set; }
-        public int UserId { get; set; }
+        public double FuelConsumption { get; set; }
+        public int MadeByUser { get; set; }
 
         public Car(int Id, string Brand, string Model, string Year, int Price, int Power,
                    int Torque, double Acceleration, int Topspeed, string CarClass, 
@@ -35,9 +35,8 @@ namespace Logic
             this.Topspeed = Topspeed;
             this.Class = CarClass;
             this.Fuel = Fuel;
-            this.Consumption = Consumption;
-            this.UserId = UserId;
+            this.FuelConsumption = Consumption;
+            this.MadeByUser = UserId;
         }
-
     }
 }

@@ -17,23 +17,23 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "INSERT INTO Cars (Brand, Model, Year, Price, Power, Torque, Acceleration, Topspeed, CarClass, Fuel, Consumption, UserId)" +
-                                 " VALUES (@Brand, @Model, @Year, @Price, @Power, @Torque, @Acceleration, @Topspeed, @CarClass, @Fuel, @Consumption, @UserId)";
+                    string sql = "INSERT INTO Cars (BrandId, Model, Year, Price, Horsepower, Torque, Acceleration, Topspeed, CarClassId, FuelId, Consumption, MadeByUser)" +
+                                 " VALUES (@BrandId, @Model, @Year, @Price, @Horsepower, @Torque, @Acceleration, @Topspeed, @CarClassId, @FuelId, @Consumption, @MadeByUser)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Brand", car.Model);
+                        command.Parameters.AddWithValue("@BrandId", car.BrandId);
                         command.Parameters.AddWithValue("@Model", car.Model);
-                        command.Parameters.AddWithValue("@Year", car.Model);
-                        command.Parameters.AddWithValue("@Price", car.Model);
-                        command.Parameters.AddWithValue("@Power", car.Model);
-                        command.Parameters.AddWithValue("@Torque", car.Model);
-                        command.Parameters.AddWithValue("@Acceleration", car.Model);
-                        command.Parameters.AddWithValue("@Topspeed", car.Model);
-                        command.Parameters.AddWithValue("@CarClass", car.Model);
-                        command.Parameters.AddWithValue("@Fuel", car.Model);
-                        command.Parameters.AddWithValue("@Consumption", car.Model);
-                        command.Parameters.AddWithValue("@UserId", car.Model);
+                        command.Parameters.AddWithValue("@Year", car.Year);
+                        command.Parameters.AddWithValue("@Price", car.Price);
+                        command.Parameters.AddWithValue("@Horsepower", car.Horsepower);
+                        command.Parameters.AddWithValue("@Torque", car.Torque);
+                        command.Parameters.AddWithValue("@Acceleration", car.Acceleration);
+                        command.Parameters.AddWithValue("@Topspeed", car.Topspeed);
+                        command.Parameters.AddWithValue("@CarClassId", car.CarClassId);
+                        command.Parameters.AddWithValue("@FuelId", car.FuelId);
+                        command.Parameters.AddWithValue("@Consumption", car.FuelConsumption);
+                        command.Parameters.AddWithValue("@MadeByUser", car.MadeByUser);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
@@ -94,18 +94,18 @@ namespace DAL
                         {
                             reader.Read();
                             car.Id = reader.GetInt32(0);
-                            car.Brand = reader.GetInt32(1);
+                            car.BrandId = reader.GetInt32(1);
                             car.Model = reader.GetString(2);
                             car.Year = reader.GetString(3);
                             car.Price = reader.GetInt32(4);
-                            car.Power = reader.GetInt32(5);
+                            car.Horsepower = reader.GetInt32(5);
                             car.Torque = reader.GetInt32(6);
                             car.Acceleration = reader.GetInt32(7);
                             car.Topspeed = reader.GetInt32(8);
-                            car.Class = reader.GetInt32(9);
-                            car.Fuel = reader.GetInt32(10);
+                            car.CarClassId = reader.GetInt32(9);
+                            car.FuelId = reader.GetInt32(10);
                             car.FuelConsumption = reader.GetInt32(11);
-                            car.UserId = reader.GetInt32(12);
+                            car.MadeByUser = reader.GetInt32(12);
                         }
                         connection.Close();
                     }
@@ -137,18 +137,18 @@ namespace DAL
                                 CarDTO car = new CarDTO
                                 {
                                     Id = reader.GetInt32(0),
-                                    Brand = reader.GetInt32(1),
+                                    BrandId = reader.GetInt32(1),
                                     Model = reader.GetString(2),
                                     Year = reader.GetString(3),
                                     Price = reader.GetInt32(4),
-                                    Power = reader.GetInt32(5),
+                                    Horsepower = reader.GetInt32(5),
                                     Torque = reader.GetInt32(6),
                                     Acceleration = reader.GetDouble(7),
                                     Topspeed = reader.GetInt32(8),
-                                    Class = reader.GetInt32(9),
-                                    Fuel = reader.GetInt32(10),
+                                    CarClassId = reader.GetInt32(9),
+                                    FuelId = reader.GetInt32(10),
                                     FuelConsumption = reader.GetDouble(11),
-                                    UserId = reader.GetInt32(12)
+                                    MadeByUser = reader.GetInt32(12)
                                 };
                                 cars.Add(car);
                             }
