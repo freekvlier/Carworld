@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ContractLayer
 {
-    public interface ICarDAL
+    public interface IFavoriteDAL
     {
-        bool Update(CarDTO car);
+        bool Update(FavoriteDTO favorite);
     }
 }

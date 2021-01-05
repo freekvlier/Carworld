@@ -11,11 +11,11 @@ namespace Logic
         public string Model { get; set; }
         public string Year { get; set; }
         public int Price { get; set; }
-        public int Power { get; set; }
+        public int Horsepower { get; set; }
         public int Torque { get; set; }
         public double Acceleration { get; set; }
         public int Topspeed { get; set; }
-        public string Class { get; set; }
+        public string CarClass { get; set; }
         public string Fuel { get; set; }
         public double FuelConsumption { get; set; }
         public int MadeByUser { get; set; }
@@ -29,11 +29,11 @@ namespace Logic
             this.Model = Model;
             this.Year = Year;
             this.Price = Price;
-            this.Power = Power;
+            this.Horsepower = Power;
             this.Torque = Torque;
             this.Acceleration = Acceleration;
             this.Topspeed = Topspeed;
-            this.Class = CarClass;
+            this.CarClass = CarClass;
             this.Fuel = Fuel;
             this.FuelConsumption = Consumption;
             this.MadeByUser = UserId;

@@ -19,8 +19,8 @@ namespace Logic.Tests
             foreach (var auto in testje)
             {
                 if (auto.Id < 0 || auto.Brand == null || auto.Model == null || auto.Year == null || auto.Price == 0
-                        || auto.Power == 0 || auto.Torque == 0 || auto.Acceleration == 0 || auto.Topspeed == 0
-                        || auto.Class == null || auto.Fuel == null || auto.FuelConsumption == 0 || auto.UserId == 0)
+                        || auto.Horsepower == 0 || auto.Torque == 0 || auto.Acceleration == 0 || auto.Topspeed == 0
+                        || auto.CarClass == null || auto.Fuel == null || auto.FuelConsumption == 0 || auto.UserId == 0)
                 {
                     failed = true;
                 }

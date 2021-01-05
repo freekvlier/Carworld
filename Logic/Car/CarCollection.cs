@@ -39,11 +39,11 @@ namespace Logic
                 Model = carinput.Model,
                 Year = carinput.Year,
                 Price = carinput.Price,
-                Horsepower = carinput.Power,
+                Horsepower = carinput.Horsepower,
                 Torque = carinput.Torque,
                 Acceleration = carinput.Acceleration,
                 Topspeed = carinput.Topspeed,
-                CarClassId = carClasses.FindIndex(item => item.Name == carinput.Class),
+                CarClassId = carClasses.FindIndex(item => item.Name == carinput.CarClass),
                 FuelId = fuels.FindIndex(item => item.Name == carinput.Fuel),
                 FuelConsumption = carinput.FuelConsumption,
                 MadeByUser = carinput.UserId
