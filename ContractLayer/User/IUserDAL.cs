@@ -6,6 +6,6 @@ namespace ContractLayer
 {
     public interface IUserDAL
     {
-        bool Update(UserDTO fuel);
+        bool Update(UserDTO user);
     }
 }

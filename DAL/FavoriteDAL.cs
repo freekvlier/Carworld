@@ -6,7 +6,7 @@ using ContractLayer;
 
 namespace DAL
 {
-    class FavoriteDAL : IFavoriteDAL, IFavoriteCollectionDAL
+    public class FavoriteDAL : IFavoriteDAL, IFavoriteCollectionDAL
     {
         private string sqlConnectionString = "Server=mssql.fhict.local;Database=dbi454449;User Id=dbi454449;Password=454449ICT;";
 

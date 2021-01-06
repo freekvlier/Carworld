@@ -8,7 +8,7 @@ namespace Logic
 {
     public class CarCollection
     {
-        public List<Car> getCars()
+        public List<Car> GetALl()
         {
             List<Car> carList = new List<Car>();
             var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
@@ -26,13 +26,13 @@ namespace Logic
             return carList;
         }
 
-        public bool addCar(Car carinput)
+        public bool Create(Car carinput)
         {
             var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
             var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
             var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
 
-            CarDTO dto = new CarDTO
+            CarDTO carDTO = new CarDTO
             {
                 Id = carinput.Id,
                 BrandId = brands.FindIndex(item => item.Name == carinput.Brand),
@@ -46,10 +46,10 @@ namespace Logic
                 CarClassId = carClasses.FindIndex(item => item.Name == carinput.CarClass),
                 FuelId = fuels.FindIndex(item => item.Name == carinput.Fuel),
                 FuelConsumption = carinput.FuelConsumption,
-                MadeByUser = carinput.UserId
+                MadeByUser = carinput.MadeByUser
             };
 
-            if (CarFactoryDAL.GetCollectionDAL().Create(dto))
+            if (CarFactoryDAL.GetCollectionDAL().Create(carDTO))
             {
                 return true;
             }
@@ -59,6 +59,51 @@ namespace Logic
             }
         }
 
+        public bool Delete(Car carinput)
+        {
+            var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
+            var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
+            var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
 
+            CarDTO carDTO = new CarDTO
+            {
+                Id = carinput.Id,
+                BrandId = brands.FindIndex(item => item.Name == carinput.Brand),
+                Model = carinput.Model,
+                Year = carinput.Year,
+                Price = carinput.Price,
+                Horsepower = carinput.Horsepower,
+                Torque = carinput.Torque,
+                Acceleration = carinput.Acceleration,
+                Topspeed = carinput.Topspeed,
+                CarClassId = carClasses.FindIndex(item => item.Name == carinput.CarClass),
+                FuelId = fuels.FindIndex(item => item.Name == carinput.Fuel),
+                FuelConsumption = carinput.FuelConsumption,
+                MadeByUser = carinput.MadeByUser
+            };
+
+            if (CarFactoryDAL.GetCollectionDAL().Delete(carDTO))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Car Get(int id)
+        {
+            var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
+            var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
+            var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
+
+            var getCar = CarFactoryDAL.GetCollectionDAL().Get(id);
+            Car car = new Car  (getCar.Id, brands[getCar.BrandId].Name, getCar.Model, 
+                                getCar.Year, getCar.Price, getCar.Horsepower, getCar.Torque, 
+                                getCar.Acceleration, getCar.Topspeed, carClasses[getCar.CarClassId].Name, 
+                                fuels[getCar.FuelId].Name, getCar.FuelConsumption, getCar.MadeByUser);
+            return car;
+        }
     }
 }

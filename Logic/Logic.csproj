@@ -9,8 +9,4 @@
     <ProjectReference Include="..\FactoryDAL\FactoryDAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="User\" />
-  </ItemGroup>
-
 </Project>

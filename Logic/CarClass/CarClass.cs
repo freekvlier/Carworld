@@ -6,29 +6,26 @@ using FactoryDAL;
 
 namespace Logic
 {
-    class Brand
+    public class CarClass
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Origin { get; set; }
 
-        public Brand(int id, string name, string origin)
+        public CarClass(int id, string name)
         {
             this.Id = id;
             this.Name = name;
-            this.Origin = origin;
         }
 
         public bool Update()
         {
-            BrandDTO brandDTO = new BrandDTO
+            CarClassDTO carClassDTO = new CarClassDTO
             {
                 Id = this.Id,
-                Name = this.Name,
-                Origin = this.Origin
+                Name = this.Name
             };
 
-            if (BrandFactoryDAL.GetDAL().Update(brandDTO))
+            if (CarClassFactoryDAL.GetDAL().Update(carClassDTO))
             {
                 return true;
             }
@@ -42,12 +39,5 @@ namespace Logic
         {
             this.Name = name;
         }
-
-        public void SetOrigin(string origin)
-        {
-            this.Origin = origin;
-        }
-
     }
-
 }

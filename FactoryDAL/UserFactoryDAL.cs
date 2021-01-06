@@ -14,7 +14,7 @@ namespace FactoryDAL
             return new UserDAL();
         }
 
-        public static IUserDAL GetCollectionDAL()
+        public static IUserCollectionDAL GetCollectionDAL()
         {
             return new UserDAL();
         }
