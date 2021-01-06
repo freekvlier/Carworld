@@ -10,10 +10,11 @@
                 <div class="imageCard row align-content-center">
                     <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
                 </div>
-                <h1>@(car.Brand + car.Model)</h1>
+                <h1>@(car.Brand + " " + car.Model)</h1>
                 <p class="price">€@car.Price</p>
-                <p>Tekst</p>
-                <p><button>Meer lezen</button></p>
+                <p>Text</p>
+                <p><button>Read More</button></p>
+                <a asp-controller="HomeController" asp-action="ReadMore"
             </div>
         }
     </div>

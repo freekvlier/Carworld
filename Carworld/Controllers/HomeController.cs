@@ -23,7 +23,7 @@ namespace Carworld.Controllers
         {
             List<CarModel> carModels = new List<CarModel>();
 
-            foreach (Car car in new CarCollection().getCars())
+            foreach (Car car in new CarCollection().GetAll())
             {
                 carModels.Add(new CarModel
                 {
@@ -47,6 +47,10 @@ namespace Carworld.Controllers
             return View(carModels);
         }
 
+        public IActionResult CarDetails()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

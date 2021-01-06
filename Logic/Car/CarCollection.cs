@@ -8,7 +8,7 @@ namespace Logic
 {
     public class CarCollection
     {
-        public List<Car> GetALl()
+        public List<Car> GetAll()
         {
             List<Car> carList = new List<Car>();
             var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
