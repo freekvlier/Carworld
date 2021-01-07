@@ -44,7 +44,7 @@ namespace Carworld.Controllers
             return fuels;
         }
 
-        private bool CreateCar(CarModel car)
+        private bool AddCar(CarModel car)
         {
             Car newCar = new Car()
             {
@@ -111,7 +111,7 @@ namespace Carworld.Controllers
                 MadeByUser = car.MadeByUser,
             };
 
-            Console.WriteLine(CreateCar(createdCar));
+            Console.WriteLine(AddCar(createdCar));
 
             return View();
         }
