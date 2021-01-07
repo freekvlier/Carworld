@@ -6,7 +6,7 @@ using FactoryDAL;
 
 namespace Logic
 {
-    class FuelCollection
+    public class FuelCollection
     {
         public List<Fuel> GetAll()
         {

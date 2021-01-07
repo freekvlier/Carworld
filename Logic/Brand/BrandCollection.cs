@@ -6,7 +6,7 @@ using ContractLayer;
 
 namespace Logic
 {
-    class BrandCollection
+    public class BrandCollection
     {
         public List<Brand> GetAll()
         {

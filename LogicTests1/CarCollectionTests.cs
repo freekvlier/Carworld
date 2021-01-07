@@ -13,14 +13,14 @@ namespace Logic.Tests
         public void getCarsTest()
         {
             CarCollection test = new CarCollection();
-            var testje = test.getCars();
+            var testje = test.GetAll();
 
             bool failed = false;
             foreach (var auto in testje)
             {
                 if (auto.Id < 0 || auto.Brand == null || auto.Model == null || auto.Year == null || auto.Price == 0
                         || auto.Horsepower == 0 || auto.Torque == 0 || auto.Acceleration == 0 || auto.Topspeed == 0
-                        || auto.CarClass == null || auto.Fuel == null || auto.FuelConsumption == 0 || auto.UserId == 0)
+                        || auto.CarClass == null || auto.Fuel == null || auto.FuelConsumption == 0 || auto.MadeByUser == 0)
                 {
                     failed = true;
                 }
@@ -34,7 +34,7 @@ namespace Logic.Tests
         {
             Car car = new Car(2, "BMW", "Model", "Jaar", 200, 300, 250, 2, 150, "Sport", "Benzine", 2, 2);
             bool actual = false;
-            if(new CarCollection().addCar(car))
+            if(new CarCollection().Create(car))
             {
                 actual = true;
             }

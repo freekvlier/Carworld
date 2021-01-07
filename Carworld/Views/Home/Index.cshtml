@@ -3,7 +3,7 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
-    <div class="autoContainer">
+    <div class="carContainer">
         @foreach (var car in Model)
         {
             <div class="card">
@@ -13,8 +13,7 @@
                 <h1>@(car.Brand + " " + car.Model)</h1>
                 <p class="price">€@car.Price</p>
                 <p>Text</p>
-                <p><button>Read More</button></p>
-                <a asp-controller="HomeController" asp-action="ReadMore"
+                <a asp-controller="Home" asp-action="CarDetails" asp-route-id="@car.Id" class="btn btn-outline-secondary">Read More</a>
             </div>
         }
     </div>

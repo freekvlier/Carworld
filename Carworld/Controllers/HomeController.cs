@@ -19,13 +19,13 @@ namespace Carworld.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        private List<CarModel> getCars()
         {
-            List<CarModel> carModels = new List<CarModel>();
+            List<CarModel> cars = new List<CarModel>();
 
             foreach (Car car in new CarCollection().GetAll())
             {
-                carModels.Add(new CarModel
+                cars.Add(new CarModel
                 {
                     Id = car.Id,
                     Brand = car.Brand,
@@ -43,14 +43,42 @@ namespace Carworld.Controllers
                     DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
                 });
             }
-
-            return View(carModels);
+            return cars;
         }
 
-        public IActionResult CarDetails()
+        private CarModel getCar(int id)
         {
-            return View();
+            Car getCar = new CarCollection().Get(id);
+            CarModel car = new CarModel
+            {
+                Id = getCar.Id,
+                Brand = getCar.Brand,
+                Model = getCar.Model,
+                Year = getCar.Year,
+                Price = getCar.Price,
+                Horsepower = getCar.Horsepower,
+                Torque = getCar.Torque,
+                Acceleration = getCar.Acceleration,
+                Topspeed = getCar.Topspeed,
+                CarClass = getCar.CarClass,
+                Fuel = getCar.Fuel,
+                FuelConsumption = getCar.FuelConsumption,
+                MadeByUser = getCar.MadeByUser,
+                DisplayFuel = $"Het verbruik van {getCar.Fuel}: {getCar.FuelConsumption}"
+            };
+            return car;
         }
+
+        public IActionResult Index()
+        {
+            return View(getCars());
+        }
+
+        public IActionResult CarDetails(int id)
+        {
+            return View(getCar(id));
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

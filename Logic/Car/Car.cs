@@ -41,6 +41,11 @@ namespace Logic
             this.MadeByUser = MadeByUser;
         }
 
+        public Car()
+        {
+
+        }
+
         public bool Update()
         {
             var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();

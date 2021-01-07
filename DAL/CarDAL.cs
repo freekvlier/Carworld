@@ -17,7 +17,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "INSERT INTO Cars (BrandId, Model, Year, Price, Horsepower, Torque, Acceleration, Topspeed, CarClassId, FuelId, Consumption, MadeByUser)" +
+                    string sql = "INSERT INTO Cars (BrandId, Model, Year, Price, Horsepower, Torque, Acceleration, Topspeed, CarClassId, FuelId, FuelConsumption, MadeByUser)" +
                                  " VALUES (@BrandId, @Model, @Year, @Price, @Horsepower, @Torque, @Acceleration, @Topspeed, @CarClassId, @FuelId, @Consumption, @MadeByUser)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -100,11 +100,11 @@ namespace DAL
                             car.Price = reader.GetInt32(4);
                             car.Horsepower = reader.GetInt32(5);
                             car.Torque = reader.GetInt32(6);
-                            car.Acceleration = reader.GetInt32(7);
+                            car.Acceleration = reader.GetDouble(7);
                             car.Topspeed = reader.GetInt32(8);
                             car.CarClassId = reader.GetInt32(9);
                             car.FuelId = reader.GetInt32(10);
-                            car.FuelConsumption = reader.GetInt32(11);
+                            car.FuelConsumption = reader.GetDouble(11);
                             car.MadeByUser = reader.GetInt32(12);
                         }
                         connection.Close();

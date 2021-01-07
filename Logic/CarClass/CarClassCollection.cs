@@ -6,7 +6,7 @@ using FactoryDAL;
 
 namespace Logic
 {
-    class CarClassCollection
+    public class CarClassCollection
     {
         public List<CarClass> GetAll()
         {
