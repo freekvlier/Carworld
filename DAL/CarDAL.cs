@@ -119,13 +119,73 @@ namespace DAL
         }
 
         public List<CarDTO> GetAll()
-        {
-            
+        {        
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Cars";
+                    string sql = "SELECT * FROM Cars ORDER BY BrandId";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            List<CarDTO> cars = new List<CarDTO>();
+                            while (reader.Read())
+                            {
+                                CarDTO car = new CarDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    BrandId = reader.GetInt32(1),
+                                    Model = reader.GetString(2),
+                                    Year = reader.GetString(3),
+                                    Price = reader.GetInt32(4),
+                                    Horsepower = reader.GetInt32(5),
+                                    Torque = reader.GetInt32(6),
+                                    Acceleration = reader.GetDouble(7),
+                                    Topspeed = reader.GetInt32(8),
+                                    CarClassId = reader.GetInt32(9),
+                                    FuelId = reader.GetInt32(10),
+                                    FuelConsumption = reader.GetDouble(11),
+                                    MadeByUser = reader.GetInt32(12)
+                                };
+                                cars.Add(car);
+                            }
+                            connection.Close();
+                            return cars;
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public List<CarDTO> GetAllSorted(string property)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Cars ORDER BY ";
+                    switch (property)
+                    {
+                        case "Brand":
+                            sql += "BrandId";
+                            break;
+                        case "Price":
+                            sql += "Price DESC";
+                            break;
+                        case "Horsepower":
+                            sql += "Horsepower DESC";
+                            break;
+                        default:
+                            sql += "BrandId";
+                            break;
+                    }
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();

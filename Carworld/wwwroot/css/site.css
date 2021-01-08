@@ -100,3 +100,12 @@ body {
     text-align: left;
     margin-left: inherit;
 }
+
+.filterContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    float: left;
+    margin-top: 10px;
+    text-align: left;
+}

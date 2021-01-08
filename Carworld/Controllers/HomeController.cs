@@ -47,10 +47,58 @@ namespace Carworld.Controllers
             return cars;
         }
 
+        private List<CarModel> getCarsSorted(string property)
+        {
+            List<CarModel> cars = new List<CarModel>();
+
+            foreach (Car car in new CarCollection().GetAllSorted(property))
+            {
+                cars.Add(new CarModel
+                {
+                    Id = car.Id,
+                    Brand = car.Brand,
+                    Model = car.Model,
+                    Year = car.Year,
+                    Price = car.Price,
+                    Horsepower = car.Horsepower,
+                    Torque = car.Torque,
+                    Acceleration = car.Acceleration,
+                    Topspeed = car.Topspeed,
+                    CarClass = car.CarClass,
+                    Fuel = car.Fuel,
+                    FuelConsumption = car.FuelConsumption,
+                    MadeByUser = car.MadeByUser,
+                    DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
+                });
+            }
+            return cars;
+        }
+
         public IActionResult Index()
         {
             return View(getCars());
         }
+
+        [Route("/[action]")]
+        public IActionResult Index(string sort)
+        {
+            switch (sort)
+            {
+                case "":
+                    return View(getCars());
+                case "Brand":
+                    ViewBag.Filter = "Brand";
+                    return View(getCarsSorted("Brand"));
+                case "Price":
+                    ViewBag.Filter = "Price";
+                    return View(getCarsSorted("Price"));
+                case "Horsepower":
+                    ViewBag.Filter = "Horsepower";
+                    return View(getCarsSorted("Horsepower"));
+            }
+            return View(getCars());
+        }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -71,7 +71,7 @@ namespace Carworld.Controllers
         }
 
         //End methods
-
+        [Route("/[action]")]
         public IActionResult AddCar()
         {
             //Dropdown menus
@@ -82,6 +82,7 @@ namespace Carworld.Controllers
             return View();
         }
 
+        [Route("/[action]")]
         [HttpPost]
         public IActionResult AddCar(CarModel car)
         {

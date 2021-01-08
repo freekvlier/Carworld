@@ -16,11 +16,42 @@ namespace Logic
             var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
             var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
 
-            foreach (var car in cars)
+            if(cars != null) { 
+                foreach (var car in cars)
+                {
+                    carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
+                                car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
+                                car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name, car.FuelConsumption, car.MadeByUser));
+                }
+            }
+            else
             {
-                carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
-                            car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
-                            car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name, car.FuelConsumption, car.MadeByUser));
+                Console.WriteLine("ERROR: Can't connect to database");
+            }
+
+            return carList;
+        }
+
+        public List<Car> GetAllSorted(string property)
+        {
+            List<Car> carList = new List<Car>();
+            var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
+            var cars = CarFactoryDAL.GetCollectionDAL().GetAllSorted(property);
+            var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
+            var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
+
+            if (cars != null)
+            {
+                foreach (var car in cars)
+                {
+                    carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
+                                car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
+                                car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name, car.FuelConsumption, car.MadeByUser));
+                }
+            }
+            else
+            {
+                Console.WriteLine("ERROR: Can't connect to database");
             }
 
             return carList;

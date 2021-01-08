@@ -1,24 +1,55 @@
 ﻿@model IEnumerable<CarModel>
 
+<script>
+    window.onload = function () {
+        switch ("@ViewBag.Filter") {
+            case "":
+                document.getElementById("radioBrand").checked = true;
+                break;
+            case "Brand":
+                document.getElementById("radioBrand").checked = true;
+                break;
+            case "Price":
+                document.getElementById("radioPrice").checked = true;
+                break;
+            case "Horsepower":
+                document.getElementById("radioHorsepower").checked = true;
+                break;
+        }
+    };
+</script>
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-
+    <hr />
+    <div class="filterContainer">
+        <form>
+            <p class="text-body">Filter:</p>
+            <input type="radio" value="Brand" name="filter" id="radioBrand" onclick="document.location='/Index?sort=Brand'" }>
+            <label>Brand</label><br>
+            <input type="radio" value="Price" name="filter" id="radioPrice" onclick="document.location='/Index?sort=Price'">
+            <label>Price</label><br>
+            <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?sort=Horsepower'">
+            <label>Horsepower</label><br>
+        </form>
+    </div>
     <div class="carContainer">
+
         @foreach (var car in Model)
         {
-        <div class="card">
-            <div class="imageCard row align-content-center">
-                <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
-            </div>
-            <h1>@(car.Brand + " " + car.Model)</h1>
+            <div class="card">
+                <div class="imageCard row align-content-center">
+                    <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
+                </div>
+                <h1>@(car.Brand + " " + car.Model)</h1>
                 <h5>€@car.Price</h5>
                 <a class="cardText">Year: @car.Year</a>
                 <a class="cardText">Topspeed: @car.Topspeed</a>
                 <a class="cardText">Acceleration: @car.Acceleration</a>
                 <a class="cardText">Horsepower: @car.Horsepower</a>
                 <a class="cardText">Torque: @car.Torque</a>
-            <a asp-controller="SelectedCar" asp-action="CarDetails" asp-route-id="@car.Id" class="btn btn-outline-secondary">Read More</a>
-        </div>
+                <a asp-controller="SelectedCar" asp-action="CarDetails" asp-route-id="@car.Id" class="btn btn-outline-secondary">Read More</a>
+            </div>
         }
     </div>
 </div>
