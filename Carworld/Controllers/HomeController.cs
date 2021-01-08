@@ -95,10 +95,12 @@ namespace Carworld.Controllers
                 case "Horsepower":
                     ViewBag.Filter = "Horsepower";
                     return View(getCarsSorted("Horsepower"));
+                case "Year":
+                    ViewBag.Filter = "Year";
+                    return View(getCarsSorted("Year"));
             }
             return View(getCars());
         }
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

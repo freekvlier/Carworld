@@ -102,7 +102,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Fuel";
+                    string sql = "SELECT * FROM Fuel ORDER BY Name";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();

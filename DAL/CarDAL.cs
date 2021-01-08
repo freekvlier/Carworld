@@ -182,6 +182,9 @@ namespace DAL
                         case "Horsepower":
                             sql += "Horsepower DESC";
                             break;
+                        case "Year":
+                            sql += "Year DESC";
+                            break;
                         default:
                             sql += "BrandId";
                             break;

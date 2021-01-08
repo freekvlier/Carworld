@@ -99,12 +99,11 @@ namespace DAL
 
         public List<BrandDTO> GetAll()
         {
-            
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Brands";
+                    string sql = "SELECT * FROM Brands ORDER BY Name";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();

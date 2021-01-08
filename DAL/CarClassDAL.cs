@@ -96,7 +96,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM CarClass";
+                    string sql = "SELECT * FROM CarClass ORDER BY Name";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();

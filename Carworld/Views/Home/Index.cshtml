@@ -15,6 +15,9 @@
             case "Horsepower":
                 document.getElementById("radioHorsepower").checked = true;
                 break;
+            case "Year":
+                document.getElementById("radioYear").checked = true;
+                break;
         }
     };
 </script>
@@ -26,13 +29,13 @@
         <form>
             <p class="text-body">Sort:</p>
             <input type="radio" value="Brand" name="filter" id="radioBrand" onclick="document.location='/Index?sort=Brand'" }>
-            <label>Brand</label><br>
+            <label>Brand (A-Z)</label><br>
             <input type="radio" value="Price" name="filter" id="radioPrice" onclick="document.location='/Index?sort=Price'">
             <label>Price</label><br>
             <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?sort=Horsepower'">
             <label>Horsepower</label><br>
-            <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?sort=Horsepower'">
-            <label>Horsepower</label><br>
+            <input type="radio" value="Year" name="filter" id="radioYear" onclick="document.location='/Index?sort=Year'">
+            <label>Year</label><br>
         </form>
     </div>
     <div class="carContainer">
