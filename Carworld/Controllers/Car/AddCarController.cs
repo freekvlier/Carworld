@@ -44,7 +44,7 @@ namespace Carworld.Controllers
             return fuels;
         }
 
-        private bool AddCar(CarModel car)
+        private bool createCar(CarModel car)
         {
             Car newCar = new Car()
             {
@@ -72,7 +72,7 @@ namespace Carworld.Controllers
 
         //End methods
 
-        public IActionResult Index()
+        public IActionResult AddCar()
         {
             //Dropdown menus
             ViewBag.Brands = GetBrands();
@@ -83,7 +83,7 @@ namespace Carworld.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(CarModel car)
+        public IActionResult AddCar(CarModel car)
         {
             var brands = GetBrands();
             var fuels = GetFuels();
@@ -114,7 +114,7 @@ namespace Carworld.Controllers
                 MadeByUser = car.MadeByUser,
             };
 
-            if (AddCar(createdCar))
+            if (createCar(createdCar))
             {
                 TempData.Add("Success", "Car has succesfully been uploaded to database");
             }

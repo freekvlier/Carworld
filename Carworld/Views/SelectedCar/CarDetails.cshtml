@@ -4,10 +4,9 @@
     ViewData["Title"] = "CarDetails";
 }
 
-<h1>CarDetails</h1>
+<h1>Car Details</h1>
 
 <div>
-    <h4>CarModel</h4>
     <hr />
     <img src="@("/Images/"+Model.Id+".jpg")" style="width:100%">
     <dl class="row">
@@ -98,9 +97,9 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a asp-controller="SelectedCar" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
     <a> | </a>
-    <a asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    <a asp-controller="SelectedCar" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
     <a> | </a>
-    <a asp-action="Index">Back</a>
+    <a asp-controller="Home" asp-action="Index">Back</a>
 </div>

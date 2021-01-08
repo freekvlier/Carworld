@@ -1,12 +1,15 @@
 ﻿@model Carworld.Models.CarModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "AddCar";
 }
 
-<h1>Edit</h1>
+@*asp-items="@(new SelectList(ViewBag.Brands, "Id", "Name"))"*@
+@*asp-items="@(new SelectList(ViewBag.CarClasses, "Id", "Name"))"*@
+@*asp-items="@(new SelectList(ViewBag.Fuels, "Id", "Name"))"*@
 
-<h4>CarModel</h4>
+<h1>Add Car</h1>
+
 <hr />
 
 @if (TempData.ContainsKey("Success"))
@@ -20,16 +23,15 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Index">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="Brand" class="control-label"></label>
-                @*<input asp-for="Brand" class="form-control" />*@
                 <select asp-for="Brand" class="form-control">
                     @foreach (BrandModel brand in ViewBag.Brands)
                     {
@@ -98,24 +100,24 @@
                 <input asp-for="FuelConsumption" class="form-control" />
                 <span asp-validation-for="FuelConsumption" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="MadeByUser" class="control-label"></label>
+                <input asp-for="MadeByUser" class="form-control" />
+                <span asp-validation-for="MadeByUser" class="text-danger"></span>
+            </div>
             @*<div class="form-group">
-                    <label asp-for="MadeByUser" class="control-label"></label>
-                    <input asp-for="MadeByUser" class="form-control" />
-                    <span asp-validation-for="MadeByUser" class="text-danger"></span>
-                </div>*@
-            @*<div class="form-group">
-                    <label asp-for="DisplayFuel" class="control-label"></label>
-                    <input asp-for="DisplayFuel" class="form-control" />
-                    <span asp-validation-for="DisplayFuel" class="text-danger"></span>
+                        <label asp-for="ImageFile" class="control-label"></label>
+                        <input asp-for="Imagefile" class="form-control" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>*@
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Cancel</a>
-</div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
