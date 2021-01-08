@@ -18,7 +18,7 @@ namespace Logic.Tests
             bool failed = false;
             foreach (var auto in testje)
             {
-                if (auto.Id < 0 || auto.Brand == null || auto.Model == null || auto.Year == null || auto.Price == 0
+                if (auto.Id < 0 || auto.Brand == null || auto.Model == null || auto.Year == 0 || auto.Price == 0
                         || auto.Horsepower == 0 || auto.Torque == 0 || auto.Acceleration == 0 || auto.Topspeed == 0
                         || auto.CarClass == null || auto.Fuel == null || auto.FuelConsumption == 0 || auto.MadeByUser == 0)
                 {
@@ -32,7 +32,7 @@ namespace Logic.Tests
         [TestMethod()]
         public void addCarTest()
         {
-            Car car = new Car(2, "BMW", "Model", "Jaar", 200, 300, 250, 2, 150, "Sport", "Benzine", 2, 2);
+            Car car = new Car(2, "BMW", "Model", 2000, 200, 300, 250, 2, 150, "Sport", "Benzine", 2, 2);
             bool actual = false;
             if(new CarCollection().Create(car))
             {

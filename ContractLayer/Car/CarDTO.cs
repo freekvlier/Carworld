@@ -7,7 +7,7 @@ namespace ContractLayer
         public int Id { get; set; }
         public int BrandId { get; set; }
         public string Model { get; set; }
-        public string Year { get; set; }
+        public int Year { get; set; }
         public int Price { get; set; }
         public int Horsepower { get; set; }
         public int Torque { get; set; }

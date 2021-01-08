@@ -96,7 +96,7 @@ namespace DAL
                             car.Id = reader.GetInt32(0);
                             car.BrandId = reader.GetInt32(1);
                             car.Model = reader.GetString(2);
-                            car.Year = reader.GetString(3);
+                            car.Year = reader.GetInt32(3);
                             car.Price = reader.GetInt32(4);
                             car.Horsepower = reader.GetInt32(5);
                             car.Torque = reader.GetInt32(6);
@@ -138,7 +138,7 @@ namespace DAL
                                     Id = reader.GetInt32(0),
                                     BrandId = reader.GetInt32(1),
                                     Model = reader.GetString(2),
-                                    Year = reader.GetString(3),
+                                    Year = reader.GetInt32(3),
                                     Price = reader.GetInt32(4),
                                     Horsepower = reader.GetInt32(5),
                                     Torque = reader.GetInt32(6),
@@ -199,7 +199,7 @@ namespace DAL
                                     Id = reader.GetInt32(0),
                                     BrandId = reader.GetInt32(1),
                                     Model = reader.GetString(2),
-                                    Year = reader.GetString(3),
+                                    Year = reader.GetInt32(3),
                                     Price = reader.GetInt32(4),
                                     Horsepower = reader.GetInt32(5),
                                     Torque = reader.GetInt32(6),

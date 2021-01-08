@@ -11,7 +11,7 @@ namespace Logic
         public int Id { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
-        public string Year { get; set; }
+        public int Year { get; set; }
         public int Price { get; set; }
         public int Horsepower { get; set; }
         public int Torque { get; set; }
@@ -22,7 +22,7 @@ namespace Logic
         public double FuelConsumption { get; set; }
         public int MadeByUser { get; set; }
 
-        public Car(int Id, string Brand, string Model, string Year, int Price, int Horsepower,
+        public Car(int Id, string Brand, string Model, int Year, int Price, int Horsepower,
                    int Torque, double Acceleration, int Topspeed, string CarClass, 
                    string Fuel, double FuelConsumption, int MadeByUser)
         {
@@ -90,7 +90,7 @@ namespace Logic
             this.Model = model;
         }
 
-        public void SetYear(string year)
+        public void SetYear(int year)
         {
             this.Year = year;
         }
