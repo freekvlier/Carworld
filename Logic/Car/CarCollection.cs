@@ -59,30 +59,9 @@ namespace Logic
             }
         }
 
-        public bool Delete(Car carinput)
+        public bool Delete(int Id)
         {
-            var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
-            var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
-            var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
-
-            CarDTO carDTO = new CarDTO
-            {
-                Id = carinput.Id,
-                BrandId = brands.FindIndex(item => item.Name == carinput.Brand),
-                Model = carinput.Model,
-                Year = carinput.Year,
-                Price = carinput.Price,
-                Horsepower = carinput.Horsepower,
-                Torque = carinput.Torque,
-                Acceleration = carinput.Acceleration,
-                Topspeed = carinput.Topspeed,
-                CarClassId = carClasses.FindIndex(item => item.Name == carinput.CarClass),
-                FuelId = fuels.FindIndex(item => item.Name == carinput.Fuel),
-                FuelConsumption = carinput.FuelConsumption,
-                MadeByUser = carinput.MadeByUser
-            };
-
-            if (CarFactoryDAL.GetCollectionDAL().Delete(carDTO))
+            if (CarFactoryDAL.GetCollectionDAL().Delete(Id))
             {
                 return true;
             }

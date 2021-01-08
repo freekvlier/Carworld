@@ -160,6 +160,21 @@ namespace Carworld.Controllers
                 return View();
             }
         }
+        
+        public IActionResult Delete(int id)
+        {
+            return View(getCar(id));
+        }
+
+        [HttpPost]
+        public IActionResult Delete(CarModel car)
+        {
+            if(new CarCollection().Delete(car.Id))
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

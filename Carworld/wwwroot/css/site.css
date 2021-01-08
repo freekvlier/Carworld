@@ -95,3 +95,8 @@ body {
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.cardText {
+    text-align: left;
+    margin-left: inherit;
+}

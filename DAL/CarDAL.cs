@@ -50,17 +50,17 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(CarDTO car)
+        public bool Delete(int Id)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "DELETE FROM Cars WHERE Model = (@Model)";
+                    string sql = "DELETE FROM Cars WHERE Id = (@Id)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Model", car.Model);
+                        command.Parameters.AddWithValue("@Id", Id);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;

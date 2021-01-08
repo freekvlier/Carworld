@@ -11,12 +11,12 @@
                 <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
             </div>
             <h1>@(car.Brand + " " + car.Model)</h1>
-                <p class="price">€@car.Price</p>
-                <p>Year: @car.Year</p>
-                <p>Topspeed: @car.Topspeed</p>
-                <p>Acceleration: @car.Acceleration</p>
-                <p>Horsepower: @car.Horsepower</p>
-                <p>Torque: @car.Torque</p>
+                <h5>€@car.Price</h5>
+                <a class="cardText">Year: @car.Year</a>
+                <a class="cardText">Topspeed: @car.Topspeed</a>
+                <a class="cardText">Acceleration: @car.Acceleration</a>
+                <a class="cardText">Horsepower: @car.Horsepower</a>
+                <a class="cardText">Torque: @car.Torque</a>
             <a asp-controller="Home" asp-action="CarDetails" asp-route-id="@car.Id" class="btn btn-outline-secondary">Read More</a>
         </div>
         }
