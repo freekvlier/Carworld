@@ -78,6 +78,66 @@ namespace Logic
                 return false;
             }
         }
-        
+
+        //Set functions
+        public void SetBrand(string brand)
+        {
+            this.Brand = Brand;
+        }
+
+        public void SetModel(string model)
+        {
+            this.Model = model;
+        }
+
+        public void SetYear(string year)
+        {
+            this.Year = year;
+        }
+
+        public void SetPrice(int price)
+        {
+            this.Price = price;
+        }
+
+        public void SetHorsepower(int horsepower)
+        {
+            this.Horsepower = horsepower;
+        }
+
+        public void SetTorque(int torque)
+        {
+            this.Torque = torque;
+        }
+
+        public void SetAcceleration(double acceleration)
+        {
+            this.Acceleration = acceleration;
+        }
+
+        public void SetTopspeed(int topspeed)
+        {
+            this.Topspeed = topspeed;
+        }
+
+        public void SetCarClass(string carClass)
+        {
+            this.CarClass = carClass;
+        }
+
+        public void SetFuel(string fuel)
+        {
+            this.Fuel = fuel;
+        }
+
+        public void SetFuelConsumption(double fuelConsumption)
+        {
+            this.FuelConsumption = fuelConsumption;
+        }
+
+        public void SetMadeByUser(int madeByUser)
+        {
+            this.MadeByUser = madeByUser;
+        }
     }
 }

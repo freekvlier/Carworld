@@ -97,7 +97,8 @@ namespace Carworld.Controllers
             CarModel createdCar = new CarModel()
             {
                 Id = car.Id,
-                Brand = brands.Single(s => s.Id == Convert.ToInt32(car.Brand)).Name,
+                //Brand = brands.Single(s => s.Id == Convert.ToInt32(car.Brand)).Name,
+                Brand = car.Brand,
                 Model = car.Model,
                 Year = car.Year,
                 Price = car.Price,
@@ -105,14 +106,23 @@ namespace Carworld.Controllers
                 Torque = car.Torque,
                 Acceleration = car.Acceleration,
                 Topspeed = car.Topspeed,
-                CarClass = carClasses.Single(s => s.Id == Convert.ToInt32(car.CarClass)).Name,
-                Fuel = fuels.Single(s => s.Id == Convert.ToInt32(car.Fuel)).Name,
+                //CarClass = carClasses.Single(s => s.Id == Convert.ToInt32(car.CarClass)).Name,
+                //Fuel = fuels.Single(s => s.Id == Convert.ToInt32(car.Fuel)).Name,
+                CarClass = car.CarClass,
+                Fuel = car.Fuel,
                 FuelConsumption = car.FuelConsumption,
                 MadeByUser = car.MadeByUser,
             };
 
-            Console.WriteLine(AddCar(createdCar));
-
+            if (AddCar(createdCar))
+            {
+                TempData.Add("Success", "Car has succesfully been uploaded to database");
+            }
+            else
+            {
+                TempData.Add("Alert", "Something went wrong uploading data to the server");
+            }
+            
             return View();
         }
 

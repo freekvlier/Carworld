@@ -6,15 +6,19 @@
     <div class="carContainer">
         @foreach (var car in Model)
         {
-            <div class="card">
-                <div class="imageCard row align-content-center">
-                    <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
-                </div>
-                <h1>@(car.Brand + " " + car.Model)</h1>
-                <p class="price">€@car.Price</p>
-                <p>Text</p>
-                <a asp-controller="Home" asp-action="CarDetails" asp-route-id="@car.Id" class="btn btn-outline-secondary">Read More</a>
+        <div class="card">
+            <div class="imageCard row align-content-center">
+                <img src="@("/Images/"+car.Id+".jpg")" alt=@car.Brand style="width:100%">
             </div>
+            <h1>@(car.Brand + " " + car.Model)</h1>
+                <p class="price">€@car.Price</p>
+                <p>Year: @car.Year</p>
+                <p>Topspeed: @car.Topspeed</p>
+                <p>Acceleration: @car.Acceleration</p>
+                <p>Horsepower: @car.Horsepower</p>
+                <p>Torque: @car.Torque</p>
+            <a asp-controller="Home" asp-action="CarDetails" asp-route-id="@car.Id" class="btn btn-outline-secondary">Read More</a>
+        </div>
         }
     </div>
 </div>

@@ -18,7 +18,7 @@ namespace DAL
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
                     string sql = "INSERT INTO Cars (BrandId, Model, Year, Price, Horsepower, Torque, Acceleration, Topspeed, CarClassId, FuelId, FuelConsumption, MadeByUser)" +
-                                 " VALUES (@BrandId, @Model, @Year, @Price, @Horsepower, @Torque, @Acceleration, @Topspeed, @CarClassId, @FuelId, @Consumption, @MadeByUser)";
+                                 " VALUES (@BrandId, @Model, @Year, @Price, @Horsepower, @Torque, @Acceleration, @Topspeed, @CarClassId, @FuelId, @FuelConsumption, @MadeByUser)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
@@ -32,7 +32,7 @@ namespace DAL
                         command.Parameters.AddWithValue("@Topspeed", car.Topspeed);
                         command.Parameters.AddWithValue("@CarClassId", car.CarClassId);
                         command.Parameters.AddWithValue("@FuelId", car.FuelId);
-                        command.Parameters.AddWithValue("@Consumption", car.FuelConsumption);
+                        command.Parameters.AddWithValue("@FuelConsumption", car.FuelConsumption);
                         command.Parameters.AddWithValue("@MadeByUser", car.MadeByUser);
                         if (command.ExecuteNonQuery() < 1)
                         {
@@ -171,11 +171,24 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "UPDATE Cars SET Name = (@Name) WHERE Id = (@Id)";
+                    string sql = "UPDATE Cars SET BrandId = (@BrandId), Model = (@Model), Year = (@Year)," +
+                                 " Price = (@Price), Horsepower = (@Horsepower), Torque = (@Torque)," +
+                                 " Acceleration = (@Acceleration), Topspeed = (@Topspeed), CarClassId = (@CarClassId)," +
+                                 " FuelId = (@FuelId), FuelConsumption = (@FuelConsumption) WHERE Id = (@Id)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", car.Model);
+                        command.Parameters.AddWithValue("@BrandId", car.BrandId);
+                        command.Parameters.AddWithValue("@Model", car.Model);
+                        command.Parameters.AddWithValue("@Year", car.Year);
+                        command.Parameters.AddWithValue("@Price", car.Price);
+                        command.Parameters.AddWithValue("@Horsepower", car.Horsepower);
+                        command.Parameters.AddWithValue("@Torque", car.Torque);
+                        command.Parameters.AddWithValue("@Acceleration", car.Acceleration);
+                        command.Parameters.AddWithValue("@Topspeed", car.Topspeed);
+                        command.Parameters.AddWithValue("@CarClassId", car.CarClassId);
+                        command.Parameters.AddWithValue("@FuelId", car.FuelId);
+                        command.Parameters.AddWithValue("@FuelConsumption", car.FuelConsumption);
                         command.Parameters.AddWithValue("@Id", car.Id);
                         command.ExecuteNonQuery();
                         connection.Close();
