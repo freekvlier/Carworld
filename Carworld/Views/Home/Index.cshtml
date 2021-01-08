@@ -20,21 +20,22 @@
 </script>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">Cars</h1>
     <hr />
     <div class="filterContainer">
         <form>
-            <p class="text-body">Filter:</p>
+            <p class="text-body">Sort:</p>
             <input type="radio" value="Brand" name="filter" id="radioBrand" onclick="document.location='/Index?sort=Brand'" }>
             <label>Brand</label><br>
             <input type="radio" value="Price" name="filter" id="radioPrice" onclick="document.location='/Index?sort=Price'">
             <label>Price</label><br>
             <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?sort=Horsepower'">
             <label>Horsepower</label><br>
+            <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?sort=Horsepower'">
+            <label>Horsepower</label><br>
         </form>
     </div>
     <div class="carContainer">
-
         @foreach (var car in Model)
         {
             <div class="card">

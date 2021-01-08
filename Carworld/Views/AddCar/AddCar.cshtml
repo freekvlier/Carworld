@@ -30,16 +30,17 @@
                     <input asp-for="Id" class="form-control" />
                     <span asp-validation-for="Id" class="text-danger"></span>
                 </div>*@
-            <div class="form-group">
-                <label asp-for="Brand" class="control-label"></label>
-                <select asp-for="Brand" class="form-control">
-                    @foreach (BrandModel brand in ViewBag.Brands)
-                    {
-                        <option value="@brand.Name">@brand.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="Brand" class="text-danger"></span>
-            </div>
+        <div class="form-group">
+            <label asp-for="Brand" class="control-label"></label>
+            <select asp-for="Brand" class="form-control">
+                @foreach (BrandModel brand in ViewBag.Brands)
+                {
+                    <option value="@brand.Name">@brand.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Brand" class="text-danger"></span>
+            <a asp-controller="Home" asp-action="Index">Add Brand</a>
+        </div>
             <div class="form-group">
                 <label asp-for="Model" class="control-label"></label>
                 <input asp-for="Model" class="form-control" />
@@ -84,6 +85,7 @@
                     }
                 </select>
                 <span asp-validation-for="CarClass" class="text-danger"></span>
+                <a asp-controller="Home" asp-action="Index">Add class</a>
             </div>
             <div class="form-group">
                 <label asp-for="Fuel" class="control-label"></label>
@@ -94,6 +96,7 @@
                     }
                 </select>
                 <span asp-validation-for="Fuel" class="text-danger"></span>
+                <a asp-controller="Home" asp-action="Index">Add Fuel</a>
             </div>
             <div class="form-group">
                 <label asp-for="FuelConsumption" class="control-label"></label>
