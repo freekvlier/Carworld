@@ -38,7 +38,7 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(FuelDTO brandstof)
+        public bool Delete(FuelDTO fuel)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", brandstof.Name);
+                        command.Parameters.AddWithValue("@Name", fuel.Name);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
@@ -68,7 +68,7 @@ namespace DAL
 
         public FuelDTO Get(int Id)
         {
-            FuelDTO carClass = new FuelDTO();
+            FuelDTO fuel = new FuelDTO();
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
@@ -81,8 +81,8 @@ namespace DAL
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             reader.Read();
-                            carClass.Id = reader.GetInt32(0);
-                            carClass.Name = reader.GetString(1);
+                            fuel.Id = reader.GetInt32(0);
+                            fuel.Name = reader.GetString(1);
                         }
                         connection.Close();
                     }
@@ -92,12 +92,12 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
-            return carClass;
+            return fuel;
         }
 
         public List<FuelDTO> GetAll()
         {
-            List<FuelDTO> brandstoffen = new List<FuelDTO>();
+            List<FuelDTO> fuels = new List<FuelDTO>();
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
@@ -111,12 +111,12 @@ namespace DAL
                             
                             while (reader.Read())
                             {
-                                FuelDTO brandstof = new FuelDTO
+                                FuelDTO fuel = new FuelDTO
                                 {
                                     Id = reader.GetInt32(0),
                                     Name = reader.GetString(1)
                                 };
-                                brandstoffen.Add(brandstof);
+                                fuels.Add(fuel);
                             }
                             
                         }
@@ -127,7 +127,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
-            return brandstoffen;
+            return fuels;
         }
 
         public bool Update(FuelDTO fuel)

@@ -5,11 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Carworld.Models;
 using Logic;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Carworld.Controllers
 {
     public class AddCarController : Controller
     {
+        private readonly IWebHostEnvironment envi;
         //Methods 
         private List<BrandModel> GetBrands()
         {
@@ -70,6 +73,11 @@ namespace Carworld.Controllers
             return true;
         }
 
+        public AddCarController(IWebHostEnvironment _environment)
+        {
+            envi = _environment;
+        }
+
         //End methods
         [Route("/[action]")]
         public IActionResult AddCar()
@@ -98,7 +106,6 @@ namespace Carworld.Controllers
             CarModel createdCar = new CarModel()
             {
                 Id = car.Id,
-                //Brand = brands.Single(s => s.Id == Convert.ToInt32(car.Brand)).Name,
                 Brand = car.Brand,
                 Model = car.Model,
                 Year = car.Year,
@@ -107,13 +114,20 @@ namespace Carworld.Controllers
                 Torque = car.Torque,
                 Acceleration = car.Acceleration,
                 Topspeed = car.Topspeed,
-                //CarClass = carClasses.Single(s => s.Id == Convert.ToInt32(car.CarClass)).Name,
-                //Fuel = fuels.Single(s => s.Id == Convert.ToInt32(car.Fuel)).Name,
                 CarClass = car.CarClass,
                 Fuel = car.Fuel,
                 FuelConsumption = car.FuelConsumption,
                 MadeByUser = car.MadeByUser,
             };
+
+            //Image Upload
+            string uploadsFolder = Path.Combine(envi.WebRootPath, "Images");
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + car.Image.FileName;
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            using (var filestream = new FileStream(filePath, FileMode.Create))
+            {
+                car.Image.CopyTo(filestream);
+            }
 
             if (createCar(createdCar))
             {

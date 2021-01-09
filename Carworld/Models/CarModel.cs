@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Models
 {
@@ -22,5 +23,6 @@ namespace Carworld.Models
         public int MadeByUser { get; set; }
 
         public string DisplayFuel { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

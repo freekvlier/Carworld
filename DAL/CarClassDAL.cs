@@ -9,7 +9,7 @@ namespace DAL
     {
         private string sqlConnectionString = "Server=mssql.fhict.local;Database=dbi454449;User Id=dbi454449;Password=454449ICT;";
 
-        public bool Create(CarClassDTO carclass)
+        public bool Create(CarClassDTO carClass)
         {
             try
             {
@@ -19,7 +19,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", carclass.Name);
+                        command.Parameters.AddWithValue("@Name", carClass.Name);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
@@ -36,7 +36,7 @@ namespace DAL
             return true;
         }
 
-        public bool Update(CarClassDTO carclass)
+        public bool Update(CarClassDTO carClass)
         {
             try
             {
@@ -46,8 +46,8 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", carclass.Name);
-                        command.Parameters.AddWithValue("@Id", carclass.Id);
+                        command.Parameters.AddWithValue("@Name", carClass.Name);
+                        command.Parameters.AddWithValue("@Id", carClass.Id);
                         command.ExecuteNonQuery();
                         connection.Close();
                     }
@@ -61,7 +61,7 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(CarClassDTO carclass)
+        public bool Delete(CarClassDTO carClass)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", carclass.Name);
+                        command.Parameters.AddWithValue("@Name", carClass.Name);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
@@ -91,7 +91,6 @@ namespace DAL
 
         public List<CarClassDTO> GetAll()
         {
-            
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
@@ -102,18 +101,18 @@ namespace DAL
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            List<CarClassDTO> klassen = new List<CarClassDTO>();
+                            List<CarClassDTO> carClasses = new List<CarClassDTO>();
                             while (reader.Read())
                             {
-                                CarClassDTO klasse = new CarClassDTO
+                                CarClassDTO carClass = new CarClassDTO
                                 {
                                     Id = reader.GetInt32(0),
                                     Name = reader.GetString(1)
                                 };
-                                klassen.Add(klasse);
+                                carClasses.Add(carClass);
                             }
                             connection.Close();
-                            return klassen;
+                            return carClasses;
                         }
                     }
                 }
