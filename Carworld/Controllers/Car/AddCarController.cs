@@ -7,9 +7,11 @@ using Carworld.Models;
 using Logic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Carworld.Controllers
 {
+    [Authorize]
     public class AddCarController : Controller
     {
         private readonly IWebHostEnvironment envi;
@@ -75,7 +77,7 @@ namespace Carworld.Controllers
         }
 
         //End methods
-        [Route("/[action]")]
+        [Route("/User/[action]")]
         public IActionResult AddCar()
         {
             //Dropdown menus
@@ -86,7 +88,7 @@ namespace Carworld.Controllers
             return View();
         }
 
-        [Route("/[action]")]
+        [Route("/User/[action]")]
         [HttpPost]
         public IActionResult AddCar(CarModel car)
         {
@@ -137,7 +139,5 @@ namespace Carworld.Controllers
             }
             return View();
         }
-
-
     }
 }

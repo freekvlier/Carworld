@@ -6,7 +6,7 @@ using FactoryDAL;
 
 namespace Logic
 {
-    class UserCollection
+    public class UserCollection
     {
         public List<User> GetAll()
         {
@@ -66,6 +66,11 @@ namespace Logic
             var getUser = UserFactory.GetCollectionDAL().Get(id);
             User user = new User(getUser.Id, getUser.Email, getUser.Username, getUser.Password);
             return user;
+        }
+
+        public int GetId(string username, string password)
+        {
+            return UserFactory.GetCollectionDAL().GetId(username, password);
         }
     }
 }

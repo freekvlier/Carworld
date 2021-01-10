@@ -7,6 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Logic;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Controllers
 {
@@ -102,6 +106,36 @@ namespace Carworld.Controllers
             return View(getCars());
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string username, string password, string url)
+        {
+            int userId = new UserCollection().GetId(username, password);
+
+            if (userId >= 0)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, username)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, "CarworldIdentity");
+                HttpContext.Session.SetString("Username", username);
+                HttpContext.Session.SetInt32("UserId", userId);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                //return Redirect(url == null ? "/Home" : url);
+                return Redirect("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

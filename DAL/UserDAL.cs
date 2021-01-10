@@ -161,5 +161,43 @@ namespace DAL
             }
             return true;
         }
+
+        public int GetId(string username, string password)
+        {
+            int userId;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT Id FROM Users WHERE Username = (@Username) AND Password = (@Password)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Username", username);
+                        command.Parameters.AddWithValue("@Password", password);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            reader.Read();
+                            try
+                            {
+                                userId = reader.GetInt32(0);
+                            }
+                            catch (Exception)
+                            {
+                                userId = -1;
+                            }
+                           
+                        }
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                userId = -1;
+                Console.WriteLine(e);
+            }
+            return userId;
+        }
     }
 }

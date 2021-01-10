@@ -7,6 +7,7 @@ using Carworld.Models;
 using Logic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Carworld.Controllers
 {
@@ -111,6 +112,7 @@ namespace Carworld.Controllers
             return View(getCar(id));
         }
 
+        [Authorize]
         [Route("/[action]")]
         public IActionResult Edit(int id)
         {
@@ -121,6 +123,7 @@ namespace Carworld.Controllers
             return View(getCar(id));
         }
 
+        [Authorize]
         [HttpPost]
         [Route("/[action]")]
         public IActionResult Edit(int id, CarModel car)
@@ -155,11 +158,13 @@ namespace Carworld.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult Delete(int id)
         {
             return View(getCar(id));
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Delete(CarModel car)
         {
