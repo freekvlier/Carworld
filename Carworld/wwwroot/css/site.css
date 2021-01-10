@@ -82,6 +82,7 @@ body {
 .imageCard {
     height: 200px;
     margin: 0;
+    overflow: hidden;
 }
 
 .price {

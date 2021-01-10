@@ -57,7 +57,7 @@ namespace Logic
             return carList;
         }
 
-        public bool Create(Car carinput)
+        public int Create(Car carinput)
         {
             var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
             var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
@@ -80,14 +80,15 @@ namespace Logic
                 MadeByUser = carinput.MadeByUser
             };
 
-            if (CarFactoryDAL.GetCollectionDAL().Create(carDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //if (CarFactoryDAL.GetCollectionDAL().Create(carDTO))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            return CarFactoryDAL.GetCollectionDAL().Create(carDTO);
         }
 
         public bool Delete(int Id)

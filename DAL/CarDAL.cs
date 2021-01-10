@@ -11,13 +11,14 @@ namespace DAL
     {
         private string sqlConnectionString = "Server=mssql.fhict.local;Database=dbi454449;User Id=dbi454449;Password=454449ICT;";
 
-        public bool Create(CarDTO car)
+        public int Create(CarDTO car)
         {
+            int id;
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "INSERT INTO Cars (BrandId, Model, Year, Price, Horsepower, Torque, Acceleration, Topspeed, CarClassId, FuelId, FuelConsumption, MadeByUser)" +
+                    string sql = "INSERT INTO Cars (BrandId, Model, Year, Price, Horsepower, Torque, Acceleration, Topspeed, CarClassId, FuelId, FuelConsumption, MadeByUser) Output Inserted.Id " +
                                  " VALUES (@BrandId, @Model, @Year, @Price, @Horsepower, @Torque, @Acceleration, @Topspeed, @CarClassId, @FuelId, @FuelConsumption, @MadeByUser)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -34,9 +35,10 @@ namespace DAL
                         command.Parameters.AddWithValue("@FuelId", car.FuelId);
                         command.Parameters.AddWithValue("@FuelConsumption", car.FuelConsumption);
                         command.Parameters.AddWithValue("@MadeByUser", car.MadeByUser);
-                        if (command.ExecuteNonQuery() < 1)
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            return false;
+                            reader.Read();
+                            id = reader.GetInt32(0);
                         }
                         connection.Close();
                     }
@@ -45,9 +47,9 @@ namespace DAL
             catch (SqlException e)
             {
                 Console.WriteLine(e);
-                return false;
+                id = -1;
             }
-            return true;
+            return id;
         }
 
         public bool Delete(int Id)

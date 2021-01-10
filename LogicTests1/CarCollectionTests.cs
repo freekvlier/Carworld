@@ -34,7 +34,7 @@ namespace Logic.Tests
         {
             Car car = new Car(2, "BMW", "Model", 2000, 200, 300, 250, 2, 150, "Sport", "Benzine", 2, 2);
             bool actual = false;
-            if(new CarCollection().Create(car))
+            if(new CarCollection().Create(car) > 0)
             {
                 actual = true;
             }

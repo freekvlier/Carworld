@@ -5,11 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Carworld.Models;
 using Logic;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Carworld.Controllers
 {
     public class SelectedCarController : Controller
     {
+        private readonly IWebHostEnvironment envi;
         //Methods 
         private List<CarModel> getCars()
         {
@@ -94,6 +97,11 @@ namespace Carworld.Controllers
             }
             return fuels;
         }
+
+        public SelectedCarController(IWebHostEnvironment _environment)
+        {
+            envi = _environment;
+        }
         //End methods
 
 
@@ -157,6 +165,12 @@ namespace Carworld.Controllers
         {
             if (new CarCollection().Delete(car.Id))
             {
+                //Delete Image
+                string uploadsFolder = Path.Combine(envi.WebRootPath, "Images");
+                string fileName = car.Id.ToString() + ".jpg";
+                string filePath = Path.Combine(uploadsFolder, fileName);
+                System.IO.File.Delete(filePath);
+
                 return RedirectToAction("Index", "Home");
             }
             return View();

@@ -47,7 +47,7 @@ namespace Carworld.Controllers
             return fuels;
         }
 
-        private bool createCar(CarModel car)
+        private int createCar(CarModel car)
         {
             Car newCar = new Car()
             {
@@ -66,11 +66,7 @@ namespace Carworld.Controllers
                 MadeByUser = car.MadeByUser,
             };
 
-            if(!new CarCollection().Create(newCar))
-            {
-                return false;
-            }
-            return true;
+            return new CarCollection().Create(newCar);
         }
 
         public AddCarController(IWebHostEnvironment _environment)
@@ -120,24 +116,25 @@ namespace Carworld.Controllers
                 MadeByUser = car.MadeByUser,
             };
 
-            //Image Upload
-            string uploadsFolder = Path.Combine(envi.WebRootPath, "Images");
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + car.Image.FileName;
-            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-            using (var filestream = new FileStream(filePath, FileMode.Create))
-            {
-                car.Image.CopyTo(filestream);
-            }
 
-            if (createCar(createdCar))
+            int createdCarId = createCar(createdCar);
+            if (createdCarId > 0)
             {
                 TempData.Add("Success", "Car has succesfully been uploaded to database");
+
+                //Image Upload
+                string uploadsFolder = Path.Combine(envi.WebRootPath, "Images");
+                string fileName = createdCarId.ToString() + ".jpg";
+                string filePath = Path.Combine(uploadsFolder, fileName);
+                using (var filestream = new FileStream(filePath, FileMode.Create))
+                {
+                    car.Image.CopyTo(filestream);
+                }
             }
             else
             {
                 TempData.Add("Alert", "Something went wrong uploading data to the server");
             }
-            
             return View();
         }
 
