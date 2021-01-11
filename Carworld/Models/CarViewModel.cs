@@ -24,5 +24,7 @@ namespace Carworld.Models
 
         public string DisplayFuel { get; set; }
         public IFormFile Image { get; set; }
+        public bool Favorite { get; set; }
+
     }
 }

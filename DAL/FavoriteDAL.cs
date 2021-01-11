@@ -38,7 +38,7 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(FavoriteDTO favorite)
+        public bool Delete(int id)
         {
             try
             {
@@ -48,7 +48,36 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", favorite.Id);
+                        command.Parameters.AddWithValue("@Id", id);
+                        if (command.ExecuteNonQuery() < 1)
+                        {
+                            return false;
+                        }
+                        //reseed();
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteFromUser(int userId, int carId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "DELETE FROM Favorites WHERE UserId = (@UserId) AND CarId = (@CarId)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@UserId", userId);
+                        command.Parameters.AddWithValue("@CarId", carId);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
@@ -179,6 +208,43 @@ namespace DAL
                         command.Parameters.AddWithValue("@CarId", favorite.CarId);
                         command.Parameters.AddWithValue("@Id", favorite.Id);
                         command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckFavorite(int userId, int carId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Favorites WHERE UserId = (@UserId) AND CarId = (@CarId)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@UserId", userId);
+                        command.Parameters.AddWithValue("@CarId", carId);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            reader.Read();
+                            try
+                            {
+                                int temp = reader.GetInt32(0);
+                            }
+                            catch (Exception)
+                            {
+                                return false;
+                            }
+
+                        }
                         connection.Close();
                     }
                 }

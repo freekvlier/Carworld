@@ -8,6 +8,7 @@ using Logic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Controllers
 {
@@ -45,24 +46,50 @@ namespace Carworld.Controllers
         private CarViewModel getCar(int id)
         {
             Car getCar = new CarCollection().Get(id);
-            CarViewModel car = new CarViewModel
+            if (User.Identity.IsAuthenticated)
             {
-                Id = getCar.Id,
-                Brand = getCar.Brand,
-                Model = getCar.Model,
-                Year = getCar.Year,
-                Price = getCar.Price,
-                Horsepower = getCar.Horsepower,
-                Torque = getCar.Torque,
-                Acceleration = getCar.Acceleration,
-                Topspeed = getCar.Topspeed,
-                CarClass = getCar.CarClass,
-                Fuel = getCar.Fuel,
-                FuelConsumption = getCar.FuelConsumption,
-                MadeByUser = new UserCollection().Get(getCar.MadeByUser).Username,
-                DisplayFuel = $"Het verbruik van {getCar.Fuel}: {getCar.FuelConsumption}"
-            };
-            return car;
+                CarViewModel car = new CarViewModel
+                {
+                    Id = getCar.Id,
+                    Brand = getCar.Brand,
+                    Model = getCar.Model,
+                    Year = getCar.Year,
+                    Price = getCar.Price,
+                    Horsepower = getCar.Horsepower,
+                    Torque = getCar.Torque,
+                    Acceleration = getCar.Acceleration,
+                    Topspeed = getCar.Topspeed,
+                    CarClass = getCar.CarClass,
+                    Fuel = getCar.Fuel,
+                    FuelConsumption = getCar.FuelConsumption,
+                    MadeByUser = new UserCollection().Get(getCar.MadeByUser).Username,
+                    DisplayFuel = $"Het verbruik van {getCar.Fuel}: {getCar.FuelConsumption}",
+                    Favorite = new FavoriteCollection().CheckFavorite((int)HttpContext.Session.GetInt32("UserId"), getCar.Id)
+                };
+                return car;
+            }
+            else
+            {
+                CarViewModel car = new CarViewModel
+                {
+                    Id = getCar.Id,
+                    Brand = getCar.Brand,
+                    Model = getCar.Model,
+                    Year = getCar.Year,
+                    Price = getCar.Price,
+                    Horsepower = getCar.Horsepower,
+                    Torque = getCar.Torque,
+                    Acceleration = getCar.Acceleration,
+                    Topspeed = getCar.Topspeed,
+                    CarClass = getCar.CarClass,
+                    Fuel = getCar.Fuel,
+                    FuelConsumption = getCar.FuelConsumption,
+                    MadeByUser = new UserCollection().Get(getCar.MadeByUser).Username,
+                    DisplayFuel = $"Het verbruik van {getCar.Fuel}: {getCar.FuelConsumption}",
+                    Favorite = false
+                };
+                return car;
+            }        
         }
 
 

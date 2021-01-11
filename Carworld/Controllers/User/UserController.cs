@@ -44,23 +44,38 @@ namespace Carworld.Controllers
         }
 
         [Route("/[action]")]
-        public IActionResult AddToFavorites(int id)
+        public IActionResult AddToFavorites(int Id)
         {
             Favorite favorite = new Favorite()
             {
-                CarId = id,
+                CarId = Id,
                 UserId = (int)HttpContext.Session.GetInt32("UserId")
             };
 
             if(new FavoriteCollection().Create(favorite))
             {
-                return RedirectToAction("CarDetails", "SelectedCar");
+                return RedirectToAction("CarDetails", "SelectedCar", new { id = Id });
             }
             else
             {
                 TempData.Add("Alert", "Something went wrong adding car to favorites");
                 return RedirectToAction("CarDetails", "SelectedCar");
             }         
+        }
+
+        [Route("/[action]")]
+        public IActionResult RemoveFromFavorites(int Id)
+        {
+
+            if (new FavoriteCollection().DeleteFromUser((int)HttpContext.Session.GetInt32("UserId"), Id))
+            {
+                return RedirectToAction("CarDetails", "SelectedCar", new { id = Id });
+            }
+            else
+            {
+                TempData.Add("Alert", "Something went removing car from favorites");
+                return RedirectToAction("CarDetails", "SelectedCar");
+            }
         }
 
         public IActionResult Favorites()

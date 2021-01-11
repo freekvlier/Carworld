@@ -40,16 +40,22 @@ namespace Logic
             }
         }
 
-        public bool Delete(Favorite favorite)
+        public bool Delete(int id)
         {
-            FavoriteDTO favoriteDTO = new FavoriteDTO()
+            if (FavoriteFactoryDAL.GetCollectionDAL().Delete(id))
             {
-                Id = 0,
-                UserId = favorite.UserId,
-                CarId = favorite.CarId
-            };
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-            if (FavoriteFactoryDAL.GetCollectionDAL().Delete(favoriteDTO))
+
+        public bool DeleteFromUser(int userId, int carId)
+        {
+            if (FavoriteFactoryDAL.GetCollectionDAL().DeleteFromUser(userId, carId))
             {
                 return true;
             }
@@ -77,6 +83,11 @@ namespace Logic
             }
 
             return favoriteList;
+        }
+
+        public bool CheckFavorite(int userId, int carId)
+        {
+            return FavoriteFactoryDAL.GetCollectionDAL().CheckFavorite(userId, carId);
         }
     }
 }

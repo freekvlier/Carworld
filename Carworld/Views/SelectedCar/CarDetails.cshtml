@@ -1,4 +1,4 @@
-﻿@model Carworld.Models.CarViewModel
+﻿@model Carworld.Models.CarViewModel 
 
 @{
     ViewData["Title"] = "CarDetails";
@@ -15,10 +15,19 @@
     <div class="alert alert-danger" role="alert">@TempData["Alert"]</div>
 }
 
+
+
 <div>
     <hr />
     <img src="@("/Images/"+Model.Id+".jpg")" style="width:500px">
-    <a asp-controller="User" asp-action="AddToFavorites" asp-route-id="@Model.Id" class="btn btn-primary">Add To Favorites</a>
+    @if (Model.Favorite == true)
+    {
+        <a asp-controller="User" asp-action="RemoveFromFavorites" asp-route-id="@Model.Id" class="btn btn-primary">Remove from Favorites</a>
+    }
+    else
+    {
+        <a asp-controller="User" asp-action="AddToFavorites" asp-route-id="@Model.Id" class="btn btn-primary">Add To Favorites</a>
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Id)

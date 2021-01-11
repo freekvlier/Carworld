@@ -139,5 +139,10 @@ namespace Logic
         {
             this.MadeByUser = madeByUser;
         }
+
+        public bool Favorite(int userId)
+        {
+            return new FavoriteCollection().CheckFavorite(userId, this.Id);
+        }
     }
 }
