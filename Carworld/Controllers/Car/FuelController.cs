@@ -14,7 +14,7 @@ namespace Carworld.Controllers
 {
     public class FuelController : Controller
     {
-        public IActionResult Fuels()
+        public IActionResult Fuel()
         {
             List<FuelModel> fuels = new List<FuelModel>();
 
@@ -44,7 +44,7 @@ namespace Carworld.Controllers
 
             if (new FuelCollection().Create(newFuel))
             {
-                return RedirectToAction("Fuels");
+                return RedirectToAction("Fuel");
             }
             else
             {
@@ -75,7 +75,7 @@ namespace Carworld.Controllers
 
             if (fuel.Update())
             {
-                return RedirectToAction("Fuels");
+                return RedirectToAction("Fuel");
             }
             else
             {
@@ -100,7 +100,7 @@ namespace Carworld.Controllers
         {
             if (new FuelCollection().Delete(id))
             {
-                return RedirectToAction("Fuels");
+                return RedirectToAction("Fuel");
             }
             else
             {
