@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CarViewModel>
+﻿@model IEnumerable<CarModel>
 
 <script>
     window.onload = function () {
@@ -28,13 +28,13 @@
     <div class="filterContainer">
         <form>
             <p class="text-body">Sort:</p>
-            <input type="radio" value="Brand" name="filter" id="radioBrand" onclick="document.location='/Index?sort=Brand'" }>
+            <input type="radio" value="Brand" name="filter" id="radioBrand" onclick="document.location='/Index?selectedSortMethod=Brand'" }>
             <label>Brand (A-Z)</label><br>
-            <input type="radio" value="Price" name="filter" id="radioPrice" onclick="document.location='/Index?sort=Price'">
+            <input type="radio" value="Price" name="filter" id="radioPrice" onclick="document.location='/Index?selectedSortMethod=Price'">
             <label>Price</label><br>
-            <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?sort=Horsepower'">
+            <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?selectedSortMethod=Horsepower'">
             <label>Horsepower</label><br>
-            <input type="radio" value="Year" name="filter" id="radioYear" onclick="document.location='/Index?sort=Year'">
+            <input type="radio" value="Year" name="filter" id="radioYear" onclick="document.location='/Index?selectedSortMethod=Year'">
             <label>Year</label><br>
         </form>
     </div>
@@ -52,7 +52,7 @@
                 <a class="cardText">Acceleration: @car.Acceleration</a>
                 <a class="cardText">Horsepower: @car.Horsepower</a>
                 <a class="cardText">Torque: @car.Torque</a>
-                <a asp-controller="SelectedCar" asp-action="CarDetails" asp-route-id="@car.Id" class="btn btn-outline-secondary mt-auto">Read More</a>
+                <a asp-controller="Car" asp-action="Details" asp-route-carId="@car.Id" class="btn btn-outline-secondary mt-auto">Read More</a>
             </div>
         }
     </div>

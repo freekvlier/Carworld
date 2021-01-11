@@ -14,7 +14,8 @@ namespace Carworld.Controllers
 {
     public class FuelController : Controller
     {
-        public IActionResult Fuel()
+        //Methods
+        private List<FuelModel> getAllFuels()
         {
             List<FuelModel> fuels = new List<FuelModel>();
 
@@ -26,7 +27,62 @@ namespace Carworld.Controllers
                     Name = fuel.Name,
                 });
             }
-            return View(fuels);
+            return fuels;
+        }
+
+        private FuelModel getFuel(int fuelId)
+        {
+            Fuel databaseFuel = new FuelCollection().Get(fuelId);
+            FuelModel fuel = new FuelModel()
+            {
+                Id = databaseFuel.Id,
+                Name = databaseFuel.Name,
+            };
+            return fuel;
+        }
+
+        private bool createFuel(FuelModel fuel)
+        {
+            Fuel fuelObject = new Fuel()
+            {
+                Name = fuel.Name
+            };
+
+            if (new FuelCollection().Create(fuelObject))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool updateFuel(int fuelId, FuelModel inputFuel)
+        {
+            Fuel fuel = new FuelCollection().Get(fuelId);
+
+            fuel.SetName(inputFuel.Name);
+
+            if (fuel.Update())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool deleteFuel(int fuelId)
+        {
+            return new FuelCollection().Delete(fuelId);
+        }
+        //End Methods
+
+        public IActionResult Index()
+        {
+            return View(getAllFuels());
         }
 
         public IActionResult Create()
@@ -37,14 +93,9 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Create(FuelModel fuel)
         {
-            Fuel newFuel = new Fuel()
+            if (createFuel(fuel))
             {
-                Name = fuel.Name
-            };
-
-            if (new FuelCollection().Create(newFuel))
-            {
-                return RedirectToAction("Fuel");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -53,29 +104,17 @@ namespace Carworld.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int fuelId)
         {
-            Fuel databaseFuel = new FuelCollection().Get(id);
-            FuelModel fuel = new FuelModel()
-            {
-                Id = databaseFuel.Id,
-                Name = databaseFuel.Name,
-            };
-
-            return View(fuel);
+            return View(getFuel(fuelId));
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, FuelModel inputFuel)
+        public IActionResult Edit(int fuelId, FuelModel fuel)
         {
-            Fuel fuel = new FuelCollection().Get(id);
-
-            fuel.SetName(inputFuel.Name);
-
-
-            if (fuel.Update())
+            if (updateFuel(fuelId, fuel))
             {
-                return RedirectToAction("Fuel");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -84,23 +123,17 @@ namespace Carworld.Controllers
             }
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int fuelId)
         {
-            Fuel databaseFuel = new FuelCollection().Get(id);
-            FuelModel fuel = new FuelModel()
-            {
-                Id = databaseFuel.Id,
-                Name = databaseFuel.Name,
-            };
-            return View(fuel);
+            return View(getFuel(fuelId));
         }
 
         [HttpPost]
-        public IActionResult Delete(int id, FuelModel fuel)
+        public IActionResult Delete(int fuelId, FuelModel fuel)
         {
-            if (new FuelCollection().Delete(id))
+            if (deleteFuel(fuelId))
             {
-                return RedirectToAction("Fuel");
+                return RedirectToAction("Index");
             }
             else
             {

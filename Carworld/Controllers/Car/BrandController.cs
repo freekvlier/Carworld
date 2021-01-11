@@ -14,20 +14,79 @@ namespace Carworld.Controllers
 {
     public class BrandController : Controller
     {
-        public IActionResult Brands()
+        //Methods
+        private List<BrandModel> getAllBrands()
         {
             List<BrandModel> brands = new List<BrandModel>();
 
             foreach (var brand in new BrandCollection().GetAll())
             {
-                brands.Add(new BrandModel()
+                brands.Add(new BrandModel
                 {
                     Id = brand.Id,
                     Name = brand.Name,
                     Origin = brand.Origin
                 });
             }
-            return View(brands);
+            return brands;
+        }
+
+        private BrandModel getBrand(int brandId)
+        {
+            Brand databaseBrand = new BrandCollection().Get(brandId);
+            BrandModel brand = new BrandModel()
+            {
+                Id = databaseBrand.Id,
+                Name = databaseBrand.Name,
+                Origin = databaseBrand.Origin
+            };
+            return brand;
+        }
+
+        private bool updateBrand(int brandId, BrandModel brand)
+        {
+            Brand databaseBrand = new BrandCollection().Get(brandId);
+
+            databaseBrand.SetName(brand.Name);
+            databaseBrand.SetOrigin(brand.Origin);
+
+            if (databaseBrand.Update())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool createBrand(BrandModel brand)
+        {
+            Brand newBrand = new Brand()
+            {
+                Name = brand.Name,
+                Origin = brand.Origin
+            };
+
+            if (new BrandCollection().Create(newBrand))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool deleteBrand(int brandId)
+        {
+            return new BrandCollection().Delete(brandId);
+        }
+        //End methods
+
+        public IActionResult Index()
+        {
+            return View(getAllBrands());
         }
 
         public IActionResult Create()
@@ -38,15 +97,9 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Create(BrandModel brand)
         {
-            Brand newBrand = new Brand()
+            if (createBrand(brand))
             {
-                Name = brand.Name,
-                Origin = brand.Origin
-            };
-
-            if (new BrandCollection().Create(newBrand))
-            {
-                return RedirectToAction("Brands");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -55,31 +108,17 @@ namespace Carworld.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int brandId)
         {
-            Brand databaseBrand = new BrandCollection().Get(id);
-            BrandModel brand = new BrandModel()
-            {
-                Id = databaseBrand.Id,
-                Name = databaseBrand.Name,
-                Origin = databaseBrand.Origin
-            };
-
-            return View(brand);
+            return View(getBrand(brandId));
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, BrandModel inputBrand)
+        public IActionResult Edit(int brandId, BrandModel brand)
         {
-            Brand brand = new BrandCollection().Get(id);
-
-            brand.SetName(inputBrand.Name);
-            brand.SetOrigin(inputBrand.Origin);
-
-
-            if (brand.Update())
+            if (updateBrand(brandId, brand))
             {
-                return RedirectToAction("Brands");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -88,24 +127,17 @@ namespace Carworld.Controllers
             }
         }
 
-        public IActionResult Delete(int id)
-        {
-            Brand databaseBrand = new BrandCollection().Get(id);
-            BrandModel brand = new BrandModel()
-            {
-                Id = databaseBrand.Id,
-                Name = databaseBrand.Name,
-                Origin = databaseBrand.Origin
-            };
-            return View(brand);
+        public IActionResult Delete(int brandId)
+        {   
+            return View(getBrand(brandId));
         }
 
         [HttpPost]
-        public IActionResult Delete(int id, BrandModel brand)
+        public IActionResult Delete(int brandId, BrandModel brand)
         {
-            if (new BrandCollection().Delete(id))
+            if (deleteBrand(brandId))
             {
-                return RedirectToAction("Brands");
+                return RedirectToAction("Index");
             }
             else
             {

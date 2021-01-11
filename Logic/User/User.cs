@@ -21,6 +21,11 @@ namespace Logic
             this.Password = password;
         }
 
+        public User()
+        {
+
+        }
+
         public bool Update()
         {
             UserDTO user = new UserDTO()

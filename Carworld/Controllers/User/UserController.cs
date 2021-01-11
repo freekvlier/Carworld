@@ -16,13 +16,14 @@ namespace Carworld.Controllers
     [Authorize]
     public class UserController : Controller
     {
-        private List<CarViewModel> getFavoriteCars(int userId)
+        //Methods
+        private List<CarModel> getFavoriteCars(int userId)
         {
-            List<CarViewModel> cars = new List<CarViewModel>();
+            List<CarModel> cars = new List<CarModel>();
 
             foreach (Car car in new CarCollection().GetAllFavorites(userId))
             {
-                cars.Add(new CarViewModel
+                cars.Add(new CarModel
                 {
                     Id = car.Id,
                     Brand = car.Brand,
@@ -37,56 +38,89 @@ namespace Carworld.Controllers
                     Fuel = car.Fuel,
                     FuelConsumption = car.FuelConsumption,
                     MadeByUser = new UserCollection().Get(car.MadeByUser).Username,
-                    DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
                 });
             }
             return cars;
         }
 
-        [Route("/[action]")]
-        public IActionResult AddToFavorites(int Id)
+        private int getCurrentLoggedInUserId()
         {
-            Favorite favorite = new Favorite()
+            return (int)HttpContext.Session.GetInt32("UserId");
+        }
+
+        private bool addCarToFavorites(int carId)
+        {
+            Favorite favoriteObject = new Favorite()
             {
-                CarId = Id,
-                UserId = (int)HttpContext.Session.GetInt32("UserId")
+                CarId = carId,
+                UserId = getCurrentLoggedInUserId()
             };
 
-            if(new FavoriteCollection().Create(favorite))
+            if (new FavoriteCollection().Create(favoriteObject))
             {
-                return RedirectToAction("CarDetails", "SelectedCar", new { id = Id });
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool removeCarFromFavorites(int favoriteId)
+        {
+            if (new FavoriteCollection().DeleteFromUser(getCurrentLoggedInUserId(), favoriteId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private async Task clearCurrentSession()
+        {
+            HttpContext.Session.Clear();
+            await HttpContext.SignOutAsync();
+        }
+        //End Methods
+
+        [Route("/[action]")]
+        public IActionResult AddToFavorites(int carId)
+        {
+            if(addCarToFavorites(carId))
+            {
+                return RedirectToAction("Details", "Car", new { carId = carId });
             }
             else
             {
                 TempData.Add("Alert", "Something went wrong adding car to favorites");
-                return RedirectToAction("CarDetails", "SelectedCar");
+                return RedirectToAction("Details", "Car", new { carId = carId });
             }         
         }
 
         [Route("/[action]")]
-        public IActionResult RemoveFromFavorites(int Id)
+        public IActionResult RemoveFromFavorites(int favoriteId)
         {
-
-            if (new FavoriteCollection().DeleteFromUser((int)HttpContext.Session.GetInt32("UserId"), Id))
+            if (removeCarFromFavorites(favoriteId))
             {
-                return RedirectToAction("CarDetails", "SelectedCar", new { id = Id });
+                return RedirectToAction("Details", "car", new { carId = favoriteId });
             }
             else
             {
                 TempData.Add("Alert", "Something went removing car from favorites");
-                return RedirectToAction("CarDetails", "SelectedCar");
+                return RedirectToAction("Details", "Car");
             }
         }
 
         public IActionResult Favorites()
         {
-            return View(getFavoriteCars((int)HttpContext.Session.GetInt32("UserId")));
+            return View(getFavoriteCars(getCurrentLoggedInUserId()));
         }
 
         public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.Clear();
-            await HttpContext.SignOutAsync();
+            await clearCurrentSession();
             return RedirectToAction("LoggedOut");
         }
 

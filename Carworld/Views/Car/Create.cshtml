@@ -1,4 +1,4 @@
-﻿@model Carworld.Models.CarViewModel
+﻿@model Carworld.Models.CarModel
 
 @{
     ViewData["Title"] = "AddCar";
@@ -24,7 +24,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form enctype="multipart/form-data" asp-action="Index">
+        <form enctype="multipart/form-data" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
             <label asp-for="Id" class="control-label"></label>

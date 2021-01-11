@@ -14,7 +14,8 @@ namespace Carworld.Controllers
 {
     public class CarClassController : Controller
     {
-        public IActionResult CarClasses()
+        //Methods
+        private List<CarClassModel> getAllCarClasses()
         {
             List<CarClassModel> carClasses = new List<CarClassModel>();
 
@@ -26,7 +27,62 @@ namespace Carworld.Controllers
                     Name = carClass.Name,
                 });
             }
-            return View(carClasses);
+            return carClasses;
+        }
+
+        private CarClassModel GetCarClass(int carClassId)
+        {
+            CarClass databaseCarClass = new CarClassCollection().Get(carClassId);
+            CarClassModel carClass = new CarClassModel()
+            {
+                Id = databaseCarClass.Id,
+                Name = databaseCarClass.Name
+            };
+            return carClass;
+        }
+
+        private bool createCarClass(CarClassModel carClass)
+        {
+            CarClass carClassObject = new CarClass()
+            {
+                Name = carClass.Name
+            };
+
+            if (new CarClassCollection().Create(carClassObject))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool updateCarClass(int carClassId, CarClassModel carClass)
+        {
+            CarClass databaseCarClass = new CarClassCollection().Get(carClassId);
+
+            databaseCarClass.SetName(carClass.Name);
+
+            if (databaseCarClass.Update())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool deleteCarClass(int carClassId)
+        {
+            return new CarClassCollection().Delete(carClassId);
+        }
+        //End methods
+
+        public IActionResult Index()
+        {
+            return View(getAllCarClasses());
         }
 
         public IActionResult Create()
@@ -37,14 +93,9 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Create(CarClassModel carClass)
         {
-            CarClass newCarClass = new CarClass()
+            if (createCarClass(carClass))
             {
-                Name = carClass.Name
-            };
-
-            if (new CarClassCollection().Create(newCarClass))
-            {
-                return RedirectToAction("CarClasses");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -53,29 +104,17 @@ namespace Carworld.Controllers
             }
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int carClassId)
         {
-            CarClass databaseCarClass = new CarClassCollection().Get(id);
-            CarClassModel carClass = new CarClassModel()
-            {
-                Id = databaseCarClass.Id,
-                Name = databaseCarClass.Name
-            };
-
-            return View(carClass);
+            return View(GetCarClass(carClassId));
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, CarClassModel inputCarClass)
+        public IActionResult Edit(int carClassId, CarClassModel carClass)
         {
-            CarClass carClass = new CarClassCollection().Get(id);
-
-            carClass.SetName(inputCarClass.Name);
-
-
-            if (carClass.Update())
+            if (updateCarClass(carClassId, carClass))
             {
-                return RedirectToAction("CarClasses");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -84,23 +123,17 @@ namespace Carworld.Controllers
             }
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int carClassId)
         {
-            CarClass databaseCarClass = new CarClassCollection().Get(id);
-            CarClassModel carClass = new CarClassModel()
-            {
-                Id = databaseCarClass.Id,
-                Name = databaseCarClass.Name,
-            };
-            return View(carClass);
+            return View(GetCarClass(carClassId));
         }
 
         [HttpPost]
-        public IActionResult Delete(int id, CarClassModel carClass)
+        public IActionResult Delete(int carClassId, CarClassModel carClass)
         {
-            if (new CarClassCollection().Delete(id))
+            if (deleteCarClass(carClassId))
             {
-                return RedirectToAction("CarClasses");
+                return RedirectToAction("Index");
             }
             else
             {

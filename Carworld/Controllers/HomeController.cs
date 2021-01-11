@@ -24,13 +24,18 @@ namespace Carworld.Controllers
         }
 
         //Methods 
-        private List<CarViewModel> getCars()
+        private string getUsername(int userId)
         {
-            List<CarViewModel> cars = new List<CarViewModel>();
+            return new UserCollection().Get(userId).Username;
+        }
+
+        private List<CarModel> getCars()
+        {
+            List<CarModel> cars = new List<CarModel>();
 
             foreach (Car car in new CarCollection().GetAll())
             {
-                cars.Add(new CarViewModel
+                cars.Add(new CarModel
                 {
                     Id = car.Id,
                     Brand = car.Brand,
@@ -45,19 +50,18 @@ namespace Carworld.Controllers
                     Fuel = car.Fuel,
                     FuelConsumption = car.FuelConsumption,
                     MadeByUser = new UserCollection().Get(car.MadeByUser).Username,
-                    DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
                 });
             }
             return cars;
         }
 
-        private List<CarViewModel> getCarsSorted(string property)
+        private List<CarModel> getCarsSortedByProperty(string property)
         {
-            List<CarViewModel> cars = new List<CarViewModel>();
+            List<CarModel> cars = new List<CarModel>();
 
             foreach (Car car in new CarCollection().GetAllSorted(property))
             {
-                cars.Add(new CarViewModel
+                cars.Add(new CarModel
                 {
                     Id = car.Id,
                     Brand = car.Brand,
@@ -71,12 +75,87 @@ namespace Carworld.Controllers
                     CarClass = car.CarClass,
                     Fuel = car.Fuel,
                     FuelConsumption = car.FuelConsumption,
-                    MadeByUser = new UserCollection().Get(car.MadeByUser).Username,
-                    DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
+                    MadeByUser = getUsername(car.MadeByUser),
                 });
             }
             return cars;
         }
+
+        private void setSessionVariables(User user)
+        {
+            HttpContext.Session.SetString("Username", user.Username);
+            HttpContext.Session.SetInt32("UserId", user.Id);
+        }
+
+        private bool loginUser(UserModel user)
+        {
+            User userObject = new User()
+            {
+                Username = user.Username,
+                Password = user.Password
+            };
+
+            user.Id = new UserCollection().GetId(userObject);
+
+            if (user.Id >= 0)
+            {
+                setSessionVariables(userObject);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task generateAuthenticationCookie(UserModel user)
+        {
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Username)
+                };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "CarworldIdentity");
+  
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+        }
+
+        private bool registerUser(UserRegisterModel user)
+        {
+            User registerUser = new User()
+            {
+                Email = user.Email,
+                Username = user.Username,
+                Password = user.Password
+            };
+
+            if (new UserCollection().Create(registerUser))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
+        private List<CarModel> getCarsSortedByPropertyString(string property)
+        {
+            switch (property)
+            {
+                case "Brand":
+                    return getCarsSortedByProperty("Brand");
+                case "Price":
+                    return getCarsSortedByProperty("Price");
+                case "Horsepower":
+                    return getCarsSortedByProperty("Horsepower");
+                case "Year":
+                    return getCarsSortedByProperty("Year");
+                default:
+                    return getCars();
+            }
+        }
+        //End methods
 
         public IActionResult Index()
         {
@@ -84,26 +163,10 @@ namespace Carworld.Controllers
         }
 
         [Route("/[action]")]
-        public IActionResult Index(string sort)
+        public IActionResult Index(string selectedSortMethod)
         {
-            switch (sort)
-            {
-                case "":
-                    return View(getCars());
-                case "Brand":
-                    ViewBag.Filter = "Brand";
-                    return View(getCarsSorted("Brand"));
-                case "Price":
-                    ViewBag.Filter = "Price";
-                    return View(getCarsSorted("Price"));
-                case "Horsepower":
-                    ViewBag.Filter = "Horsepower";
-                    return View(getCarsSorted("Horsepower"));
-                case "Year":
-                    ViewBag.Filter = "Year";
-                    return View(getCarsSorted("Year"));
-            }
-            return View(getCars());
+            ViewBag.Filter = selectedSortMethod;
+            return View(getCarsSortedByPropertyString(selectedSortMethod));
         }
 
         public IActionResult Login()
@@ -114,24 +177,9 @@ namespace Carworld.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserModel user, string url)
         {
-            User loginUser = new User(-1, null, user.Username, user.Password);
-
-            int userId = new UserCollection().GetId(loginUser);
-
-            if (userId >= 0)
+            if (loginUser(user))
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.Username)
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, "CarworldIdentity");
-                HttpContext.Session.SetString("Username", user.Username);
-                HttpContext.Session.SetInt32("UserId", userId);
-
-                //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties() { IsPersistent = false, ExpiresUtc = DateTime.Now.AddMinutes(20)});
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                //return Redirect(url == null ? "/Home" : url);
+                await generateAuthenticationCookie(user);
                 return Redirect("Index");
             }
             else
@@ -148,11 +196,8 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Register(UserRegisterModel user)
         {
-            User registerUser = new User(-1, user.Email, user.Username, user.Password);
-
-            if (new UserCollection().Create(registerUser))
+            if (registerUser(user))
             {
-                TempData.Add("Success", "Registered succesfully");
                 return RedirectToAction("Login");
             }
             else
