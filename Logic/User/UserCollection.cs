@@ -25,7 +25,7 @@ namespace Logic
         {
             UserDTO userDTO = new UserDTO()
             {
-                Id = user.Id,
+                Id = -1,
                 Email = user.Email,
                 Username = user.Username,
                 Password = user.Password
@@ -68,9 +68,14 @@ namespace Logic
             return user;
         }
 
-        public int GetId(string username, string password)
+        public int GetId(User user)
         {
-            return UserFactory.GetCollectionDAL().GetId(username, password);
+            UserDTO userDTO = new UserDTO()
+            {
+                Username = user.Username,
+                Password = user.Password
+            };
+            return UserFactory.GetCollectionDAL().GetId(userDTO);
         }
     }
 }

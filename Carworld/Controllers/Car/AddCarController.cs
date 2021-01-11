@@ -8,6 +8,7 @@ using Logic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Controllers
 {
@@ -49,7 +50,7 @@ namespace Carworld.Controllers
             return fuels;
         }
 
-        private int createCar(CarModel car)
+        private int createCar(CarViewModel car)
         {
             Car newCar = new Car()
             {
@@ -65,7 +66,7 @@ namespace Carworld.Controllers
                 CarClass = car.CarClass,
                 Fuel = car.Fuel,
                 FuelConsumption = car.FuelConsumption,
-                MadeByUser = car.MadeByUser,
+                MadeByUser = (int)HttpContext.Session.GetInt32("UserId"),
             };
 
             return new CarCollection().Create(newCar);
@@ -90,7 +91,7 @@ namespace Carworld.Controllers
 
         [Route("/User/[action]")]
         [HttpPost]
-        public IActionResult AddCar(CarModel car)
+        public IActionResult AddCar(CarViewModel car)
         {
             var brands = GetBrands();
             var fuels = GetFuels();
@@ -101,7 +102,7 @@ namespace Carworld.Controllers
             ViewBag.Fuels = fuels;
             ViewBag.CarClasses = carClasses;
 
-            CarModel createdCar = new CarModel()
+            CarViewModel createdCar = new CarViewModel()
             {
                 Id = car.Id,
                 Brand = car.Brand,
@@ -115,7 +116,7 @@ namespace Carworld.Controllers
                 CarClass = car.CarClass,
                 Fuel = car.Fuel,
                 FuelConsumption = car.FuelConsumption,
-                MadeByUser = car.MadeByUser,
+                MadeByUser = null,
             };
 
 

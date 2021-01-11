@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Models
 {
-    public class CarModel
+    public class CarViewModel
     {
         public int Id { get; set; }
         public string Brand { get; set; }
@@ -20,7 +20,7 @@ namespace Carworld.Models
         public string CarClass { get; set; }
         public string Fuel { get; set; }
         public double FuelConsumption { get; set; }
-        public int MadeByUser { get; set; }
+        public string MadeByUser { get; set; }
 
         public string DisplayFuel { get; set; }
         public IFormFile Image { get; set; }

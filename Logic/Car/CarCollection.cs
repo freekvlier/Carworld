@@ -116,5 +116,26 @@ namespace Logic
                                 fuels[getCar.FuelId].Name, getCar.FuelConsumption, getCar.MadeByUser);
             return car;
         }
+
+        public List<Car> GetAllFavorites(int userId)
+        {
+            List<Car> carList = new List<Car>();
+            var favorites = FavoriteFactoryDAL.GetCollectionDAL().GetAllByUserId(userId);
+
+            if (favorites != null)
+            {
+                foreach (var favorite in favorites)
+                {
+                    carList.Add(Get(favorite.CarId));
+                }
+            }
+            else
+            {
+                Console.WriteLine("ERROR: Can't connect to database");
+            }
+
+            return carList;
+        }
+
     }
 }

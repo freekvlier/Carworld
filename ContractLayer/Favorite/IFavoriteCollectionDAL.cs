@@ -10,5 +10,6 @@ namespace ContractLayer
         bool Delete(FavoriteDTO favorite);
         List<FavoriteDTO> GetAll();
         FavoriteDTO Get(int Id);
+        List<FavoriteDTO> GetAllByUserId(int userId);
     }
 }

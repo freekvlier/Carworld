@@ -1,4 +1,4 @@
-﻿@model Carworld.Models.CarModel
+﻿@model Carworld.Models.CarViewModel
 
 @{
     ViewData["Title"] = "AddCar";
@@ -104,21 +104,17 @@
                 <input asp-for="FuelConsumption" class="form-control" />
                 <span asp-validation-for="FuelConsumption" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="MadeByUser" class="control-label"></label>
                 <input asp-for="MadeByUser" class="form-control" />
                 <span asp-validation-for="MadeByUser" class="text-danger"></span>
-            </div>
-            <div class="custom-file">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" type="file" class="custom-file-input" id="imageInput"/>
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="Imagefile" class="form-control" />
-                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>*@
+            <div class="custom-file">
+                <input asp-for="Image" type="file" class="custom-file-input" id="validatedCustomFile" required/>
+                <label asp-for="Image" for="validatedCustomFile" class="custom-file-label">Choose Image</label>
+                <span asp-validation-for="Image" class="text-danger"></span>
+                <br />
+            </div>
             <div class="form-group">
                 <input asp-page-handler="Upload" type="submit" value="Add" class="btn btn-primary" />
             </div>

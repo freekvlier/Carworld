@@ -24,13 +24,13 @@ namespace Carworld.Controllers
         }
 
         //Methods 
-        private List<CarModel> getCars()
+        private List<CarViewModel> getCars()
         {
-            List<CarModel> cars = new List<CarModel>();
+            List<CarViewModel> cars = new List<CarViewModel>();
 
             foreach (Car car in new CarCollection().GetAll())
             {
-                cars.Add(new CarModel
+                cars.Add(new CarViewModel
                 {
                     Id = car.Id,
                     Brand = car.Brand,
@@ -44,20 +44,20 @@ namespace Carworld.Controllers
                     CarClass = car.CarClass,
                     Fuel = car.Fuel,
                     FuelConsumption = car.FuelConsumption,
-                    MadeByUser = car.MadeByUser,
+                    MadeByUser = new UserCollection().Get(car.MadeByUser).Username,
                     DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
                 });
             }
             return cars;
         }
 
-        private List<CarModel> getCarsSorted(string property)
+        private List<CarViewModel> getCarsSorted(string property)
         {
-            List<CarModel> cars = new List<CarModel>();
+            List<CarViewModel> cars = new List<CarViewModel>();
 
             foreach (Car car in new CarCollection().GetAllSorted(property))
             {
-                cars.Add(new CarModel
+                cars.Add(new CarViewModel
                 {
                     Id = car.Id,
                     Brand = car.Brand,
@@ -71,7 +71,7 @@ namespace Carworld.Controllers
                     CarClass = car.CarClass,
                     Fuel = car.Fuel,
                     FuelConsumption = car.FuelConsumption,
-                    MadeByUser = car.MadeByUser,
+                    MadeByUser = new UserCollection().Get(car.MadeByUser).Username,
                     DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
                 });
             }
@@ -112,27 +112,52 @@ namespace Carworld.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password, string url)
+        public async Task<IActionResult> Login(UserModel user, string url)
         {
-            int userId = new UserCollection().GetId(username, password);
+            User loginUser = new User(-1, null, user.Username, user.Password);
+
+            int userId = new UserCollection().GetId(loginUser);
 
             if (userId >= 0)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, user.Username)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, "CarworldIdentity");
-                HttpContext.Session.SetString("Username", username);
+                HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetInt32("UserId", userId);
 
+                //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties() { IsPersistent = false, ExpiresUtc = DateTime.Now.AddMinutes(20)});
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                 //return Redirect(url == null ? "/Home" : url);
                 return Redirect("Index");
             }
             else
             {
+                return View();
+            }
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(UserRegisterModel user)
+        {
+            User registerUser = new User(-1, user.Email, user.Username, user.Password);
+
+            if (new UserCollection().Create(registerUser))
+            {
+                TempData.Add("Success", "Registered succesfully");
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                TempData.Add("Alert", "Something went wrong uploading data to the server");
                 return View();
             }
         }

@@ -10,6 +10,6 @@ namespace ContractLayer
         bool Delete(UserDTO user);
         List<UserDTO> GetAll();
         UserDTO Get(int Id);
-        int GetId(string username, string password);
+        int GetId(UserDTO user);
     }
 }

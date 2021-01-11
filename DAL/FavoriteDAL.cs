@@ -20,7 +20,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", favorite.UserId);
+                        command.Parameters.AddWithValue("@UserId", favorite.UserId);
                         command.Parameters.AddWithValue("@CarId", favorite.CarId);
                         if (command.ExecuteNonQuery() < 1)
                         {
@@ -95,6 +95,42 @@ namespace DAL
             return favorite;
         }
 
+
+        public List<FavoriteDTO> GetAllByUserId(int userId)
+        {
+            List<FavoriteDTO> favorites = new List<FavoriteDTO>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Favorites WHERE UserId = (@UserId)";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@UserId", userId);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                FavoriteDTO favorite = new FavoriteDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    UserId = reader.GetInt32(1),
+                                    CarId = reader.GetInt32(2)
+                                };
+                                favorites.Add(favorite);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+            }
+            return favorites;
+        }
+
         public List<FavoriteDTO> GetAll()
         {
             List<FavoriteDTO> favorites = new List<FavoriteDTO>();
@@ -102,7 +138,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "SELECT * FROM Fuel";
+                    string sql = "SELECT * FROM Favorites";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();

@@ -65,5 +65,18 @@ namespace Logic
             Favorite favorite = new Favorite(favoriteGet.Id, favoriteGet.UserId, favoriteGet.CarId);
             return favorite;
         }
+
+        public List<Favorite> GetAllByUserId(int userId)
+        {
+            List<Favorite> favoriteList = new List<Favorite>();
+            var favorites = FavoriteFactoryDAL.GetCollectionDAL().GetAllByUserId(userId);
+
+            foreach (var favorite in favorites)
+            {
+                favoriteList.Add(new Favorite(favorite.Id, favorite.UserId, favorite.CarId));
+            }
+
+            return favoriteList;
+        }
     }
 }

@@ -15,13 +15,13 @@ namespace Carworld.Controllers
     {
         private readonly IWebHostEnvironment envi;
         //Methods 
-        private List<CarModel> getCars()
+        private List<CarViewModel> getCars()
         {
-            List<CarModel> cars = new List<CarModel>();
+            List<CarViewModel> cars = new List<CarViewModel>();
 
             foreach (Car car in new CarCollection().GetAll())
             {
-                cars.Add(new CarModel
+                cars.Add(new CarViewModel
                 {
                     Id = car.Id,
                     Brand = car.Brand,
@@ -35,17 +35,17 @@ namespace Carworld.Controllers
                     CarClass = car.CarClass,
                     Fuel = car.Fuel,
                     FuelConsumption = car.FuelConsumption,
-                    MadeByUser = car.MadeByUser,
+                    MadeByUser = new UserCollection().Get(car.MadeByUser).Username,
                     DisplayFuel = $"Het verbruik van {car.Fuel}: {car.FuelConsumption}"
                 });
             }
             return cars;
         }
 
-        private CarModel getCar(int id)
+        private CarViewModel getCar(int id)
         {
             Car getCar = new CarCollection().Get(id);
-            CarModel car = new CarModel
+            CarViewModel car = new CarViewModel
             {
                 Id = getCar.Id,
                 Brand = getCar.Brand,
@@ -59,7 +59,7 @@ namespace Carworld.Controllers
                 CarClass = getCar.CarClass,
                 Fuel = getCar.Fuel,
                 FuelConsumption = getCar.FuelConsumption,
-                MadeByUser = getCar.MadeByUser,
+                MadeByUser = new UserCollection().Get(getCar.MadeByUser).Username,
                 DisplayFuel = $"Het verbruik van {getCar.Fuel}: {getCar.FuelConsumption}"
             };
             return car;
@@ -126,7 +126,7 @@ namespace Carworld.Controllers
         [Authorize]
         [HttpPost]
         [Route("/[action]")]
-        public IActionResult Edit(int id, CarModel car)
+        public IActionResult Edit(int id, CarViewModel car)
         {
             ViewBag.Brands = GetBrands();
             ViewBag.Fuels = GetFuels();
@@ -166,7 +166,7 @@ namespace Carworld.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Delete(CarModel car)
+        public IActionResult Delete(CarViewModel car)
         {
             if (new CarCollection().Delete(car.Id))
             {

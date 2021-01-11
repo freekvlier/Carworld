@@ -19,6 +19,11 @@ namespace Logic
             this.CarId = carId;
         }
 
+        public Favorite()
+        {
+
+        }
+
         public bool Update()
         {
             FavoriteDTO favoriteDTO = new FavoriteDTO

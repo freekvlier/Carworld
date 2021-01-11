@@ -21,9 +21,9 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", user.Username);
+                        command.Parameters.AddWithValue("@Email", user.Email);
                         command.Parameters.AddWithValue("@Username", user.Username);
-                        command.Parameters.AddWithValue("@Password", user.Username);
+                        command.Parameters.AddWithValue("@Password", user.Password);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
@@ -162,7 +162,7 @@ namespace DAL
             return true;
         }
 
-        public int GetId(string username, string password)
+        public int GetId(UserDTO user)
         {
             int userId;
             try
@@ -173,8 +173,8 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Username", username);
-                        command.Parameters.AddWithValue("@Password", password);
+                        command.Parameters.AddWithValue("@Username", user.Username);
+                        command.Parameters.AddWithValue("@Password", user.Password);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             reader.Read();
