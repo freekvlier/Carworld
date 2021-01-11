@@ -17,7 +17,7 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "INSERT INTO Brand (Name, Origin) VALUES (@Name, @Origin)";
+                    string sql = "INSERT INTO Brands (Name, Origin) VALUES (@Name, @Origin)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
@@ -39,17 +39,17 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(BrandDTO brand)
+        public bool Delete(int id)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "DELETE FROM Brands WHERE Name = (@Name)";
+                    string sql = "DELETE FROM Brands WHERE Id = (@Id)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Name", brand.Name);
+                        command.Parameters.AddWithValue("@Id", id);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             return false;
@@ -139,12 +139,12 @@ namespace DAL
             {
                 using (SqlConnection connection = new SqlConnection(sqlConnectionString))
                 {
-                    string sql = "UPDATE Brands SET Name = (@Name), Origin = @Origin WHERE Id = (@Id)";
+                    string sql = "UPDATE Brands SET Name = (@Name), Origin = (@Origin) WHERE Id = (@Id)";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
                         command.Parameters.AddWithValue("@Name", brand.Name);
-                        command.Parameters.AddWithValue("@Name", brand.Origin);
+                        command.Parameters.AddWithValue("@Origin", brand.Origin);
                         command.Parameters.AddWithValue("@Id", brand.Id);
                         command.ExecuteNonQuery();
                         connection.Close();

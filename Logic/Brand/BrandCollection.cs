@@ -39,16 +39,9 @@ namespace Logic
             }
         }
 
-        public bool Delete(Brand brand)
+        public bool Delete(int id)
         {
-            BrandDTO brandDTO = new BrandDTO()
-            {
-                Id = brand.Id,
-                Name = brand.Name,
-                Origin = brand.Origin
-            };
-
-            if (BrandFactoryDAL.GetCollectionDAL().Delete(brandDTO))
+            if (BrandFactoryDAL.GetCollectionDAL().Delete(id))
             {
                 return true;
             }

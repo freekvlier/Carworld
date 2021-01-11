@@ -39,15 +39,9 @@ namespace Logic
             }
         }
 
-        public bool Delete(Fuel fuel)
+        public bool Delete(int id)
         {
-            FuelDTO fuelDTO = new FuelDTO()
-            {
-                Id = 0,
-                Name = fuel.Name,
-            };
-
-            if (FuelFactoryDAL.GetCollectionDAL().Delete(fuelDTO))
+            if (FuelFactoryDAL.GetCollectionDAL().Delete(id))
             {
                 return true;
             }

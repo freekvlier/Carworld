@@ -89,7 +89,7 @@ namespace DAL.Tests
             var allClassesBefore = CarClassFactoryDAL.GetCollectionDAL().GetAll();
 
             //Act
-            CarClassFactoryDAL.GetCollectionDAL().Delete(carclass);
+            //CarClassFactoryDAL.GetCollectionDAL().Delete(carclass);
 
             //Assert
             var allClassesAfter = CarClassFactoryDAL.GetCollectionDAL().GetAll();

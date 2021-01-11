@@ -7,7 +7,7 @@ namespace ContractLayer
     public interface IFuelCollectionDAL
     {
         bool Create(FuelDTO fuel);
-        bool Delete(FuelDTO fuel);
+        bool Delete(int id);
         List<FuelDTO> GetAll();
         FuelDTO Get(int Id);
     }

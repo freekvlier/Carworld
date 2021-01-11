@@ -17,6 +17,11 @@ namespace Logic
             this.Name = name;
         }
 
+        public Fuel()
+        {
+
+        }
+
         public bool Update()
         {
             FuelDTO fuelDTO = new FuelDTO

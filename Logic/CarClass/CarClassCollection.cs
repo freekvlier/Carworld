@@ -39,15 +39,9 @@ namespace Logic
             }
         }
 
-        public bool Delete(CarClass carclass)
+        public bool Delete(int id)
         {
-            CarClassDTO carclassDTO = new CarClassDTO()
-            {
-                Id = carclass.Id,
-                Name = carclass.Name,
-            };
-
-            if (CarClassFactoryDAL.GetCollectionDAL().Delete(carclassDTO))
+            if (CarClassFactoryDAL.GetCollectionDAL().Delete(id))
             {
                 return true;
             }

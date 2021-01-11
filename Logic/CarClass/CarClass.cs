@@ -17,6 +17,11 @@ namespace Logic
             this.Name = name;
         }
 
+        public CarClass()
+        {
+
+        }
+
         public bool Update()
         {
             CarClassDTO carClassDTO = new CarClassDTO

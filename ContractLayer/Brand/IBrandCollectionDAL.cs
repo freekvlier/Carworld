@@ -7,7 +7,7 @@ namespace ContractLayer
     public interface IBrandCollectionDAL
     {
         bool Create(BrandDTO brand);
-        bool Delete(BrandDTO brand);
+        bool Delete(int id);
         List<BrandDTO> GetAll();
         BrandDTO Get(int Id);
     }

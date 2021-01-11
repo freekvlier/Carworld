@@ -19,6 +19,11 @@ namespace Logic
             this.Origin = origin;
         }
 
+        public Brand()
+        {
+
+        }
+
         public bool Update()
         {
             BrandDTO brandDTO = new BrandDTO
