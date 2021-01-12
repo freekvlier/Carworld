@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_UI", "Carworld\Carworld_UI.csproj", "{C4B9399E-ED28-473E-882D-F225654660AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_UI", "Carworld_UI\Carworld_UI.csproj", "{C4B9399E-ED28-473E-882D-F225654660AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_Logic", "Logic\Carworld_Logic.csproj", "{0BD2686B-2ECC-4F06-8974-1BA28A4281F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_Logic", "Carworld_Logic\Carworld_Logic.csproj", "{0BD2686B-2ECC-4F06-8974-1BA28A4281F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_DAL", "DAL\Carworld_DAL.csproj", "{09750BA4-6934-4230-961F-05BA8D57D97F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_DAL", "Carworld_DAL\Carworld_DAL.csproj", "{09750BA4-6934-4230-961F-05BA8D57D97F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_ContractLayer", "ContractLayer\Carworld_ContractLayer.csproj", "{37638042-C3E2-4711-BD96-CB4440863E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_ContractLayer", "Carworld_ContractLayer\Carworld_ContractLayer.csproj", "{37638042-C3E2-4711-BD96-CB4440863E1E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_FactoryDAL", "FactoryDAL\Carworld_FactoryDAL.csproj", "{FBACF7B6-8C8D-4EB9-BD14-DD5DB843C9E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carworld_FactoryDAL", "Carworld_FactoryDAL\Carworld_FactoryDAL.csproj", "{FBACF7B6-8C8D-4EB9-BD14-DD5DB843C9E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

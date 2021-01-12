@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carworld_ContractLayer\Carworld_ContractLayer.csproj" />
+    <ProjectReference Include="..\Carworld_DAL\Carworld_DAL.csproj" />
+  </ItemGroup>
+
+</Project>
