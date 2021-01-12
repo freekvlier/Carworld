@@ -242,18 +242,17 @@ namespace DAL
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             reader.Read();
-                            try
+                            if (reader.HasRows)
                             {
-                                reader.GetInt32(0);
+                                connection.Close();
+                                return true;
                             }
-                            catch (SqlException e)
+                            else
                             {
-                                Console.WriteLine(e);
                                 connection.Close();
                                 return false;
-                            }
+                            }  
                         }
-                        connection.Close();
                     }
                 }
             }
@@ -262,8 +261,6 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
-
-            return true;
         }
     }
 }
