@@ -29,32 +29,19 @@ namespace Logic
                 Name = fuel.Name,
             };
 
-            if (FuelFactoryDAL.GetCollectionDAL().Create(fuelDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return FuelFactoryDAL.GetCollectionDAL().Create(fuelDTO);
         }
 
         public bool Delete(int id)
         {
-            if (FuelFactoryDAL.GetCollectionDAL().Delete(id))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return FuelFactoryDAL.GetCollectionDAL().Delete(id);
         }
 
         public Fuel Get(int id)
         {
             var fuelGet = FuelFactoryDAL.GetCollectionDAL().Get(id);
             Fuel fuel = new Fuel(fuelGet.Id, fuelGet.Name);
+
             return fuel;
         }
     }

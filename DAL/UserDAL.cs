@@ -26,6 +26,7 @@ namespace DAL
                         command.Parameters.AddWithValue("@Password", user.Password);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
                         connection.Close();
@@ -37,6 +38,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -53,9 +55,9 @@ namespace DAL
                         command.Parameters.AddWithValue("@Username", user.Username);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
-                        //reseed();
                         connection.Close();
                     }
                 }
@@ -65,6 +67,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -81,7 +84,6 @@ namespace DAL
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-
                             while (reader.Read())
                             {
                                 UserDTO user = new UserDTO
@@ -93,7 +95,6 @@ namespace DAL
                                 };
                                 users.Add(user);
                             }
-
                         }
                     }
                 }
@@ -102,6 +103,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return users;
         }
 
@@ -133,6 +135,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return user;
         }
 
@@ -159,6 +162,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -182,8 +186,9 @@ namespace DAL
                             {
                                 userId = reader.GetInt32(0);
                             }
-                            catch (Exception)
+                            catch (SqlException e)
                             {
+                                Console.WriteLine(e);
                                 userId = -1;
                             }
                            
@@ -197,6 +202,7 @@ namespace DAL
                 userId = -1;
                 Console.WriteLine(e);
             }
+
             return userId;
         }
     }

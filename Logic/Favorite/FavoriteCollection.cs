@@ -30,45 +30,25 @@ namespace Logic
                 CarId = favorite.CarId
             };
 
-            if (FavoriteFactoryDAL.GetCollectionDAL().Create(favoriteDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return FavoriteFactoryDAL.GetCollectionDAL().Create(favoriteDTO);
         }
 
         public bool Delete(int id)
         {
-            if (FavoriteFactoryDAL.GetCollectionDAL().Delete(id))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return FavoriteFactoryDAL.GetCollectionDAL().Delete(id);
         }
 
 
         public bool DeleteFromUser(int userId, int carId)
         {
-            if (FavoriteFactoryDAL.GetCollectionDAL().DeleteFromUser(userId, carId))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return FavoriteFactoryDAL.GetCollectionDAL().DeleteFromUser(userId, carId);
         }
 
         public Favorite Get(int id)
         {
             var favoriteGet = FavoriteFactoryDAL.GetCollectionDAL().Get(id);
             Favorite favorite = new Favorite(favoriteGet.Id, favoriteGet.UserId, favoriteGet.CarId);
+
             return favorite;
         }
 

@@ -24,6 +24,7 @@ namespace DAL
                         command.Parameters.AddWithValue("@Name", fuel.Name);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
                         connection.Close();
@@ -35,6 +36,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -51,9 +53,9 @@ namespace DAL
                         command.Parameters.AddWithValue("@Id", id);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
-                        //reseed();
                         connection.Close();
                     }
                 }
@@ -63,6 +65,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -92,6 +95,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return fuel;
         }
 
@@ -118,7 +122,6 @@ namespace DAL
                                 };
                                 fuels.Add(fuel);
                             }
-                            
                         }
                     }
                 }
@@ -127,6 +130,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return fuels;
         }
 
@@ -152,6 +156,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
     }

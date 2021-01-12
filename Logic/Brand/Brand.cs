@@ -12,16 +12,16 @@ namespace Logic
         public string Name { get; set; }
         public string Origin { get; set; }
 
+        public Brand()
+        {
+
+        }
+
         public Brand(int id, string name, string origin)
         {
             this.Id = id;
             this.Name = name;
             this.Origin = origin;
-        }
-
-        public Brand()
-        {
-
         }
 
         public bool Update()
@@ -33,14 +33,7 @@ namespace Logic
                 Origin = this.Origin
             };
 
-            if (BrandFactoryDAL.GetDAL().Update(brandDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return BrandFactoryDAL.GetDAL().Update(brandDTO);
         }
 
         public void SetName(string name)
@@ -52,7 +45,5 @@ namespace Logic
         {
             this.Origin = origin;
         }
-
     }
-
 }

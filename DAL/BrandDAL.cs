@@ -25,6 +25,7 @@ namespace DAL
                         command.Parameters.AddWithValue("@Origin", brand.Origin);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
                         connection.Close();
@@ -36,6 +37,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -52,9 +54,9 @@ namespace DAL
                         command.Parameters.AddWithValue("@Id", id);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
-                        //reseed();
                         connection.Close();
                     }
                 }
@@ -64,6 +66,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -94,6 +97,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return brand;
         }
 
@@ -156,6 +160,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
     }

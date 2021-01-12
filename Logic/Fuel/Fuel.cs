@@ -11,15 +11,15 @@ namespace Logic
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public Fuel()
+        {
+
+        }
+
         public Fuel(int id, string name)
         {
             this.Id = id;
             this.Name = name;
-        }
-
-        public Fuel()
-        {
-
         }
 
         public bool Update()
@@ -30,14 +30,8 @@ namespace Logic
                 Name = this.Name
             };
 
-            if (FuelFactoryDAL.GetDAL().Update(fuelDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return FuelFactoryDAL.GetDAL().Update(fuelDTO);
+
         }
 
         public void SetName(string name)

@@ -49,6 +49,7 @@ namespace DAL
                 Console.WriteLine(e);
                 id = -1;
             }
+
             return id;
         }
 
@@ -65,9 +66,9 @@ namespace DAL
                         command.Parameters.AddWithValue("@Id", Id);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
-                        //reseed();
                         connection.Close();
                     }
                 }
@@ -77,6 +78,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -117,6 +119,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return car;
         }
 
@@ -265,6 +268,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
     }

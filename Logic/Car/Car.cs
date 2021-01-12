@@ -22,6 +22,12 @@ namespace Logic
         public double FuelConsumption { get; set; }
         public int MadeByUser { get; set; }
 
+        public Car()
+        {
+
+
+        }
+
         public Car(int Id, string Brand, string Model, int Year, int Price, int Horsepower,
                    int Torque, double Acceleration, int Topspeed, string CarClass, 
                    string Fuel, double FuelConsumption, int MadeByUser)
@@ -39,11 +45,6 @@ namespace Logic
             this.Fuel = Fuel;
             this.FuelConsumption = FuelConsumption;
             this.MadeByUser = MadeByUser;
-        }
-
-        public Car()
-        {
-
         }
 
         public bool Update()
@@ -69,17 +70,9 @@ namespace Logic
                 MadeByUser = this.MadeByUser
             };
 
-            if (CarFactoryDAL.GetDAL().Update(carDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return CarFactoryDAL.GetDAL().Update(carDTO);
         }
 
-        //Set functions
         public void SetBrand(string brand)
         {
             this.Brand = Brand;

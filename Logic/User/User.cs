@@ -13,17 +13,17 @@ namespace Logic
         public string Username { get; set; }
         public string Password { get; set; }
 
+        public User()
+        {
+
+        }
+
         public User(int id, string email, string username, string password)
         {
             this.Id = id;
             this.Email = email;
             this.Username = username;
             this.Password = password;
-        }
-
-        public User()
-        {
-
         }
 
         public bool Update()
@@ -36,14 +36,7 @@ namespace Logic
                 Password = this.Password
             };
 
-            if (UserFactory.GetDAL().Update(user)) 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return UserFactory.GetDAL().Update(user);
         }
 
         public void SetEmail(string email)

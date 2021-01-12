@@ -16,17 +16,12 @@ namespace Logic
             var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
             var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
 
-            if(cars != null) { 
-                foreach (var car in cars)
-                {
-                    carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
-                                car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
-                                car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name, car.FuelConsumption, car.MadeByUser));
-                }
-            }
-            else
+            foreach (var car in cars)
             {
-                Console.WriteLine("ERROR: Can't connect to database");
+                carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
+                            car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
+                            car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name,
+                            car.FuelConsumption, car.MadeByUser));
             }
 
             return carList;
@@ -40,20 +35,13 @@ namespace Logic
             var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
             var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
 
-            if (cars != null)
+            foreach (var car in cars)
             {
-                foreach (var car in cars)
-                {
-                    carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
-                                car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
-                                car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name, car.FuelConsumption, car.MadeByUser));
-                }
+                carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
+                            car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
+                            car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name, car.FuelConsumption, car.MadeByUser));
             }
-            else
-            {
-                Console.WriteLine("ERROR: Can't connect to database");
-            }
-
+ 
             return carList;
         }
 
@@ -80,27 +68,12 @@ namespace Logic
                 MadeByUser = carinput.MadeByUser
             };
 
-            //if (CarFactoryDAL.GetCollectionDAL().Create(carDTO))
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
             return CarFactoryDAL.GetCollectionDAL().Create(carDTO);
         }
 
         public bool Delete(int Id)
         {
-            if (CarFactoryDAL.GetCollectionDAL().Delete(Id))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return CarFactoryDAL.GetCollectionDAL().Delete(Id);
         }
 
         public Car Get(int id)
@@ -114,6 +87,7 @@ namespace Logic
                                 getCar.Year, getCar.Price, getCar.Horsepower, getCar.Torque, 
                                 getCar.Acceleration, getCar.Topspeed, carClasses[getCar.CarClassId].Name, 
                                 fuels[getCar.FuelId].Name, getCar.FuelConsumption, getCar.MadeByUser);
+
             return car;
         }
 
@@ -122,18 +96,11 @@ namespace Logic
             List<Car> carList = new List<Car>();
             var favorites = FavoriteFactoryDAL.GetCollectionDAL().GetAllByUserId(userId);
 
-            if (favorites != null)
+            foreach (var favorite in favorites)
             {
-                foreach (var favorite in favorites)
-                {
-                    carList.Add(Get(favorite.CarId));
-                }
+                carList.Add(Get(favorite.CarId));
             }
-            else
-            {
-                Console.WriteLine("ERROR: Can't connect to database");
-            }
-
+    
             return carList;
         }
 

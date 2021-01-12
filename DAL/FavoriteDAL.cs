@@ -24,6 +24,7 @@ namespace DAL
                         command.Parameters.AddWithValue("@CarId", favorite.CarId);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
                         connection.Close();
@@ -35,6 +36,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -51,9 +53,9 @@ namespace DAL
                         command.Parameters.AddWithValue("@Id", id);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
-                        //reseed();
                         connection.Close();
                     }
                 }
@@ -63,6 +65,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -80,9 +83,9 @@ namespace DAL
                         command.Parameters.AddWithValue("@CarId", carId);
                         if (command.ExecuteNonQuery() < 1)
                         {
+                            connection.Close();
                             return false;
                         }
-                        //reseed();
                         connection.Close();
                     }
                 }
@@ -92,6 +95,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
 
@@ -121,6 +125,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return favorite;
         }
 
@@ -157,6 +162,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return favorites;
         }
 
@@ -192,6 +198,7 @@ namespace DAL
             {
                 Console.WriteLine(e);
             }
+
             return favorites;
         }
 
@@ -237,13 +244,14 @@ namespace DAL
                             reader.Read();
                             try
                             {
-                                int temp = reader.GetInt32(0);
+                                reader.GetInt32(0);
                             }
-                            catch (Exception)
+                            catch (SqlException e)
                             {
+                                Console.WriteLine(e);
+                                connection.Close();
                                 return false;
                             }
-
                         }
                         connection.Close();
                     }
@@ -254,6 +262,7 @@ namespace DAL
                 Console.WriteLine(e);
                 return false;
             }
+
             return true;
         }
     }

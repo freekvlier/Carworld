@@ -11,15 +11,15 @@ namespace Logic
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public CarClass()
+        {
+
+        }
+
         public CarClass(int id, string name)
         {
             this.Id = id;
             this.Name = name;
-        }
-
-        public CarClass()
-        {
-
         }
 
         public bool Update()
@@ -30,14 +30,7 @@ namespace Logic
                 Name = this.Name
             };
 
-            if (CarClassFactoryDAL.GetDAL().Update(carClassDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return CarClassFactoryDAL.GetDAL().Update(carClassDTO);
         }
 
         public void SetName(string name)

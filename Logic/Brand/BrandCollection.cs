@@ -29,26 +29,12 @@ namespace Logic
                 Origin = brand.Origin 
             };
 
-            if (BrandFactoryDAL.GetCollectionDAL().Create(brandDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return BrandFactoryDAL.GetCollectionDAL().Create(brandDTO);
         }
 
         public bool Delete(int id)
         {
-            if (BrandFactoryDAL.GetCollectionDAL().Delete(id))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return BrandFactoryDAL.GetCollectionDAL().Delete(id);
         }
 
         public Brand Get(int id)

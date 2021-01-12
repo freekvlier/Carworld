@@ -12,16 +12,16 @@ namespace Logic
         public int UserId { get; set; }
         public int CarId { get; set; }
 
+        public Favorite()
+        {
+
+        }
+
         public Favorite(int id, int userid, int carId)
         {
             this.Id = id;
             this.UserId = userid;
             this.CarId = carId;
-        }
-
-        public Favorite()
-        {
-
         }
 
         public bool Update()
@@ -33,14 +33,8 @@ namespace Logic
                 CarId = this.CarId
             };
 
-            if (FavoriteFactoryDAL.GetDAL().Update(favoriteDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return FavoriteFactoryDAL.GetDAL().Update(favoriteDTO);
+            
         }
 
         public void SetUserId(int userId)

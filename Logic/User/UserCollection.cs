@@ -31,14 +31,7 @@ namespace Logic
                 Password = user.Password
             };
 
-            if (UserFactory.GetCollectionDAL().Create(userDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return UserFactory.GetCollectionDAL().Create(userDTO);
         }
 
         public bool Delete(User user)
@@ -51,20 +44,14 @@ namespace Logic
                 Password = user.Password
             };
 
-            if (UserFactory.GetCollectionDAL().Delete(userDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return UserFactory.GetCollectionDAL().Delete(userDTO);
         }
 
         public User Get(int id)
         {
             var getUser = UserFactory.GetCollectionDAL().Get(id);
             User user = new User(getUser.Id, getUser.Email, getUser.Username, getUser.Password);
+
             return user;
         }
 
@@ -75,6 +62,7 @@ namespace Logic
                 Username = user.Username,
                 Password = user.Password
             };
+
             return UserFactory.GetCollectionDAL().GetId(userDTO);
         }
     }

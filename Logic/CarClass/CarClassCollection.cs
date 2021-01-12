@@ -29,32 +29,19 @@ namespace Logic
                 Name = carclass.Name,
             };
 
-            if (CarClassFactoryDAL.GetCollectionDAL().Create(carclassDTO))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return CarClassFactoryDAL.GetCollectionDAL().Create(carclassDTO);
         }
 
         public bool Delete(int id)
         {
-            if (CarClassFactoryDAL.GetCollectionDAL().Delete(id))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return CarClassFactoryDAL.GetCollectionDAL().Delete(id);
         }
 
         public CarClass Get(int id)
         {
             var carClassGet = CarClassFactoryDAL.GetCollectionDAL().Get(id);
             CarClass carClass = new CarClass(carClassGet.Id, carClassGet.Name);
+
             return carClass;
         }
     }
