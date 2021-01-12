@@ -22,11 +22,11 @@
     <img src="@("/Images/"+Model.Id+".jpg")" style="width:500px">
     @if (Model.Favorite == true)
     {
-        <a asp-controller="User" asp-action="RemoveFromFavorites" asp-route-id="@Model.Id" class="btn btn-primary">Remove from Favorites</a>
+        <a asp-controller="User" asp-action="RemoveFromFavorites" asp-route-carId="@Model.Id" class="btn btn-primary">Remove from Favorites</a>
     }
     else
     {
-        <a asp-controller="User" asp-action="AddToFavorites" asp-route-id="@Model.Id" class="btn btn-primary">Add To Favorites</a>
+        <a asp-controller="User" asp-action="AddToFavorites" asp-route-carId="@Model.Id" class="btn btn-primary">Add To Favorites</a>
     }
     <dl class="row">
         <dt class="col-sm-2">
@@ -110,9 +110,9 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="Car" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a asp-controller="Car" asp-action="Edit" asp-route-carId="@Model.Id">Edit</a>
     <a> | </a>
-    <a asp-controller="Car" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    <a asp-controller="Car" asp-action="Delete" asp-route-carId="@Model.Id">Delete</a>
     <a> | </a>
     <a asp-controller="Home" asp-action="Index">Back</a>
 </div>

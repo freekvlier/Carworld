@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Controllers
 {
+    [Authorize]
     public class FuelController : Controller
     {
         //Methods
@@ -58,13 +59,13 @@ namespace Carworld.Controllers
             }
         }
 
-        private bool updateFuel(int fuelId, FuelModel inputFuel)
+        private bool updateFuel(FuelModel fuel)
         {
-            Fuel fuel = new FuelCollection().Get(fuelId);
+            Fuel fuelObject = new FuelCollection().Get(fuel.Id);
 
-            fuel.SetName(inputFuel.Name);
+            fuelObject.SetName(fuel.Name);
 
-            if (fuel.Update())
+            if (fuelObject.Update())
             {
                 return true;
             }
@@ -110,9 +111,9 @@ namespace Carworld.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int fuelId, FuelModel fuel)
+        public IActionResult Edit(FuelModel fuel)
         {
-            if (updateFuel(fuelId, fuel))
+            if (updateFuel(fuel))
             {
                 return RedirectToAction("Index");
             }
@@ -129,9 +130,9 @@ namespace Carworld.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int fuelId, FuelModel fuel)
+        public IActionResult Delete(FuelModel fuel)
         {
-            if (deleteFuel(fuelId))
+            if (deleteFuel(fuel.Id))
             {
                 return RedirectToAction("Index");
             }

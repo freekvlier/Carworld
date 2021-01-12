@@ -168,9 +168,9 @@ namespace Carworld.Controllers
             System.IO.File.Delete(filePath);
         }
 
-        private bool updateCar(int carId, CarModel car)
+        private bool updateCar(CarModel car)
         {
-            Car databaseCar = new CarCollection().Get(carId);
+            Car databaseCar = new CarCollection().Get(car.Id);
 
             databaseCar.SetBrand(car.Brand);
             databaseCar.SetModel(car.Model);
@@ -244,13 +244,13 @@ namespace Carworld.Controllers
 
         [HttpPost]
         //[Route("/[action]")]
-        public IActionResult Edit(int carId, CarModel car)
+        public IActionResult Edit(CarModel car)
         {
             ViewBag.Brands = getBrands();
             ViewBag.Fuels = getFuels();
             ViewBag.CarClasses = getCarClasses();
 
-            if (updateCar(carId, car))
+            if (updateCar(car))
             {
                 return RedirectToAction("Details");
             }

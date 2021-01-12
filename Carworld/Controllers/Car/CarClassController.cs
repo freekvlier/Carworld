@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Controllers
 {
+    [Authorize]
     public class CarClassController : Controller
     {
         //Methods
@@ -58,9 +59,9 @@ namespace Carworld.Controllers
             }
         }
 
-        private bool updateCarClass(int carClassId, CarClassModel carClass)
+        private bool updateCarClass(CarClassModel carClass)
         {
-            CarClass databaseCarClass = new CarClassCollection().Get(carClassId);
+            CarClass databaseCarClass = new CarClassCollection().Get(carClass.Id);
 
             databaseCarClass.SetName(carClass.Name);
 
@@ -110,9 +111,9 @@ namespace Carworld.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int carClassId, CarClassModel carClass)
+        public IActionResult Edit(CarClassModel carClass)
         {
-            if (updateCarClass(carClassId, carClass))
+            if (updateCarClass(carClass))
             {
                 return RedirectToAction("Index");
             }
@@ -129,9 +130,9 @@ namespace Carworld.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int carClassId, CarClassModel carClass)
+        public IActionResult Delete(CarClassModel carClass)
         {
-            if (deleteCarClass(carClassId))
+            if (deleteCarClass(carClass.Id))
             {
                 return RedirectToAction("Index");
             }

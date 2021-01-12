@@ -66,9 +66,9 @@ namespace Carworld.Controllers
             }
         }
 
-        private bool removeCarFromFavorites(int favoriteId)
+        private bool removeCarFromFavorites(int carId)
         {
-            if (new FavoriteCollection().DeleteFromUser(getCurrentLoggedInUserId(), favoriteId))
+            if (new FavoriteCollection().DeleteFromUser(getCurrentLoggedInUserId(), carId))
             {
                 return true;
             }
@@ -100,11 +100,11 @@ namespace Carworld.Controllers
         }
 
         [Route("/[action]")]
-        public IActionResult RemoveFromFavorites(int favoriteId)
+        public IActionResult RemoveFromFavorites(int carId)
         {
-            if (removeCarFromFavorites(favoriteId))
+            if (removeCarFromFavorites(carId))
             {
-                return RedirectToAction("Details", "car", new { carId = favoriteId });
+                return RedirectToAction("Details", "car", new { carId = carId });
             }
             else
             {

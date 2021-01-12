@@ -34,7 +34,9 @@
         </dd>
     </dl>
 
-    <form asp-action="Delete" >
+    <form asp-action="Delete">
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="Name" type="hidden" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

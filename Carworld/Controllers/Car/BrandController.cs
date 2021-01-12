@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Carworld.Controllers
 {
+    [Authorize]
     public class BrandController : Controller
     {
         //Methods
@@ -43,9 +44,9 @@ namespace Carworld.Controllers
             return brand;
         }
 
-        private bool updateBrand(int brandId, BrandModel brand)
+        private bool updateBrand(BrandModel brand)
         {
-            Brand databaseBrand = new BrandCollection().Get(brandId);
+            Brand databaseBrand = new BrandCollection().Get(brand.Id);
 
             databaseBrand.SetName(brand.Name);
             databaseBrand.SetOrigin(brand.Origin);
@@ -114,9 +115,9 @@ namespace Carworld.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int brandId, BrandModel brand)
+        public IActionResult Edit(BrandModel brand)
         {
-            if (updateBrand(brandId, brand))
+            if (updateBrand(brand))
             {
                 return RedirectToAction("Index");
             }
@@ -132,10 +133,10 @@ namespace Carworld.Controllers
             return View(getBrand(brandId));
         }
 
-        [HttpPost]
-        public IActionResult Delete(int brandId, BrandModel brand)
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Delete(BrandModel brand)
         {
-            if (deleteBrand(brandId))
+            if (deleteBrand(brand.Id))
             {
                 return RedirectToAction("Index");
             }
