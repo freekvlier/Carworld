@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContractLayer\ContractLayer.csproj" />
+    <ProjectReference Include="..\ContractLayer\Carworld_ContractLayer.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContractLayer\ContractLayer.csproj" />
-    <ProjectReference Include="..\FactoryDAL\FactoryDAL.csproj" />
+    <ProjectReference Include="..\ContractLayer\Carworld_ContractLayer.csproj" />
+    <ProjectReference Include="..\FactoryDAL\Carworld_FactoryDAL.csproj" />
   </ItemGroup>
 
 </Project>
