@@ -12,7 +12,7 @@ namespace Carworld_Logic
 
         public BrandCollection()
         {
-            brandCollectionDAL = BrandFactoryDAL.GetCollectionDAL();
+            this.brandCollectionDAL = BrandFactoryDAL.GetCollectionDAL();
         }
 
         //Unit tests
@@ -53,8 +53,16 @@ namespace Carworld_Logic
         public Brand Get(int id)
         {
             var Brand = brandCollectionDAL.Get(id);
-            Brand brand = new Brand(Brand.Id, Brand.Name, Brand.Origin);
-            return brand;
+            try
+            {
+                Brand brand = new Brand(Brand.Id, Brand.Name, Brand.Origin);
+                return brand;
+            }
+            catch (Exception)
+            {
+                Brand brand = new Brand(0, "Empty", "Empty");
+                return brand;
+            }
         }
     }
 }

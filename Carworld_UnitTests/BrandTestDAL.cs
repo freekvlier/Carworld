@@ -7,14 +7,14 @@ namespace Carworld_LogicTests
 {
     public class BrandTestDAL : IBrandDAL, IBrandCollectionDAL
     {
-        private List<BrandDTO> brandDTOs = new List<BrandDTO>();
-        private int counter = 0;
+        private List<BrandDTO> database = new List<BrandDTO>();
+        private int idCounter = 0;
 
-        private int getCount()
+        private int getIdCount()
         {
-            int currentCount = counter;
-            counter++;
-            return currentCount;
+            int currentIdCount = idCounter;
+            idCounter++;
+            return currentIdCount;
         }
 
 
@@ -22,8 +22,8 @@ namespace Carworld_LogicTests
         {
             if(brand.Name != "" & brand.Name != null & brand.Origin != "" & brand.Origin != null)
             {
-                brand.Id = getCount();
-                brandDTOs.Add(brand);
+                brand.Id = getIdCount();
+                database.Add(brand);
                 return true;
             }
             return false;
@@ -31,17 +31,27 @@ namespace Carworld_LogicTests
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                database.RemoveAt(database.FindIndex(x => x.Id == id));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public BrandDTO Get(int Id)
+        public BrandDTO Get(int id)
         {
-            throw new NotImplementedException();
+            BrandDTO get = database.Find(x => x.Id == id);
+
+            return get;
         }
 
         public List<BrandDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return database;
         }
 
         public bool Update(BrandDTO brand)
