@@ -7,10 +7,10 @@ namespace ContractLayer
     public interface IFavoriteCollectionDAL
     {
         bool Create(FavoriteDTO favorite);
-        bool Delete(int id);
+        bool Delete(int favoriteId);
         bool DeleteFromUser(int userId, int carId);
         List<FavoriteDTO> GetAll();
-        FavoriteDTO Get(int Id);
+        FavoriteDTO Get(int favoriteId);
         List<FavoriteDTO> GetAllByUserId(int userId);
         bool CheckFavorite(int userId, int carId);
     }

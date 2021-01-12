@@ -40,7 +40,7 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int fuelId)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", id);
+                        command.Parameters.AddWithValue("@Id", fuelId);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             connection.Close();
@@ -69,7 +69,7 @@ namespace DAL
             return true;
         }
 
-        public FuelDTO Get(int Id)
+        public FuelDTO Get(int fuelId)
         {
             FuelDTO fuel = new FuelDTO();
             try
@@ -80,7 +80,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", Id);
+                        command.Parameters.AddWithValue("@Id", fuelId);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             reader.Read();

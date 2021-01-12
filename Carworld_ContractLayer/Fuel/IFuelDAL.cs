@@ -6,6 +6,6 @@ namespace ContractLayer
 {
     public interface IFuelDAL
     {
-        bool Update(FuelDTO brandstof);
+        bool Update(FuelDTO fuel);
     }
 }

@@ -40,7 +40,7 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int favoriteId)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", id);
+                        command.Parameters.AddWithValue("@Id", favoriteId);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             connection.Close();
@@ -99,7 +99,7 @@ namespace DAL
             return true;
         }
 
-        public FavoriteDTO Get(int Id)
+        public FavoriteDTO Get(int favoriteId)
         {
             FavoriteDTO favorite = new FavoriteDTO();
             try
@@ -110,7 +110,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", Id);
+                        command.Parameters.AddWithValue("@Id", favoriteId);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             reader.Read();

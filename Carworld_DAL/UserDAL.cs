@@ -107,7 +107,7 @@ namespace DAL
             return users;
         }
 
-        public UserDTO Get(int Id)
+        public UserDTO Get(int userId)
         {
             UserDTO user = new UserDTO();
             try
@@ -118,7 +118,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", Id);
+                        command.Parameters.AddWithValue("@Id", userId);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             reader.Read();

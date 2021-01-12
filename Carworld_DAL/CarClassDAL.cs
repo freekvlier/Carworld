@@ -64,7 +64,7 @@ namespace DAL
             return true;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int carClassId)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", id);
+                        command.Parameters.AddWithValue("@Id", carClassId);
                         if (command.ExecuteNonQuery() < 1)
                         {
                             connection.Close();
@@ -128,7 +128,7 @@ namespace DAL
             }
         }
 
-        public CarClassDTO Get(int Id)
+        public CarClassDTO Get(int carClassId)
         {          
             CarClassDTO carClass = new CarClassDTO();
             try
@@ -139,7 +139,7 @@ namespace DAL
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
-                        command.Parameters.AddWithValue("@Id", Id);
+                        command.Parameters.AddWithValue("@Id", carClassId);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             reader.Read();

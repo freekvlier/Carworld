@@ -7,9 +7,9 @@ namespace ContractLayer
     public interface ICarCollectionDAL
     {
         int Create(CarDTO car);
-        bool Delete(int Id);
+        bool Delete(int carId);
         List<CarDTO> GetAll();
         List<CarDTO> GetAllSorted(string property);
-        CarDTO Get(int Id);
+        CarDTO Get(int carId);
     }
 }

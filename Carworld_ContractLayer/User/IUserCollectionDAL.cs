@@ -9,7 +9,7 @@ namespace ContractLayer
         bool Create(UserDTO user);
         bool Delete(UserDTO user);
         List<UserDTO> GetAll();
-        UserDTO Get(int Id);
+        UserDTO Get(int userId);
         int GetId(UserDTO user);
     }
 }
