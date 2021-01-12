@@ -8,10 +8,23 @@ namespace Carworld_Logic
 {
     public class BrandCollection
     {
+        private readonly IBrandCollectionDAL brandCollectionDAL;
+
+        public BrandCollection()
+        {
+            brandCollectionDAL = BrandFactoryDAL.GetCollectionDAL();
+        }
+
+        //Unit tests
+        public BrandCollection(IBrandCollectionDAL brandCollectionDAL)
+        {
+            this.brandCollectionDAL = brandCollectionDAL;
+        }
+
         public List<Brand> GetAll()
         {
             List<Brand> brandList = new List<Brand>();
-            var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
+            var brands = brandCollectionDAL.GetAll();
 
             foreach (var brand in brands)
             {
@@ -29,17 +42,17 @@ namespace Carworld_Logic
                 Origin = brand.Origin 
             };
 
-            return BrandFactoryDAL.GetCollectionDAL().Create(brandDTO);
+            return brandCollectionDAL.Create(brandDTO);
         }
 
         public bool Delete(int id)
         {
-            return BrandFactoryDAL.GetCollectionDAL().Delete(id);
+            return brandCollectionDAL.Delete(id);
         }
 
         public Brand Get(int id)
         {
-            var Brand = BrandFactoryDAL.GetCollectionDAL().Get(id);
+            var Brand = brandCollectionDAL.Get(id);
             Brand brand = new Brand(Brand.Id, Brand.Name, Brand.Origin);
             return brand;
         }

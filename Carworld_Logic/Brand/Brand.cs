@@ -8,13 +8,31 @@ namespace Carworld_Logic
 {
     public class Brand
     {
+        private readonly IBrandDAL brandDAL;
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Origin { get; set; }
 
+        //Unit test
+        public Brand(IBrandDAL brandDAL)
+        {
+            this.brandDAL = brandDAL;
+        }
+
+        //Unit test
+        public Brand(IBrandDAL brandDAL, int id, string name, string origin)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Origin = origin;
+
+            this.brandDAL = brandDAL;
+        }
+
         public Brand()
         {
-
+            brandDAL = BrandFactoryDAL.GetDAL();
         }
 
         public Brand(int id, string name, string origin)
@@ -22,6 +40,8 @@ namespace Carworld_Logic
             this.Id = id;
             this.Name = name;
             this.Origin = origin;
+
+            brandDAL = BrandFactoryDAL.GetDAL();
         }
 
         public bool Update()
@@ -33,7 +53,7 @@ namespace Carworld_Logic
                 Origin = this.Origin
             };
 
-            return BrandFactoryDAL.GetDAL().Update(brandDTO);
+            return brandDAL.Update(brandDTO);
         }
 
         public void SetName(string name)
