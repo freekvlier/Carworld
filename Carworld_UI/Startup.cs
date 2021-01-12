@@ -29,12 +29,10 @@ namespace Carworld
                 {
                     config.Cookie.Name = "CarWorldAuthentication";
                     config.LoginPath = "/Home/Login";
-                    //config.ExpireTimeSpan = TimeSpan.FromMinutes(20);
                 });
 
             services.AddControllersWithViews();
             services.AddSession();
-            //services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
