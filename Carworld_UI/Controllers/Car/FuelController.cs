@@ -16,7 +16,7 @@ namespace Carworld.Controllers
     public class FuelController : Controller
     {
         //Methods
-        private List<FuelModel> getAllFuels()
+        private List<FuelModel> GetAllFuels()
         {
             List<FuelModel> fuels = new List<FuelModel>();
 
@@ -31,7 +31,7 @@ namespace Carworld.Controllers
             return fuels;
         }
 
-        private FuelModel getFuel(int fuelId)
+        private FuelModel GetFuel(int fuelId)
         {
             Fuel databaseFuel = new FuelCollection().Get(fuelId);
             FuelModel fuel = new FuelModel()
@@ -42,40 +42,26 @@ namespace Carworld.Controllers
             return fuel;
         }
 
-        private bool createFuel(FuelModel fuel)
+        private bool CreateFuel(FuelModel fuel)
         {
             Fuel fuelObject = new Fuel()
             {
                 Name = fuel.Name
             };
 
-            if (new FuelCollection().Create(fuelObject))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new FuelCollection().Create(fuelObject);
         }
 
-        private bool updateFuel(FuelModel fuel)
+        private bool UpdateFuel(FuelModel fuel)
         {
             Fuel fuelObject = new FuelCollection().Get(fuel.Id);
 
             fuelObject.SetName(fuel.Name);
 
-            if (fuelObject.Update())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return fuelObject.Update();
         }
 
-        private bool deleteFuel(int fuelId)
+        private bool DeleteFuel(int fuelId)
         {
             return new FuelCollection().Delete(fuelId);
         }
@@ -83,7 +69,7 @@ namespace Carworld.Controllers
 
         public IActionResult Index()
         {
-            return View(getAllFuels());
+            return View(GetAllFuels());
         }
 
         public IActionResult Create()
@@ -94,7 +80,7 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Create(FuelModel fuel)
         {
-            if (createFuel(fuel))
+            if (CreateFuel(fuel))
             {
                 return RedirectToAction("Index");
             }
@@ -107,13 +93,13 @@ namespace Carworld.Controllers
 
         public IActionResult Edit(int fuelId)
         {
-            return View(getFuel(fuelId));
+            return View(GetFuel(fuelId));
         }
 
         [HttpPost]
         public IActionResult Edit(FuelModel fuel)
         {
-            if (updateFuel(fuel))
+            if (UpdateFuel(fuel))
             {
                 return RedirectToAction("Index");
             }
@@ -126,13 +112,13 @@ namespace Carworld.Controllers
 
         public IActionResult Delete(int fuelId)
         {
-            return View(getFuel(fuelId));
+            return View(GetFuel(fuelId));
         }
 
         [HttpPost]
         public IActionResult Delete(FuelModel fuel)
         {
-            if (deleteFuel(fuel.Id))
+            if (DeleteFuel(fuel.Id))
             {
                 return RedirectToAction("Index");
             }

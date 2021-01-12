@@ -17,7 +17,7 @@ namespace Carworld.Controllers
     public class UserController : Controller
     {
         //Methods
-        private List<CarModel> getFavoriteCars(int userId)
+        private List<CarModel> GetFavoriteCars(int userId)
         {
             List<CarModel> cars = new List<CarModel>();
 
@@ -43,42 +43,28 @@ namespace Carworld.Controllers
             return cars;
         }
 
-        private int getCurrentLoggedInUserId()
+        private int GetCurrentLoggedInUserId()
         {
             return (int)HttpContext.Session.GetInt32("UserId");
         }
 
-        private bool addCarToFavorites(int carId)
+        private bool AddCarToFavorites(int carId)
         {
             Favorite favoriteObject = new Favorite()
             {
                 CarId = carId,
-                UserId = getCurrentLoggedInUserId()
+                UserId = GetCurrentLoggedInUserId()
             };
 
-            if (new FavoriteCollection().Create(favoriteObject))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new FavoriteCollection().Create(favoriteObject);
         }
 
-        private bool removeCarFromFavorites(int carId)
+        private bool RemoveCarFromFavorites(int carId)
         {
-            if (new FavoriteCollection().DeleteFromUser(getCurrentLoggedInUserId(), carId))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new FavoriteCollection().DeleteFromUser(GetCurrentLoggedInUserId(), carId);
         }
 
-        private async Task clearCurrentSession()
+        private async Task ClearCurrentSession()
         {
             HttpContext.Session.Clear();
             await HttpContext.SignOutAsync();
@@ -88,7 +74,7 @@ namespace Carworld.Controllers
         [Route("/[action]")]
         public IActionResult AddToFavorites(int carId)
         {
-            if(addCarToFavorites(carId))
+            if(AddCarToFavorites(carId))
             {
                 return RedirectToAction("Details", "Car", new { carId = carId });
             }
@@ -102,7 +88,7 @@ namespace Carworld.Controllers
         [Route("/[action]")]
         public IActionResult RemoveFromFavorites(int carId)
         {
-            if (removeCarFromFavorites(carId))
+            if (RemoveCarFromFavorites(carId))
             {
                 return RedirectToAction("Details", "car", new { carId = carId });
             }
@@ -115,12 +101,12 @@ namespace Carworld.Controllers
 
         public IActionResult Favorites()
         {
-            return View(getFavoriteCars(getCurrentLoggedInUserId()));
+            return View(GetFavoriteCars(GetCurrentLoggedInUserId()));
         }
 
         public async Task<IActionResult> Logout()
         {
-            await clearCurrentSession();
+            await ClearCurrentSession();
             return RedirectToAction("LoggedOut");
         }
 

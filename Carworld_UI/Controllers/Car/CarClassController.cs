@@ -16,7 +16,7 @@ namespace Carworld.Controllers
     public class CarClassController : Controller
     {
         //Methods
-        private List<CarClassModel> getAllCarClasses()
+        private List<CarClassModel> GetAllCarClasses()
         {
             List<CarClassModel> carClasses = new List<CarClassModel>();
 
@@ -42,40 +42,26 @@ namespace Carworld.Controllers
             return carClass;
         }
 
-        private bool createCarClass(CarClassModel carClass)
+        private bool CreateCarClass(CarClassModel carClass)
         {
             CarClass carClassObject = new CarClass()
             {
                 Name = carClass.Name
             };
 
-            if (new CarClassCollection().Create(carClassObject))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new CarClassCollection().Create(carClassObject);
         }
 
-        private bool updateCarClass(CarClassModel carClass)
+        private bool UpdateCarClass(CarClassModel carClass)
         {
             CarClass databaseCarClass = new CarClassCollection().Get(carClass.Id);
 
             databaseCarClass.SetName(carClass.Name);
 
-            if (databaseCarClass.Update())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return databaseCarClass.Update();
         }
 
-        private bool deleteCarClass(int carClassId)
+        private bool DeleteCarClass(int carClassId)
         {
             return new CarClassCollection().Delete(carClassId);
         }
@@ -83,7 +69,7 @@ namespace Carworld.Controllers
 
         public IActionResult Index()
         {
-            return View(getAllCarClasses());
+            return View(GetAllCarClasses());
         }
 
         public IActionResult Create()
@@ -94,7 +80,7 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Create(CarClassModel carClass)
         {
-            if (createCarClass(carClass))
+            if (CreateCarClass(carClass))
             {
                 return RedirectToAction("Index");
             }
@@ -113,7 +99,7 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Edit(CarClassModel carClass)
         {
-            if (updateCarClass(carClass))
+            if (UpdateCarClass(carClass))
             {
                 return RedirectToAction("Index");
             }
@@ -132,7 +118,7 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Delete(CarClassModel carClass)
         {
-            if (deleteCarClass(carClass.Id))
+            if (DeleteCarClass(carClass.Id))
             {
                 return RedirectToAction("Index");
             }

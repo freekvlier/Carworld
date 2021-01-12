@@ -24,12 +24,12 @@ namespace Carworld.Controllers
         }
 
         //Methods 
-        private string getUsername(int userId)
+        private string GetUsername(int userId)
         {
             return new UserCollection().Get(userId).Username;
         }
 
-        private List<CarModel> getCars()
+        private List<CarModel> GetCars()
         {
             List<CarModel> cars = new List<CarModel>();
 
@@ -55,7 +55,7 @@ namespace Carworld.Controllers
             return cars;
         }
 
-        private List<CarModel> getCarsSortedByProperty(string property)
+        private List<CarModel> GetCarsSortedByProperty(string property)
         {
             List<CarModel> cars = new List<CarModel>();
 
@@ -75,19 +75,19 @@ namespace Carworld.Controllers
                     CarClass = car.CarClass,
                     Fuel = car.Fuel,
                     FuelConsumption = car.FuelConsumption,
-                    MadeByUser = getUsername(car.MadeByUser),
+                    MadeByUser = GetUsername(car.MadeByUser),
                 });
             }
             return cars;
         }
 
-        private void setSessionVariables(User user)
+        private void SetSessionVariables(User user)
         {
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetInt32("UserId", user.Id);
         }
 
-        private bool loginUser(UserModel user)
+        private bool LoginUser(UserModel user)
         {
             User userObject = new User()
             {
@@ -99,7 +99,7 @@ namespace Carworld.Controllers
 
             if (user.Id >= 0)
             {
-                setSessionVariables(userObject);
+                SetSessionVariables(userObject);
                 return true;
             }
             else
@@ -108,7 +108,7 @@ namespace Carworld.Controllers
             }
         }
 
-        public async Task generateAuthenticationCookie(UserModel user)
+        public async Task GenerateAuthenticationCookie(UserModel user)
         {
             var claims = new List<Claim>
                 {
@@ -120,7 +120,7 @@ namespace Carworld.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
         }
 
-        private bool registerUser(UserRegisterModel user)
+        private bool RegisterUser(UserRegisterModel user)
         {
             User registerUser = new User()
             {
@@ -129,44 +129,37 @@ namespace Carworld.Controllers
                 Password = user.Password
             };
 
-            if (new UserCollection().Create(registerUser))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new UserCollection().Create(registerUser);
         }
         
-        private List<CarModel> getCarsSortedByPropertyString(string property)
+        private List<CarModel> GetCarsSortedByPropertyString(string property)
         {
             switch (property)
             {
                 case "Brand":
-                    return getCarsSortedByProperty("Brand");
+                    return GetCarsSortedByProperty("Brand");
                 case "Price":
-                    return getCarsSortedByProperty("Price");
+                    return GetCarsSortedByProperty("Price");
                 case "Horsepower":
-                    return getCarsSortedByProperty("Horsepower");
+                    return GetCarsSortedByProperty("Horsepower");
                 case "Year":
-                    return getCarsSortedByProperty("Year");
+                    return GetCarsSortedByProperty("Year");
                 default:
-                    return getCars();
+                    return GetCars();
             }
         }
         //End methods
 
         public IActionResult Index()
         {
-            return View(getCars());
+            return View(GetCars());
         }
 
         [Route("/[action]")]
         public IActionResult Index(string selectedSortMethod)
         {
             ViewBag.Filter = selectedSortMethod;
-            return View(getCarsSortedByPropertyString(selectedSortMethod));
+            return View(GetCarsSortedByPropertyString(selectedSortMethod));
         }
 
         public IActionResult Login()
@@ -177,9 +170,9 @@ namespace Carworld.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserModel user, string url)
         {
-            if (loginUser(user))
+            if (LoginUser(user))
             {
-                await generateAuthenticationCookie(user);
+                await GenerateAuthenticationCookie(user);
                 return Redirect("Index");
             }
             else
@@ -196,7 +189,7 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Register(UserRegisterModel user)
         {
-            if (registerUser(user))
+            if (RegisterUser(user))
             {
                 return RedirectToAction("Login");
             }

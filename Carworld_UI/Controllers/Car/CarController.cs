@@ -23,11 +23,11 @@ namespace Carworld.Controllers
         }
 
         //Methods
-        private bool isCarFavoriteFromUser(int carId)
+        private bool IsCarFavoriteFromUser(int carId)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return new FavoriteCollection().CheckFavorite(getCurrentLoggedInUserId(), carId);
+                return new FavoriteCollection().CheckFavorite(GetCurrentLoggedInUserId(), carId);
             }
             else
             {
@@ -35,7 +35,7 @@ namespace Carworld.Controllers
             }
         }
 
-        private int getCurrentLoggedInUserId()
+        private int GetCurrentLoggedInUserId()
         {
             return (int)HttpContext.Session.GetInt32("UserId");
         }
@@ -58,12 +58,12 @@ namespace Carworld.Controllers
                 Fuel = getCar.Fuel,
                 FuelConsumption = getCar.FuelConsumption,
                 MadeByUser = new UserCollection().Get(getCar.MadeByUser).Username,
-                Favorite = isCarFavoriteFromUser(carId)
+                Favorite = IsCarFavoriteFromUser(carId)
             };
             return car;
         }
 
-        private List<BrandModel> getBrands()
+        private List<BrandModel> GetBrands()
         {
             List<BrandModel> brands = new List<BrandModel>();
 
@@ -78,7 +78,7 @@ namespace Carworld.Controllers
             return brands;
         }
 
-        private List<CarClassModel> getCarClasses()
+        private List<CarClassModel> GetCarClasses()
         {
             List<CarClassModel> carClasses = new List<CarClassModel>();
 
@@ -92,7 +92,7 @@ namespace Carworld.Controllers
             return carClasses;
         }
 
-        private List<FuelModel> getFuels()
+        private List<FuelModel> GetFuels()
         {
             List<FuelModel> fuels = new List<FuelModel>();
 
@@ -105,7 +105,7 @@ namespace Carworld.Controllers
             return fuels;
         }
 
-        private bool createCar(CarModel car)
+        private bool CreateCar(CarModel car)
         {
             Car newCar = new Car()
             {
@@ -121,13 +121,13 @@ namespace Carworld.Controllers
                 CarClass = car.CarClass,
                 Fuel = car.Fuel,
                 FuelConsumption = car.FuelConsumption,
-                MadeByUser = getCurrentLoggedInUserId()
+                MadeByUser = GetCurrentLoggedInUserId()
             };
 
             int createdCarId = new CarCollection().Create(newCar);
             if (createdCarId > 0)
             {
-                saveImage(car.Image, createdCarId);
+                SaveImage(car.Image, createdCarId);
                 return true;
             }
             else
@@ -136,7 +136,7 @@ namespace Carworld.Controllers
             }
         }
 
-        private void saveImage(IFormFile image, int carId)
+        private void SaveImage(IFormFile image, int carId)
         {
             string uploadsFolder = Path.Combine(environment.WebRootPath, "Images");
             string fileName = carId.ToString() + ".jpg";
@@ -147,11 +147,11 @@ namespace Carworld.Controllers
             }
         }
 
-        private bool deleteCar(int carId)
+        private bool DeleteCar(int carId)
         {
             if (new CarCollection().Delete(carId))
             {
-                deleteImage(carId);
+                DeleteImage(carId);
                 return true;
             }
             else
@@ -160,7 +160,7 @@ namespace Carworld.Controllers
             }
         }
 
-        private void deleteImage(int carId)
+        private void DeleteImage(int carId)
         {
             string uploadsFolder = Path.Combine(environment.WebRootPath, "Images");
             string fileName = carId.ToString() + ".jpg";
@@ -168,7 +168,7 @@ namespace Carworld.Controllers
             System.IO.File.Delete(filePath);
         }
 
-        private bool updateCar(CarModel car)
+        private bool UpdateCar(CarModel car)
         {
             Car databaseCar = new CarCollection().Get(car.Id);
 
@@ -185,23 +185,16 @@ namespace Carworld.Controllers
             databaseCar.SetFuelConsumption(car.FuelConsumption);
             //carGet.SetMadeByUser(car.MadeByUser);
 
-            if (databaseCar.Update())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return databaseCar.Update();
         }
         //End methods
 
         [Route("/User/[action]")]
         public IActionResult Create()
         {
-            ViewBag.Brands = getBrands();
-            ViewBag.Fuels = getFuels();
-            ViewBag.CarClasses = getCarClasses();
+            ViewBag.Brands = GetBrands();
+            ViewBag.Fuels = GetFuels();
+            ViewBag.CarClasses = GetCarClasses();
 
             return View();
         }
@@ -210,11 +203,11 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Create(CarModel car)
         {
-            ViewBag.Brands = getBrands();
-            ViewBag.Fuels = getFuels();
-            ViewBag.CarClasses = getCarClasses();
+            ViewBag.Brands = GetBrands();
+            ViewBag.Fuels = GetFuels();
+            ViewBag.CarClasses = GetCarClasses();
 
-            if (createCar(car))
+            if (CreateCar(car))
             {
                 TempData.Add("Success", "Car has succesfully been uploaded to database");
             }
@@ -235,9 +228,9 @@ namespace Carworld.Controllers
         //[Route("/[action]")]
         public IActionResult Edit(int carId)
         {
-            ViewBag.Brands = getBrands();
-            ViewBag.Fuels = getFuels();
-            ViewBag.CarClasses = getCarClasses();
+            ViewBag.Brands = GetBrands();
+            ViewBag.Fuels = GetFuels();
+            ViewBag.CarClasses = GetCarClasses();
 
             return View(getCar(carId));
         }
@@ -246,11 +239,11 @@ namespace Carworld.Controllers
         //[Route("/[action]")]
         public IActionResult Edit(CarModel car)
         {
-            ViewBag.Brands = getBrands();
-            ViewBag.Fuels = getFuels();
-            ViewBag.CarClasses = getCarClasses();
+            ViewBag.Brands = GetBrands();
+            ViewBag.Fuels = GetFuels();
+            ViewBag.CarClasses = GetCarClasses();
 
-            if (updateCar(car))
+            if (UpdateCar(car))
             {
                 return RedirectToAction("Details");
             }
@@ -269,7 +262,7 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Delete(CarModel car)
         {
-            if (deleteCar(car.Id))
+            if (DeleteCar(car.Id))
             {
                 return RedirectToAction("Index", "Home");
             }

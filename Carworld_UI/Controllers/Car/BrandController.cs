@@ -16,7 +16,7 @@ namespace Carworld.Controllers
     public class BrandController : Controller
     {
         //Methods
-        private List<BrandModel> getAllBrands()
+        private List<BrandModel> GetAllBrands()
         {
             List<BrandModel> brands = new List<BrandModel>();
 
@@ -32,7 +32,7 @@ namespace Carworld.Controllers
             return brands;
         }
 
-        private BrandModel getBrand(int brandId)
+        private BrandModel GetBrand(int brandId)
         {
             Brand databaseBrand = new BrandCollection().Get(brandId);
             BrandModel brand = new BrandModel()
@@ -44,24 +44,17 @@ namespace Carworld.Controllers
             return brand;
         }
 
-        private bool updateBrand(BrandModel brand)
+        private bool UpdateBrand(BrandModel brand)
         {
             Brand databaseBrand = new BrandCollection().Get(brand.Id);
 
             databaseBrand.SetName(brand.Name);
             databaseBrand.SetOrigin(brand.Origin);
 
-            if (databaseBrand.Update())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return databaseBrand.Update();
         }
 
-        private bool createBrand(BrandModel brand)
+        private bool CreateBrand(BrandModel brand)
         {
             Brand newBrand = new Brand()
             {
@@ -69,17 +62,10 @@ namespace Carworld.Controllers
                 Origin = brand.Origin
             };
 
-            if (new BrandCollection().Create(newBrand))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return new BrandCollection().Create(newBrand);
         }
 
-        private bool deleteBrand(int brandId)
+        private bool DeleteBrand(int brandId)
         {
             return new BrandCollection().Delete(brandId);
         }
@@ -87,7 +73,7 @@ namespace Carworld.Controllers
 
         public IActionResult Index()
         {
-            return View(getAllBrands());
+            return View(GetAllBrands());
         }
 
         public IActionResult Create()
@@ -98,7 +84,7 @@ namespace Carworld.Controllers
         [HttpPost]
         public IActionResult Create(BrandModel brand)
         {
-            if (createBrand(brand))
+            if (CreateBrand(brand))
             {
                 return RedirectToAction("Index");
             }
@@ -111,13 +97,13 @@ namespace Carworld.Controllers
 
         public IActionResult Edit(int brandId)
         {
-            return View(getBrand(brandId));
+            return View(GetBrand(brandId));
         }
 
         [HttpPost]
         public IActionResult Edit(BrandModel brand)
         {
-            if (updateBrand(brand))
+            if (UpdateBrand(brand))
             {
                 return RedirectToAction("Index");
             }
@@ -130,13 +116,13 @@ namespace Carworld.Controllers
 
         public IActionResult Delete(int brandId)
         {   
-            return View(getBrand(brandId));
+            return View(GetBrand(brandId));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Delete(BrandModel brand)
         {
-            if (deleteBrand(brand.Id))
+            if (DeleteBrand(brand.Id))
             {
                 return RedirectToAction("Index");
             }
