@@ -104,5 +104,27 @@ namespace Carworld_Logic
             return carList;
         }
 
+        public List<Car> SearhModelName(string search)
+        {
+            List<Car> carList = new List<Car>();
+
+            var cars = CarFactoryDAL.GetCollectionDAL().SearhModelName(search);
+            var brands = BrandFactoryDAL.GetCollectionDAL().GetAll();
+            var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
+            var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
+            if(cars != null)
+            { 
+                foreach (var car in cars)
+                {
+                    carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
+                                car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
+                                car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name,
+                                car.FuelConsumption, car.MadeByUser));
+                }
+            }
+
+            return carList;
+        }
+
     }
 }

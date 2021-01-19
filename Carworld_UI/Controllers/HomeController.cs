@@ -132,35 +132,71 @@ namespace Carworld.Controllers
             return new UserCollection().Create(registerUser);
         }
         
-        private List<CarModel> GetCarsSortedByPropertyString(string property)
+        private List<CarModel> GetCarsSortedByPropertyString(int property)
         {
             switch (property)
             {
-                case "Brand":
+                case 0:
                     return GetCarsSortedByProperty("Brand");
-                case "Price":
+                case 1:
                     return GetCarsSortedByProperty("Price");
-                case "Horsepower":
+                case 2:
                     return GetCarsSortedByProperty("Horsepower");
-                case "Year":
+                case 3:
                     return GetCarsSortedByProperty("Year");
                 default:
                     return GetCars();
             }
         }
+
+        private List<CarModel> SearchModelName(string search)
+        {
+            List<CarModel> cars = new List<CarModel>();
+
+            foreach (Car car in new CarCollection().SearhModelName(search))
+            {
+                cars.Add(new CarModel
+                {
+                    Id = car.Id,
+                    Brand = car.Brand,
+                    Model = car.Model,
+                    Year = car.Year,
+                    Price = car.Price,
+                    Horsepower = car.Horsepower,
+                    Torque = car.Torque,
+                    Acceleration = car.Acceleration,
+                    Topspeed = car.Topspeed,
+                    CarClass = car.CarClass,
+                    Fuel = car.Fuel,
+                    FuelConsumption = car.FuelConsumption,
+                    MadeByUser = new UserCollection().Get(car.MadeByUser).Username,
+                });
+            }
+            return cars;
+        }
         //End methods
 
         public IActionResult Index()
         {
+            ViewBag.Filter = 0;
             return View(GetCars());
         }
 
         [Route("/[action]")]
-        public IActionResult Index(string selectedSortMethod)
+        public IActionResult Index(int selectedSortMethod)
         {
             ViewBag.Filter = selectedSortMethod;
             return View(GetCarsSortedByPropertyString(selectedSortMethod));
         }
+
+        [Route("/[action]")]
+        [HttpPost]
+        public IActionResult Index(string search)
+        {
+            ViewBag.Filter = 0;
+            return View(SearchModelName(search));
+        }
+
 
         public IActionResult Login()
         {

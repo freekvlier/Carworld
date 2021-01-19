@@ -271,5 +271,52 @@ namespace DAL
 
             return true;
         }
+
+        public List<CarDTO> SearhModelName(string search)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
+                {
+                    string sql = "SELECT * FROM Cars WHERE Model LIKE CONCAT('%', (@Search), '%') ORDER BY BrandId";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        command.Parameters.AddWithValue("@Search", search);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            List<CarDTO> cars = new List<CarDTO>();
+                            while (reader.Read())
+                            {
+                                CarDTO car = new CarDTO
+                                {
+                                    Id = reader.GetInt32(0),
+                                    BrandId = reader.GetInt32(1),
+                                    Model = reader.GetString(2),
+                                    Year = reader.GetInt32(3),
+                                    Price = reader.GetInt32(4),
+                                    Horsepower = reader.GetInt32(5),
+                                    Torque = reader.GetInt32(6),
+                                    Acceleration = reader.GetDouble(7),
+                                    Topspeed = reader.GetInt32(8),
+                                    CarClassId = reader.GetInt32(9),
+                                    FuelId = reader.GetInt32(10),
+                                    FuelConsumption = reader.GetDouble(11),
+                                    MadeByUser = reader.GetInt32(12)
+                                };
+                                cars.Add(car);
+                            }
+                            connection.Close();
+                            return cars;
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
     }
 }

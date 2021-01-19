@@ -2,21 +2,21 @@
 
 <script>
     window.onload = function () {
-        switch ("@ViewBag.Filter") {
-            case "":
+        switch (@ViewBag.Filter) {
+            case 0:
                 document.getElementById("radioBrand").checked = true;
                 break;
-            case "Brand":
-                document.getElementById("radioBrand").checked = true;
-                break;
-            case "Price":
+            case 1:
                 document.getElementById("radioPrice").checked = true;
                 break;
-            case "Horsepower":
+            case 2:
                 document.getElementById("radioHorsepower").checked = true;
                 break;
-            case "Year":
+            case 3:
                 document.getElementById("radioYear").checked = true;
+                break;
+            default:
+                document.getElementById("radioBrand").checked = true;
                 break;
         }
     };
@@ -24,17 +24,21 @@
 
 <div class="text-center">
     <h1 class="display-4">Cars</h1>
+    <form asp-controller="Home" asp-action="Index">
+        <input type="text" name="search" placeholder="Search"/>
+        <input type="submit" name="search" value="Search"/>
+    </form>
     <hr />
     <div class="filterContainer">
         <form>
             <p class="text-body">Sort:</p>
-            <input type="radio" value="Brand" name="filter" id="radioBrand" onclick="document.location='/Index?selectedSortMethod=Brand'" }>
+            <input type="radio" value="Brand" name="filter" id="radioBrand" onclick="document.location='/Index?selectedSortMethod=0'" }>
             <label>Brand (A-Z)</label><br>
-            <input type="radio" value="Price" name="filter" id="radioPrice" onclick="document.location='/Index?selectedSortMethod=Price'">
+            <input type="radio" value="Price" name="filter" id="radioPrice" onclick="document.location='/Index?selectedSortMethod=1'">
             <label>Price</label><br>
-            <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?selectedSortMethod=Horsepower'">
+            <input type="radio" value="Horsepower" name="filter" id="radioHorsepower" onclick="document.location='/Index?selectedSortMethod=2'">
             <label>Horsepower</label><br>
-            <input type="radio" value="Year" name="filter" id="radioYear" onclick="document.location='/Index?selectedSortMethod=Year'">
+            <input type="radio" value="Year" name="filter" id="radioYear" onclick="document.location='/Index?selectedSortMethod=3'">
             <label>Year</label><br>
         </form>
     </div>

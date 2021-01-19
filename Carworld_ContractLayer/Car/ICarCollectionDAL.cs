@@ -11,5 +11,6 @@ namespace ContractLayer
         List<CarDTO> GetAll();
         List<CarDTO> GetAllSorted(string property);
         CarDTO Get(int carId);
+        List<CarDTO> SearhModelName(string search);
     }
 }
