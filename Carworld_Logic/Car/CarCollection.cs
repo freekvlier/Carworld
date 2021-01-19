@@ -15,13 +15,16 @@ namespace Carworld_Logic
             var cars = CarFactoryDAL.GetCollectionDAL().GetAll();
             var carClasses = CarClassFactoryDAL.GetCollectionDAL().GetAll();
             var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
-
-            foreach (var car in cars)
+            
+            if(cars != null)
             {
-                carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
-                            car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
-                            car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name,
-                            car.FuelConsumption, car.MadeByUser));
+                foreach (var car in cars)
+                {
+                    carList.Add(new Car(car.Id, brands[brands.FindIndex(item => item.Id == car.BrandId)].Name, car.Model,
+                                car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
+                                car.Topspeed, carClasses[carClasses.FindIndex(item => item.Id == car.CarClassId)].Name, fuels[fuels.FindIndex(item => item.Id == car.FuelId)].Name,
+                                car.FuelConsumption, car.MadeByUser));
+                }
             }
 
             return carList;
@@ -37,9 +40,10 @@ namespace Carworld_Logic
 
             foreach (var car in cars)
             {
-                carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
+                carList.Add(new Car(car.Id, brands[brands.FindIndex(item => item.Id == car.BrandId)].Name, car.Model,
                             car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
-                            car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name, car.FuelConsumption, car.MadeByUser));
+                            car.Topspeed, carClasses[carClasses.FindIndex(item => item.Id == car.CarClassId)].Name, fuels[fuels.FindIndex(item => item.Id == car.FuelId)].Name,
+                            car.FuelConsumption, car.MadeByUser));
             }
  
             return carList;
@@ -83,12 +87,13 @@ namespace Carworld_Logic
             var fuels = FuelFactoryDAL.GetCollectionDAL().GetAll();
 
             var getCar = CarFactoryDAL.GetCollectionDAL().Get(id);
-            Car car = new Car  (getCar.Id, brands[getCar.BrandId].Name, getCar.Model, 
-                                getCar.Year, getCar.Price, getCar.Horsepower, getCar.Torque, 
-                                getCar.Acceleration, getCar.Topspeed, carClasses[getCar.CarClassId].Name, 
-                                fuels[getCar.FuelId].Name, getCar.FuelConsumption, getCar.MadeByUser);
+            Car car = new Car   (getCar.Id, brands[brands.FindIndex(item => item.Id == getCar.BrandId)].Name, getCar.Model,
+                                getCar.Year, getCar.Price, getCar.Horsepower, getCar.Torque, getCar.Acceleration,
+                                getCar.Topspeed, carClasses[carClasses.FindIndex(item => item.Id == getCar.CarClassId)].Name, fuels[fuels.FindIndex(item => item.Id == getCar.FuelId)].Name,
+                                getCar.FuelConsumption, getCar.MadeByUser);
 
             return car;
+
         }
 
         public List<Car> GetAllFavorites(int userId)
@@ -116,10 +121,10 @@ namespace Carworld_Logic
             { 
                 foreach (var car in cars)
                 {
-                    carList.Add(new Car(car.Id, brands[car.BrandId].Name, car.Model,
-                                car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
-                                car.Topspeed, carClasses[car.CarClassId].Name, fuels[car.FuelId].Name,
-                                car.FuelConsumption, car.MadeByUser));
+                    carList.Add(new Car(car.Id, brands[brands.FindIndex(item => item.Id == car.BrandId)].Name, car.Model,
+                             car.Year, car.Price, car.Horsepower, car.Torque, car.Acceleration,
+                             car.Topspeed, carClasses[carClasses.FindIndex(item => item.Id == car.CarClassId)].Name, fuels[fuels.FindIndex(item => item.Id == car.FuelId)].Name,
+                             car.FuelConsumption, car.MadeByUser));
                 }
             }
 
