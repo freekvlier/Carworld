@@ -58,7 +58,7 @@ namespace Carworld_Logic
             CarDTO carDTO = new CarDTO
             {
                 Id = carinput.Id,
-                BrandId = brands.FindIndex(item => item.Name == carinput.Brand),
+                BrandId = brands[brands.FindIndex(item => item.Name == carinput.Brand)].Id,
                 Model = carinput.Model,
                 Year = carinput.Year,
                 Price = carinput.Price,
@@ -66,8 +66,8 @@ namespace Carworld_Logic
                 Torque = carinput.Torque,
                 Acceleration = carinput.Acceleration,
                 Topspeed = carinput.Topspeed,
-                CarClassId = carClasses.FindIndex(item => item.Name == carinput.CarClass),
-                FuelId = fuels.FindIndex(item => item.Name == carinput.Fuel),
+                CarClassId = carClasses[carClasses.FindIndex(item => item.Name == carinput.CarClass)].Id,
+                FuelId = fuels[fuels.FindIndex(item => item.Name == carinput.Fuel)].Id,
                 FuelConsumption = carinput.FuelConsumption,
                 MadeByUser = carinput.MadeByUser
             };

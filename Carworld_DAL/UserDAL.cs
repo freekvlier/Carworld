@@ -181,17 +181,16 @@ namespace DAL
                         command.Parameters.AddWithValue("@Password", user.Password);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            reader.Read();
-                            try
+                            if (reader.HasRows)
                             {
+                                reader.Read();
                                 userId = reader.GetInt32(0);
                             }
-                            catch (SqlException e)
+                            else
                             {
-                                Console.WriteLine(e);
                                 userId = -1;
+
                             }
-                           
                         }
                         connection.Close();
                     }

@@ -95,9 +95,9 @@ namespace Carworld.Controllers
                 Password = user.Password
             };
 
-            user.Id = new UserCollection().GetId(userObject);
+            userObject.Id = new UserCollection().GetId(userObject);
 
-            if (user.Id >= 0)
+            if (userObject.Id >= 0)
             {
                 SetSessionVariables(userObject);
                 return true;

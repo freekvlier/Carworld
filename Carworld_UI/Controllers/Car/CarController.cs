@@ -245,7 +245,7 @@ namespace Carworld.Controllers
 
             if (UpdateCar(car))
             {
-                return RedirectToAction("Details");
+                return RedirectToAction("Details", new { carId = car.Id });
             }
             else
             {
