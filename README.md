@@ -2,10 +2,10 @@
 # Carworld
 Deze repository bevat de broncode van het "Carworld" project, een basis CRUD-applicatie ontwikkeld als onderdeel van het tweede semester (2020-2021) richting software engineering van de ICT-studie aan Fontys Hogescholen te Eindhoven.
 
-# Projectbeschrijving
+## Projectbeschrijving
 Het idee van Carworld was het creëren van een website met een database van auto's. Gebruikers kunnen hierbij afbeeldingen, prijzen en specificaties van verschillende auto's bekijken, filters toepassen, zoekopdrachten uitvoeren en auto's vergelijken op basis van specificaties. Gebruikers hebben de mogelijkheid om een account aan te maken, waarmee auto's aan favorieten toegevoegd kunnen worden en de gebruiker in staat wordt gesteld nieuwe auto's aan de database toe te voegen.
 
-# Projectstructuur
+## Projectstructuur
 Het project is geschreven in ASP.NET en is opgedeeld in verschillende subprojecten om een duidelijke overzicht van de verschillende lagen te bieden:
 
 - DAL (Data Access Layer): Verantwoordelijk voor de toegang tot de database.
@@ -15,7 +15,7 @@ Het project is geschreven in ASP.NET en is opgedeeld in verschillende subproject
 - Unit Test Layer: Bevat unit tests voor de verschillende lagen.
 - UI Layer: Verantwoordelijk voor de gebruikersinterface.
 
-# Functionaliteiten
+## Functionaliteiten
 Bij het project zijn verschillende functionele requirements opgesteld. De belangrijkste requirements omvatten onder andere:
 
 - Het bekijken van een overzicht van alle auto's.
@@ -26,7 +26,7 @@ Bij het project zijn verschillende functionele requirements opgesteld. De belang
 - Het toevoegen van nieuwe auto's.
 - Het favoriet maken van auto's en het bekijken van favorieten.
 
-# Leeruitkomsten
+## Leeruitkomsten
 Gedurende het semester zijn de volgende leeruitkomsten aangetoond:
 
 #### 1. Je baseert je keuzes op feedback van stakeholders en onderbouwt ze op een heldere en professionele wijze.
@@ -66,5 +66,5 @@ Gedurende het semester zijn de volgende leeruitkomsten aangetoond:
 - **Aantonen:** De code moet getest worden voor zowel het geplande gebruikt, verwachte en onverwachte foutsituaties. Deze testen moeten meerdere malen kunnen worden uitgevoerd in meerdere fasen van het project. Verwachte fouten kunnen voortkomen uit de specificaties of van externe afhankelijkheden van de software
 - **Standaard technieken en hulpmiddelen:** Gebruik bijvoorbeeld een versiebeheersysteem, acceptatietests en unit-tests.
 
-# Opmerkingen
+## Opmerkingen
 Het gebruik van Entity Framework was niet toegestaan om de data access laag te implementeren. In plaats daarvan zijn eigen SQL-statements geschreven om inzicht te krijgen in het werken met een data access laag op een meer fundamenteel niveau.
