@@ -27,7 +27,7 @@ Bij het project zijn verschillende functionele requirements opgesteld. De belang
 - Het favoriet maken van auto's en het bekijken van favorieten.
 
 ## Leeruitkomsten
-Gedurende het semester zijn de volgende leeruitkomsten aangetoond:
+Gedurende het semester zijn de volgende leeruitkomsten aangetoond voor het behalen van het semester:
 
 #### 1. Je baseert je keuzes op feedback van stakeholders en onderbouwt ze op een heldere en professionele wijze.
 - **Stakeholder:**: Iemand met een bepaalde rol en belang in het project (ongeacht of deze groot of klein is). Je kunt deze stakeholders identificeren en kunt hun belangen achterhalen en prioriteren.
